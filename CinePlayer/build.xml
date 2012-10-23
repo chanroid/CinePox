@@ -1,0 +1,630 @@
+<?xml version="1.0" encoding="euc-kr"?>
+
+<project name="CinePlayer" default="all" basedir=".">
+
+	<property name="application-package" value="com.kr.busan.cinepox" />
+	<property name="outdir" 	value="bin" />
+	<property name="keypass" 	value="cinepox123!@#" />
+	<property name="storepass" 	value="cinepox123!@#" />
+	<property name="alias" 		value="cinepox" />
+
+	<property name="key.store" 			value="/Users/CINEPOX/Documents/DaumCloud/appkey" />
+	<property name="key.store.password" value="cinepox123!@#" />
+	<property name="key.alias" 			value="cinepox" />
+	<property name="key.alias.password" value="cinepox123!@#" />
+	
+	<property name="sdk-dir" 				value="/Users/CINEPOX/Documents/dev/tools/android-sdk-macosx" />
+	<property name="sdk-platform-dir" 		value="${sdk-dir}/platforms/android-8" />
+	<property name="android-tools" 			value="${sdk-dir}/tools" />
+	<property name="android-platform_tools" value="${sdk-dir}/platform-tools" />
+	<property name="android-framework" 		value="${sdk-platform-dir}/framework.aidl" />
+
+	<property name="resource-dir" 	value="${basedir}/res" />
+	<property name="asset-dir" 		value="${basedir}/assets" />
+	<property name="src-dir" 		value="src" />
+	<property name="manifeset-file" value="AndroidManifest.xml" />
+
+	<property name="external-libs" 		value="${basedir}/libs" />
+	<property name="native-libs" 		value="${basedir}/libs" />
+	<property name="outdir-classes" 	value="${outdir}" />
+	<property name="outdir-r" 			value="${basedir}/gen" />
+	<property name="dex-file" 			value="classes.dex" />
+	<property name="classes.dex" 		value="classes.dex" />
+	<property name="intermediate-dex" 	value="${basedir}/${outdir}/${dex-file}" />
+
+	<property name="resource-package" 				value="${outdir}/${ant.project.name}.ap_" />
+	<property name="out-debug-package" 				value="${ant.project.name}_debug.apk" /> 
+	<property name="out-debug-unaligned-package" 	value="${ant.project.name}_debug_unaligned.apk" />
+	<property name="out-unsigned-package" 			value="${ant.project.name}_unsigned.apk" />
+	<property name="out-unaligned-package" 			value="${ant.project.name}_unaligned.apk" />
+	<property name="out-signedjar-package" 			value="${ant.project.name}_signedjar.apk" />
+	<property name="out-signed-package" 			value="${ant.project.name}.apk" />
+	
+	<property name="out.debug.unaligned.file" 		value="${outdir}/${ant.project.name}.apk" />
+	<property name="out-full_signed-package" 		value="/Users/CINEPOX/Desktop/${ant.project.name}.apk" />
+	
+    <property name="resource.package.file.name"		value="${ant.project.name}.ap_" />
+	
+                  	
+    <condition property="out-debug-package-ospath"
+            value="${basedir}/${out-debug-package}"
+            else="${basedir}/${out-debug-package}" >
+        <os family="windows"/>
+    </condition>
+	
+	<property name="aapt" location="${android-platform_tools}/aapt.exe" />
+
+	<property name="aidl" location="${android-platform_tools}/aidl.exe" />
+
+	<property name="dx" 	location="${android-platform_tools}/dx.bat" />
+	<property name="dxjar" 	location="${android-platform_tools}/lib/dx.jar" />
+
+	<property name="adb" location="${android-platform_tools}/adb.exe" />
+
+	<property name="apk-builder" location="${android-tools}/apkbuilder.bat" />
+
+	<property name="android-jar" location="${sdk-platform-dir}/android.jar" />
+
+    <property name="adb" 		location="${android-tools}/adb.exe" />
+    <property name="zipalign" 	location="${android-tools}/zipalign.exe" />	
+	
+	<target name="all" depends="clean, dirs, resource-src, aidl, compile, dex, package-res-and-assets, package-res-no-assets, package-res, -package-debug-sign, -package-release, debug, -release-check, release, install"   />
+	
+	<target name="clean" description="Removes output files created by other targets.">
+		<echo> 1. Output 폴더를 제거한다. </echo>	
+		<delete dir="${basedir}/${outdir}/classes" />
+		<delete dir="${basedir}/${outdir}" />
+		<delete dir="${outdir-r}" />			
+	</target>
+
+	<!-- Output Directory를 생성한다. 
+		<mkdir dir="${outdir}" />
+		<mkdir dir="${outdir-classes}" />
+		<mkdir dir="${basedir}/${outdir}/classes" />
+		<mkdir dir="${outdir-r}" />
+		<mkdir dir="${basedir}/${outdir-r}" />	
+		<mkdir dir="${basedir}/apk" />	
+	-->
+	<target name="dirs" depends="clean">
+		<echo> 2. Output bin , gen 폴더를 생성한다. </echo>
+		<mkdir dir="${basedir}/${outdir}" />
+		<mkdir dir="${outdir-r}" />
+	</target>
+
+	<!-- Generate the R.java file for this project's resources -->
+	<target name="resource-src" depends="dirs">
+		<echo> 3. R.java 파일을 생성한다. </echo>
+		<exec executable="${aapt}" failonerror="true">
+			<arg value="package" />
+			<arg value="-m" />
+			<arg value="-J" />
+			<arg value="${outdir-r}" />
+			<arg value="-M" />
+			<arg value="${manifeset-file}" />
+			<arg value="-S" />
+			<arg value="${resource-dir}" />
+			<arg value="-I" />
+			<arg value="${android-jar}" />
+		</exec>
+	</target>
+
+	<!-- Generate java classes from .aidl files. -->
+	<target name="aidl" depends="dirs">
+		<echo> 4. AIDL 파일을 컴파일하여 java 파일을 생성한다. </echo>
+		<apply executable="${aidl}" failonerror="true">
+			<arg value="-p${android-framework}" />
+			<arg value="-I${src-dir}" />
+			<fileset dir="${src-dir}">
+				<include name="**/*.aidl" />
+			</fileset>
+		</apply>
+	</target>
+
+	<!-- Compile this project's .java files into .class files. 
+		<javac encoding="UTF-8" 
+				source="1.6" 
+				target="1.6" 
+				debug="true" 
+				extdirs="" 
+				srcdir="." 
+				destdir="${outdir-classes}" 
+				bootclasspath="${android-jar}"
+				<classpath>
+					<fileset dir="${external-libs}" includes="*.jar" />
+				</classpath>
+		</javac>	
+		
+		<javac encoding="UTF-8" 
+				source="1.6" 
+				target="1.6" 
+				debug="true" 
+				extdirs="" 
+				srcdir="${basedir}/src" 
+				destdir="${basedir}/bin/classes" 
+				bootclasspath="${android-jar}"
+				classpath="${native-libs}/*.jar"
+	         	executable="C:/Program Files/Java/jdk1.6.0_10/bin/javac"
+	        	compiler="javac1.6">
+				<classpath>
+					<fileset dir="${external-libs}" includes="*.jar" />
+				</classpath>
+		</javac>
+				
+		C:/jdk1.5.0_06/bin/javac
+		C:/Program Files/Java/jdk1.6.0_10/bin
+	-->
+	<target name="compile" depends="dirs, aidl, resource-src">
+		<echo> 5. compile... </echo>
+		<javac encoding="UTF-8" 
+				source="1.6" 
+				target="1.6" 
+				debug="true" 
+				extdirs="" 
+				srcdir="." 
+				destdir="${outdir-classes}" 
+				bootclasspath="${android-jar}">
+				<classpath>
+					<fileset dir="${external-libs}" includes="*.jar" />
+				</classpath>
+		</javac>
+	</target>
+
+	<!-- Convert this project's .class files into .dex files. 
+		<fileset dir="${external-libs}" includes="*.jar" />
+	-->
+	<!-- Intermediate files -->
+	<property name="intermediate-dex" value="${basedir}/${dex-file}" />
+	<condition property="intermediate-dex-ospath"
+	    	value="${intermediate-dex}/bin"
+	   		else="${intermediate-dex}/bin" >
+		<os family="windows"/>
+	</condition>	
+	
+	<!-- 방법1 -->
+	<!--  
+	<target name="dex" depends="compile">
+		<echo> Converting compiled files and external libraries into ${outdir}/${dex-file} </echo>
+		<echo> output=${intermediate-dex} </echo>
+		<echo> path=${basedir}/${outdir-classes} </echo>
+		<echo> dir=${external-libs} </echo>
+		<apply executable="${dx}" failonerror="true" parallel="true">
+			<arg value="/-/-dex" />
+			<arg value="/-/-output=${outdir-classes}/${classes.dex}" />
+			<arg value="/-/-locals=full" /> 
+			<arg value="/-/-positions=lines" /> 
+			<arg path="${basedir}/${outdir}/classes" />
+		</apply>
+	</target>	
+	-->
+
+	
+	<!-- 방법2 
+        <apply executable="${dx}" failonerror="true" parallel="true">
+            <arg value="/-/-dex" />
+            <arg value="/-/-output=${basedir}/${outdir}/${classes.dex}" />
+            <arg path="${basedir}/${outdir}/classes" />
+        	<fileset dir="${external-libs}" includes="*.jar" />
+        </apply>	
+	-->
+    <target name="dex" depends="compile">
+        <echo> 6. Converting compiled files and external libraries into ${outdir}/${dex-file}...</echo>
+        <apply executable="${dx}" failonerror="true" parallel="true">
+            <arg value="--dex" />
+            <arg value="--output=${basedir}/${outdir}/${classes.dex}" />
+            <arg path="${basedir}/${outdir}/**" />
+        	<fileset dir="${external-libs}" includes="*.jar" />
+        </apply>
+    </target>	
+	<!--  
+    <target name="dex" depends="compile">
+        <echo>Converting compiled files and external libraries into ${outdir}/${dex-file}...</echo>
+        <apply executable="${dx}" failonerror="true" parallel="true">
+            <arg value="/-/-dex" />
+            <arg value="/-/-output=${intermediate-dex-ospath}" />
+            <arg path="${basedir}/${outdir}/classes" />
+			<classpath>
+				<fileset dir="${external-libs}" includes="*.jar" />
+			</classpath>
+        </apply>
+    </target>	
+	-->
+
+	<!-- Put the project's resources into the output package file. -->
+	<target name="package-res-and-assets">
+		<echo> 7. Packaging resources and assets... </echo>
+		<exec executable="${aapt}" failonerror="true">
+			<arg value="package" />
+			<arg value="-f" />
+			<arg value="-M" />
+			<arg value="${manifeset-file}" />
+			<arg value="-S" />
+			<arg value="${resource-dir}" />
+			<arg value="-A" />
+			<arg value="${asset-dir}" />
+			<arg value="-I" />
+			<arg value="${android-jar}" />
+			<arg value="-F" />
+			<arg value="${basedir}/${resource-package}" />
+		</exec>
+	</target>
+
+	<!-- Same as package-res-and-assets, but without -->
+	<target name="package-res-no-assets">
+		<echo> 8. Packaging resources without... </echo>
+		<exec executable="${aapt}" failonerror="true">
+			<arg value="package" />
+			<arg value="-f" />
+			<arg value="-M" />
+			<arg value="${manifeset-file}" />
+			<arg value="-S" />
+			<arg value="${resource-dir}" />
+			<arg value="-I" />
+			<arg value="${android-jar}" />
+			<arg value="-F" />
+			<arg value="${resource-package}" />
+		</exec>
+	</target>
+
+	<!-- Invoke the proper target depending on whenther or not an assets directory is present -->
+	<target name="package-res">
+		<echo> 9. Packaging res... ${res-target}</echo>
+		<available file="${asset-dir}" type="dir" property="res-target" value="and-assets" />
+		<property name="res-target" value="no-assets" />
+		<antcall target="package-res-${res-target}" />
+	</target>
+
+	<!--  R.java 파일을 생성하고 관련 java 파일들을  클래스 파일로 컴파일 후 , 컴파일 된 클래스파일을
+       	다시 dex 파일로 변환하고 관련 리소스들을 옮기는 등의 apk 파일을 만들기위한 일련의 과정을 설정
+	-->
+
+	<!-- Package the application and sign it with a debug key.
+       This is the default target when building. it is used for debug 
+       <target name="debug" depends="dex, package-res">
+             <echo> Packaging ${out-debug-package}, and signing it with a debug key... </echo>
+             <exec executable="${apk-builder}" failonerror="true">
+                   <arg value="${out-debug-package}"/>
+                   <arg value="-z"/>
+                   <arg value="${basedir}/${resource-package}"/>
+                   <arg value="-f"/>
+                   <arg value="${intermediate-dex}"/>
+                   <arg value="-rf"/>
+                   <arg value="${basedir}/${src-dir}"/>
+                   <arg value="-rj"/>
+                   <arg value="${basedir}/${external-libs}"/>
+                   <arg value="-nf"/>
+                   <arg value="${native-libs}"/>
+             </exec>
+       </target>
+	-->
+
+	<!-- ################################################################################################### -->
+	<!-- ################################################################################################### -->
+	<!-- ################################################################################################### -->
+	<!-- 12.Sign all the application  
+	<target name="jarsign">
+		<signjar jar="${out-signed-package}"
+			keystore ="C:/Users/lby/.android/20120620_jsmart_pdf.keystore"
+			storepass="${storepass}"
+			alias="${alias}"
+			keypass="${keypass}">
+		</signjar>
+	</target>	
+	-->
+
+
+	<!-- ############################################################################################################################## -->
+	<!-- ############################################################################################################################## -->
+	<!-- ############################################################################################################################## -->
+	<!-- ############################################################################################################################## -->
+	<!-- ############################################################################################################################## -->
+	<!-- ############################################################################################################################## -->
+    <!-- Custom tasks -->
+	<path id="android.antlibs">
+		<fileset dir="${android-tools}/lib">
+	    	<include name="**/*.jar" />
+	  	</fileset>
+	</path>	
+    <taskdef name="aaptexec" 	classname="com.android.ant.AaptExecLoopTask" 	classpathref="android.antlibs" />
+
+    <taskdef name="apkbuilder" 	classname="com.android.ant.ApkBuilderTask" 		classpathref="android.antlibs" />
+	
+    <!-- Verbosity -->
+    <property name="verbose" value="false" />
+    <!-- This is needed by emma as it uses multilevel verbosity instead of simple 'true' or 'false'
+         The property 'verbosity' is not user configurable and depends exclusively on 'verbose'
+         value.-->
+    <condition property="verbosity" value="verbose" else="quiet">
+        <istrue value="${verbose}" />
+    </condition>
+    <!-- This is needed to switch verbosity of zipalign. Depends exclusively on 'verbose'
+         -->
+    <condition property="v.option" value="-v" else="">
+        <istrue value="${verbose}" />
+    </condition>
+    <!-- This is needed to switch verbosity of dx. Depends exclusively on 'verbose' -->
+    <condition property="verbose.option" value="--verbose" else="">
+        <istrue value="${verbose}" />
+    </condition>	
+    <!-- This is macro that enable passing variable list of external jar files to ApkBuilder
+         Example of use:
+         <package-helper sign.package="true">
+             <extra-jars>
+                <jarfolder path="my_jars" />
+                <jarfile path="foo/bar.jar" />
+                <jarfolder path="your_jars" />
+             </extra-jars>
+         </package-helper>
+         
+		resource-package			: ${ant.project.name}.ap_
+	    out-debug-package			: ${ant.project.name}-debug.apk
+	    out-debug-unaligned-package	: ${ant.project.name}-debug-unaligned.apk
+	    out-unsigned-package		: ${ant.project.name}-unsigned.apk
+	    out-unaligned-package		: ${ant.project.name}-unaligned.apk
+        out.debug.unaligned.file	: ${ant.project.name}-apk
+        out-full_signed-package
+        resourcefile="${resource.package.file.name}" 
+        apkfilepath=${basedir}/${outdir}/${ant.project.name}-debug-unaligned.apk
+        
+		android apk 빌드 과정 : apkbuilder 실행에 필요한 모든 파일을 .apk 파일 하나로 압축, 패키징.
+			패키징 되는 파일
+				dex (.dex)
+				리소스 패키지 (.ap_)
+				java library (.jar)
+				jni native library (.so)
+			실행 옵션
+				-z : 리소스 패키지 파일 경로
+				-f : 추가할 파일(=.dex)의 경로
+				-rf : java 소스 폴더. 이 옵션은 특별히 소스폴더에 리소스파일이 함께 있는 경우만 사용한다. (경로 유지)
+				-rj : jar 파일 또는 jar 파일이 있는 폴더
+				-nf : native library 파일이 있는 root 폴더.
+				-u : 메타 파일을 만들지 않음. 메타데이터가 없으면 설치는 할 수 없고, 압축만 됨
+				-storetype : keystore 타입
+         	ex) apkbuilder  ${output.apk.file} -u -z  ${packagedresource.file} -f  ${dex.file} 
+    -->
+    <macrodef name="package-helper">
+        <attribute 	name="sign.package" />
+        <element 	name="extra-jars" optional="yes" />
+        <sequential>
+            <apkbuilder 
+                    outfolder="${basedir}/${outdir}" 
+                    resourcefile="${ant.project.name}.ap_" 
+                    apkfilepath="${out-signed-package}" 
+            		debugsigning="true" 
+                    abifilter="${filter.abi}" 
+                    verbose="${verbose}" 
+                    hascode="${manifest.hasCode}"> 
+                <dex 			path="${basedir}/${outdir}/${classes.dex}}" />
+                <sourcefolder 	path="${basedir}/src" />
+                <sourcefolder 	refid="android.libraries.src" />
+                <jarfolder 		path="${basedir}/${external-libs}" />
+                <jarfolder 		refid="android.antlibs" />
+                <nativefolder 	path="${basedir}/${external-libs}" />
+                <nativefolder 	refid="android.antlibs" />
+                <extra-jars/>
+            </apkbuilder>
+        </sequential>
+    </macrodef>	
+    <!-- Packages the application and sign it with a debug key. -->
+    <target name="-package-debug-sign" depends="dex, package-res">
+    	<echo> 10. Packages the application and sign it with a debug key </echo>
+        <package-helper sign.package="true" />
+    </target>
+
+    <!-- Packages the application without signing it. -->
+    <target name="-package-release" depends="dex, package-res">
+        <package-helper sign.package="false" />
+    </target>
+
+
+		
+    <!-- Builds debug output package, provided all the necessary files are already dexed 
+    	 방법1 : in.package="${ant.project.name}-apk"
+    	 방법2 : in.package="${out-debug-unaligned-package}"
+    	 
+    <target name="debug" depends="-package-debug-sign" description="Builds the application and signs it with a debug key.">
+        <zipalign-helper in.package="${ant.project.name}-apk" out.package="${out-debug-package}" />
+        <echo> 11. generate Debug apk file : ${out.debug.package} </echo>
+    </target>    	 
+    -->
+
+	
+	<!-- 	Package the application without  signing it.
+        	This allow for the application to be signed later with an offical publishing key.
+        	out-signed-package
+        	out-debug-package-ospath
+	-->
+    <target name="-release-check" depends="-package-release">
+    	<echo> 12. generate key property for signed value </echo>
+        <condition property="release.sign">
+            <and>
+                <isset property="key.store" />
+                <isset property="key.alias" />
+            </and>
+        </condition>
+    </target>	
+
+    <target name="-release-nosign" depends="-release-check" unless="release.sign">
+        <echo> 13. No key.store and key.alias properties found in build.properties. </echo>
+        <echo> Please sign ${out.unsigned.package} manually </echo>
+        <echo> and run zipalign from the Android SDK tools. </echo>
+    </target>
+	
+	<!-- 방법1 apk 파일 생성 -->
+	<!-- 방법1 apk 파일 생성 
+	<target name="release" depends="dex, package-res" if="release.sign" >
+        Gets passwords
+        <input
+                message="Please enter keystore password (store:${key.store}):"
+                addproperty="key.store.password" />
+        <input
+                message="Please enter password for alias '${key.alias}':"
+                addproperty="key.alias.password" />		
+		<echo> Packaging ${out-unsigned-package} for release... </echo>
+		<exec executable="${apk-builder}" failonerror="true">
+			<arg value="${out-debug-package-ospath}" />
+			<arg value="-u" />
+			<arg value="-z" />
+			<arg value="${basedir}/${resource-package}" />
+			<arg value="-f" />
+			<arg value="${intermediate-dex}" />
+			<arg value="-rf" />
+			<arg value="${basedir}/${src-dir}" />
+			<arg value="-rj" />
+			<arg value="${basedir}/${external-libs}" />
+			<arg value="-nf" />
+			<arg value="${native-libs}" />
+		</exec>
+		<echo>it will need to be signed with jarsigner before being published</echo>
+	</target>	
+	-->
+
+	<!-- 방법2 apk 파일 생성 -->
+    <!-- This is macro which zipaligns in.package and outputs it to out.package. Used by targets
+         debug, -debug-with-emma and release.
+         
+         http://www.addictivetips.com/mobile/what-is-zipalign-in-android-and-how-it-works-complete-guide/
+         zipalign [-f] [-v] <alignment> infile.apk outfile.apk
+         zipalign -c -v <alignment> existing.apk
+		  -f : overwrites existing outfile.zip
+		  -v : will give verbose output
+		  -c : will confirm the alignment of a given file         
+    -->
+    <macrodef name="zipalign-helper">
+        <attribute name="in.package"  />
+        <attribute name="out.package" />
+        <sequential>
+            <echo> Running zip align on final apk... </echo>
+            <exec executable="${zipalign}" failonerror="true">
+                <arg line="${v.option}" />
+                <arg value="-f" />
+                <arg value="4" />
+                <arg path="@{in.package}" />
+                <arg path="@{out.package}" />
+            </exec>
+        </sequential>
+    </macrodef>
+    <target name="release" description="Builds the application. The generated apk file must be signed before it is published." depends="dex, package-res , -release-nosign" if="release.sign" >
+        <!-- Gets passwords -->
+    	<echo> 13. Gets passwords for key.store and key.alias properties </echo>
+        <input
+                message="Please enter keystore password (store:${key.store.password}):"
+                addproperty="key.store.password" />
+        <input
+                message="Please enter password for alias '${key.alias}':"
+                addproperty="key.alias.password" />
+
+        <!-- Signs the APK 
+        	 방법 1 : jar="${ant.project.name}-apk" signedjar="${out-unaligned-package}" 
+        	 방법 2 : jar="${out.unsigned.package}" signedjar="${out-unaligned-package}"
+        <signjar
+                jar="${out-debug-package}"
+                signedjar="${out-signedjar-package}"
+                keystore="${key.store}"
+                storepass="${key.store.password}"
+                alias="${key.alias}"
+                keypass="${key.alias.password}"
+                verbose="${verbose}" />
+                
+        <echo> 14. Make a Signed Apk file with signed keystore file. </echo>
+        <signjar
+                jar="${out-signed-package}"
+                signedjar="${out-signedjar-package}"
+                keystore="${key.store}"
+                storepass="${key.store.password}"
+                alias="${key.alias}"
+                keypass="${key.alias.password}"
+                verbose="${verbose}" />
+        -->
+        <echo> 14. Make a Signed Apk file with signed keystore file. </echo>
+
+
+        <!-- Zip aligns the APK 
+        	 방법 1 : in.package="${out-debug-package}"
+        	 방법 2 : in.package="${out-unaligned-package}"
+        	 방법 2 : in.package="${ant.project.name}-apk"
+        	
+        	 방법 1 : out.package="${ant.project.name}.apk"
+        	 방법 2 : out.package="${out-signed-package}"
+        -->
+    	<echo> Release Package: ${out-signedjar-package} Start ... </echo>
+		<!-- 
+        <zipalign-helper in.package="${out-signedjar-package}" out.package="${out-signed-package}" />
+        <echo> Release Package: ${out-signedjar-package} </echo>		
+		-->
+    </target>
+        	
+	<!-- 방법2 apk 파일 생성 
+    <target name="release" depends="-package-release, -release-nosign" if="release.sign"
+                description="Builds the application. The generated apk file must be signed before
+                            it is published.">
+        Gets passwords
+        <input
+                message="Please enter keystore password (store:${key.store}):"
+                addproperty="key.store.password" />
+        <input
+                message="Please enter password for alias '${key.alias}':"
+                addproperty="key.alias.password" />
+
+        Signs the APK
+        <echo>Signing final apk...
+        <signjar
+                jar="${out.unsigned.package}"
+                signedjar="${out.unaligned.package}"
+                keystore="${key.store}"
+                storepass="${key.store.password}"
+                alias="${key.alias}"
+                keypass="${key.alias.password}"
+                verbose="${verbose}" />
+
+        Zip aligns the APK
+        <zipalign-helper in.package="${out.unaligned.package}" out.package="${out.release.package}" />
+        <echo>Release Package: ${out.release.package}
+    </target>	
+	-->
+	
+	<!-- debug용 빌드와 release 용 빌드 설정이다.
+       	debug가 붙는 apk 파일은 특정 에뮬레이터의 전자서명 키로  전자서명 된것을 뜻한다.
+       	-unsigned 를 포함한 apk 파일은 relesase 빌드이지만 정식 전자서명 키와 jarsigner 를
+       	이용해 전자서명 하여야 최종 릴리즈 가능하다. 
+       	
+       	${out-signed-package}
+       	${ant.project.name}_apk
+	-->
+
+	<!-- Install the package on the default emulator -->
+	<target name="install" depends="release">
+		<echo> #### 15. Finally ... Installing apk  #### [${out-signed-package}] onto default emulator... </echo>
+		<exec executable="${adb}" failonerror="true">
+			<arg value="install" />
+			<arg value="${out-signed-package}" />
+		</exec>
+	</target>
+
+
+	<!-- ###################################################################################################### -->
+	<!-- ###################################################################################################### -->
+	<!--  
+	<target name="reinstall" depends="debug">
+		<echo>######## Please Wait ! Installing ${out-signed-package} onto default emulator ... ... .. . ########</echo>
+		<exec executable="${adb}" failonerror="true">
+			<arg value="install" />
+			<arg value="-r" />
+			<arg value="${out-signed-package}" />
+		</exec>
+	</target>	
+	-->
+
+	<!-- ###################################################################################################### -->
+	<!-- ###################################################################################################### -->
+	<!-- Uinstall the package from the default emulator 
+	<target name="uninstall">
+		<echo>######## Please Wait ! Uninstalling ${application-package} from the default emulator ... ... .. . ########</echo>
+		<exec executable="${adb}" failonerror="true">
+			<arg value="uninstall" />
+			<arg value="${application-package}" />
+		</exec>
+	</target>	
+	-->
+
+	<!-- 생성된 apk 를 안드로이드 에뮬레이터에 설치 / 제거 하는 설정 부분이다. -->
+</project>
