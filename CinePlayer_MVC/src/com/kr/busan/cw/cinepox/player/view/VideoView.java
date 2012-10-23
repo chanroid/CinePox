@@ -3,7 +3,9 @@ package com.kr.busan.cw.cinepox.player.view;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.MediaPlayer.OnCompletionListener;
 import io.vov.vitamio.VitamioInstaller;
-import android.R;
+import kr.co.chan.util.Util;
+import kr.co.chan.util.VerticalProgressBar;
+import kr.co.chan.util.Classes.AnimatedImageView;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -23,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.kr.busan.cw.cinepox.R;
 import com.kr.busan.cw.cinepox.player.iface.VideoCallback;
 import com.kr.busan.cw.cinepox.player.model.VideoModel;
 import com.kr.busan.cw.cinepox.player.model.VideoModel.PlayData;

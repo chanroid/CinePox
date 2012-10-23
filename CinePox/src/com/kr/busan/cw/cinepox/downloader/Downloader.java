@@ -127,7 +127,7 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 				conn.getInputStream());
 
 		publishProgress(0);
-		
+
 		if (fileSize < lenghtOfFile) {
 			int readBytes = 0;
 			byte data[] = new byte[input.available()];
@@ -157,19 +157,18 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 		@Override
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
+			Intent playerIntent;
+			if (Util.App
+					.isInstalled(mContext, "com.kr.busan.cw.cinepox.player")) {
+				playerIntent = new Intent("com.kr.busan.cw.cinepox.player.PLAY");
+			} else {
+				playerIntent = new Intent(Intent.ACTION_VIEW);
+			}
+			PendingIntent i = PendingIntent.getActivity(mContext, 0,
+					playerIntent, 0);
 			switch (msg.what) {
 			case 0:
-				Intent playerIntent;
-				if (Util.App.isInstalled(mContext,
-						"com.kr.busan.cw.cinepox.player")) {
-					playerIntent = new Intent(
-							"com.kr.busan.cw.cinepox.player.PLAY");
-				} else {
-					playerIntent = new Intent(Intent.ACTION_VIEW);
-				}
 				playerIntent.setData(Uri.fromFile(new File(mPath)));
-				PendingIntent i = PendingIntent.getActivity(mContext, 0,
-						playerIntent, 0);
 				if (Build.VERSION.SDK_INT > 13) {
 					Notification.Builder mBuilder = new Notification.Builder(
 							mContext);
@@ -207,6 +206,7 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 							.getString(R.string.download_preparing));
 					mBuilder.setTicker(mContext
 							.getString(R.string.download_preparing));
+					mBuilder.setContentIntent(i);
 					mNoti = mBuilder.getNotification();
 				} else {
 					mNoti = new Notification(mIcon,
@@ -214,6 +214,7 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 							System.currentTimeMillis());
 					mNoti.vibrate = new long[] { 0, 200, 300, 200 };
 					mNoti.flags |= Notification.FLAG_AUTO_CANCEL;
+					mNoti.contentIntent = i;
 					mNoti.setLatestEventInfo(mContext,
 							mContext.getString(R.string.download_preparing),
 							mContext.getString(R.string.download_preparing),

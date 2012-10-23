@@ -5,14 +5,14 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import com.kr.busan.cw.cinepox.movie.WidgetProvider.UpdateData;
-
 import kr.co.chan.util.ShakeListener;
 import kr.co.chan.util.l;
 import kr.co.chan.util.CinePox.LogPost;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+
+import com.kr.busan.cw.cinepox.movie.WidgetProvider.UpdateData;
 
 public class Config {
 

@@ -4,10 +4,11 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import org.apache.http.protocol.HTTP;
-
 import kr.co.chan.util.Classes.ClearableEditText;
 import kr.co.chan.util.Interfaces.Refreshable;
+
+import org.apache.http.protocol.HTTP;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
