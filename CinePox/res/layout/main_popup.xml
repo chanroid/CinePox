@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <CheckBox
+        android:id="@+id/checkBox_main_popup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="일주일동안 안보기" />
+
+</LinearLayout>
