@@ -398,6 +398,7 @@ public class CinepoxService extends Service {
 
 	void initService() {
 		mDownManager = DownManager.getInstance(this);
+		mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(ACTION_REFRESH_SERVICE);
 		filter.addAction(ACTION_RESTART_SERVICE);
@@ -487,7 +488,6 @@ public class CinepoxService extends Service {
 	void registerRestrartAlarm() {
 		Intent i = new Intent(ACTION_RESTART_SERVICE);
 		mIntentSender = PendingIntent.getBroadcast(this, REQ_REFRESH, i, 0);
-		mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 		mAlarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + 5000,
 				mIntentSender);
 	}
@@ -499,7 +499,6 @@ public class CinepoxService extends Service {
 	void registerAlarm(long interval) {
 		Intent i = new Intent(ACTION_REFRESH_SERVICE);
 		mIntentSender = PendingIntent.getBroadcast(this, REQ_REFRESH, i, 0);
-		mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 		mAlarmManager.set(AlarmManager.RTC, System.currentTimeMillis()
 				+ interval, mIntentSender);
 	}
@@ -514,7 +513,6 @@ public class CinepoxService extends Service {
 	void registerWidgetDataAlarm() {
 		Intent i = new Intent(ACTION_LOAD_WIDGET_DATA);
 		mDataIntentSender = PendingIntent.getBroadcast(this, REQ_REFRESH, i, 0);
-		mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 		mAlarmManager.set(AlarmManager.RTC, System.currentTimeMillis()
 				+ mDataInterval, mDataIntentSender);
 	}

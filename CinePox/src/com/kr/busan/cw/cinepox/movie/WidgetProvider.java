@@ -18,7 +18,7 @@ import com.kr.busan.cw.cinepox.R;
 public class WidgetProvider extends AppWidgetProvider {
 
 	public final static String ACTION_QRPLAY = "QRPLAY";
-	private int mInterval = 60000;
+	private int mInterval = 30000;
 	private PendingIntent mIntentSender;
 	private AlarmManager mAlarmManager;
 
