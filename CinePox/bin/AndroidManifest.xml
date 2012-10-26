@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.kr.busan.cw.cinepox"
+    package="com.busan.cw.clsp20120924"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -19,7 +19,6 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -43,24 +42,24 @@
     </supports-screens>
 
     <application
-        android:name=".movie.State"
+        android:name="com.kr.busan.cw.cinepox.movie.State"
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/cinepox" >
         <service
-            android:name=".movie.CinepoxService"
+            android:name="com.kr.busan.cw.cinepox.movie.CinepoxService"
             android:label="@string/cinepox" >
         </service>
 
         <receiver
-            android:name=".movie.BootReceiver"
+            android:name="com.kr.busan.cw.cinepox.movie.BootReceiver"
             android:enabled="true"
             android:exported="false" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".movie.WidgetProvider" >
+        <receiver android:name="com.kr.busan.cw.cinepox.movie.WidgetProvider" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -71,7 +70,7 @@
         </receiver>
 
         <activity
-            android:name=".movie.ServiceActivateActivity"
+            android:name="com.kr.busan.cw.cinepox.movie.ServiceActivateActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" >
@@ -88,7 +87,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".movie.PayActivity"
+            android:name="com.kr.busan.cw.cinepox.movie.PayActivity"
             android:theme="@android:style/Theme.Holo.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" >
@@ -105,10 +104,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".downloader.DownCancelActivity"
+            android:name="com.kr.busan.cw.cinepox.downloader.DownCancelActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:name=".downloader.DownloaderActivity"
+            android:name="com.kr.busan.cw.cinepox.downloader.DownloaderActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" >
@@ -126,7 +125,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".movie.InstallTest"
+            android:name="com.kr.busan.cw.cinepox.movie.InstallTest"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" >
@@ -144,16 +143,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".movie.ADActivity"
+            android:name="com.kr.busan.cw.cinepox.movie.ADActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:name=".movie.SettingActivity"
+            android:name="com.kr.busan.cw.cinepox.movie.SettingActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@android:style/Theme.Holo" >
         </activity>
         <activity
-            android:name=".movie.SearchActivity"
+            android:name="com.kr.busan.cw.cinepox.movie.SearchActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.NoActionBar"
@@ -174,7 +173,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".movie.IntroActivity"
+            android:name="com.kr.busan.cw.cinepox.movie.IntroActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
@@ -199,13 +198,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".movie.MainActivity"
+            android:name="com.kr.busan.cw.cinepox.movie.MainActivity"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.NoActionBar" />
         <activity
-            android:name=".movie.LoginActivity"
+            android:name="com.kr.busan.cw.cinepox.movie.LoginActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
@@ -224,12 +223,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".movie.AgreeActivity"
+            android:name="com.kr.busan.cw.cinepox.movie.AgreeActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity
-            android:name=".movie.QRPlayActivity"
+            android:name="com.kr.busan.cw.cinepox.movie.QRPlayActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/qrplay" >
             <intent-filter>
@@ -272,24 +271,24 @@
 
         <!-- 플레이어 관련 매니페스트 -->
         <activity
-            android:name=".player.PluginInstallActivity"
+            android:name="com.kr.busan.cw.cinepox.player.PluginInstallActivity"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
         <activity
-            android:name=".player.VolumeActivity"
+            android:name="com.kr.busan.cw.cinepox.player.VolumeActivity"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
         <activity
-            android:name=".player.BrightActivity"
+            android:name="com.kr.busan.cw.cinepox.player.BrightActivity"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
         <activity
-            android:name=".player.ReadQRActivity"
+            android:name="com.kr.busan.cw.cinepox.player.ReadQRActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" >
         </activity>
         <activity
-            android:name=".player.CinePlayer"
+            android:name="com.kr.busan.cw.cinepox.player.PlayerActivity"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale"
             android:label="@string/cineplayer"
             android:screenOrientation="landscape"
@@ -297,11 +296,6 @@
             <intent-filter>
                 <action android:name="com.kr.busan.cw.cinepox.player.PLAY" >
                 </action>
-
-                <category android:name="android.intent.category.DEFAULT" >
-                </category>
-                <category android:name="android.intent.category.BROWSABLE" >
-                </category>
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" >

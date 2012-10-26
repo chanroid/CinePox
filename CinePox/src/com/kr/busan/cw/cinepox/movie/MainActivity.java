@@ -39,7 +39,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.kr.busan.cw.cinepox.R;
+import com.busan.cw.clsp20120924.R;
 
 /**
  * 이슈사항 정리

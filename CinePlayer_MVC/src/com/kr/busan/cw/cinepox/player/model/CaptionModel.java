@@ -62,6 +62,7 @@ public class CaptionModel {
 	private ArrayList<String> mLangKeys;
 
 	private String mCurrentCC = CaptionData.LANG_KR;
+	private int mCurrentCCIndex = 0;
 	private boolean isEnabled = false;
 
 	public Map<String, ArrayList<CaptionData>> getCaptionArray() {
@@ -215,6 +216,27 @@ public class CaptionModel {
 
 	}
 
+	/**
+	 * <PRE>
+	 * 1. MethodName : setCCLang
+	 * 2. ClassName  : CaptionModel
+	 * 3. Comment   : 
+	 * 4. 작성자    : 박찬우
+	 * 5. 작성일    : 2012. 10. 26. 오후 3:01:58
+	 * </PRE>
+	 * 
+	 * @return void
+	 * @param which
+	 */
+	public void setCCLang(int which) {
+		mCurrentCC = mLangKeys.get(which);
+		mCurrentCCIndex = which;
+	}
+
+	public int getCCLangIndex() {
+		return mCurrentCCIndex;
+	}
+
 	public synchronized String getCaption(long playTime) {
 		if (!mCaptionArray.containsKey(mCurrentCC))
 			return "";
@@ -253,4 +275,5 @@ public class CaptionModel {
 		public String TEXT;
 		public long TIME;
 	}
+
 }

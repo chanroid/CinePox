@@ -234,7 +234,6 @@ public final class R {
         public static final int update=0x7f050037;
     }
     public static final class style {
-        public static final int AppTheme=0x7f060001;
         public static final int EpoNgsProgressStyle=0x7f060000;
     }
     public static final class styleable {

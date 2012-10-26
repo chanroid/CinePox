@@ -48,6 +48,9 @@ public class PlayerConfigModel extends PlayerModel {
 	private String mOrderCode;
 	private CaptionModel mCaptionModel;
 	private VideoModel mVideoModel;
+	
+	private String m3GMessage;
+	private int m3GMessageLength;
 
 	private String mBugReportUrl;
 	private String mPlaytimeUrl;
@@ -95,6 +98,14 @@ public class PlayerConfigModel extends PlayerModel {
 			}
 		}
 		return -1;
+	}
+	
+	public int get3GMessageLength() {
+		return m3GMessageLength;
+	}
+	
+	public String get3GMessage() {
+		return m3GMessage;
 	}
 
 	public void setDefaultQuality(String ctype) {
@@ -353,6 +364,8 @@ public class PlayerConfigModel extends PlayerModel {
 						mBugReportUrl = urlArray.getString(KEY_BUG_INSERT_URL);
 						mLogReportUrl = urlArray.getString(KEY_LOG_URL);
 						mPlaytimeUrl = urlArray.getString(KEY_PLAY_TIME_URL);
+						m3GMessage = urlArray.getString(KEY_3G_MESSAGE);
+						m3GMessageLength = urlArray.getInt(KEY_3G_MESSAGE_LENGTH);
 						return RESULT_SUCCESS;
 					} catch (JSONException e) {
 						e.printStackTrace();

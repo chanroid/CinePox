@@ -8,7 +8,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
 
-import com.kr.busan.cw.cinepox.R;
+import com.busan.cw.clsp20120924.R;
 
 public class DownCancelActivity extends Activity implements OnCancelListener {
 

@@ -116,7 +116,7 @@ public class BestParser extends AsyncTask<String, Integer, String> {
 		item.put(KEY_MOVIE_NUM, o.getString("movieProduct_seq"));
 		item.put(KEY_TITLE, o.getString(KEY_TITLE));
 		item.put("is_adult", ai.getString("is_adult"));
-		item.put("sn_url", ai.getString("url"));
+		item.put("sn_url", ai.getString("sn_url"));
 		return item;
 	}
 

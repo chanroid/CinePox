@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.kr.busan.cw.cinepox.R;
+import com.busan.cw.clsp20120924.R;
 
 public class MyPageFragment extends Fragment {
 

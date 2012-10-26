@@ -13,12 +13,12 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.widget.RemoteViews;
 
-import com.kr.busan.cw.cinepox.R;
+import com.busan.cw.clsp20120924.R;
 
 public class WidgetProvider extends AppWidgetProvider {
 
 	public final static String ACTION_QRPLAY = "QRPLAY";
-	private int mInterval = 30000;
+	private long mInterval = 30000l;
 	private PendingIntent mIntentSender;
 	private AlarmManager mAlarmManager;
 
@@ -37,8 +37,8 @@ public class WidgetProvider extends AppWidgetProvider {
 		}
 	}
 
-	void setInterval(int interval) {
-		if (mInterval >= 10000)
+	void setInterval(long interval) {
+		if (mInterval >= 10000l)
 			mInterval = interval;
 	}
 

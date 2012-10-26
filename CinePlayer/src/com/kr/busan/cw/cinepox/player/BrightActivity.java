@@ -1,5 +1,6 @@
 package com.kr.busan.cw.cinepox.player;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -16,6 +17,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import com.kr.busan.cw.cinepox.R;
 
+@SuppressLint("HandlerLeak")
 public class BrightActivity extends Activity implements OnSeekBarChangeListener {
 
 	private SeekBar mBrightSeekBar;
@@ -27,10 +29,10 @@ public class BrightActivity extends Activity implements OnSeekBarChangeListener 
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+		setContentView(R.layout.bright);
 		mBrightSeekBar = (SeekBar) findViewById(R.id.seekBar_brightness);
 		mBrightSeekBar.setMax(90);
 		mBrightSeekBar.setOnSeekBarChangeListener(this);
-		setContentView(mBrightSeekBar);
 		setBrightness(getIntent().getFloatExtra("bright", 1.0f));
 		sync();
 		mHandler.sendEmptyMessageDelayed(0, 2000);

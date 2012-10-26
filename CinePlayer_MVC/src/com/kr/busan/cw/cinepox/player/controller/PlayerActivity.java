@@ -28,6 +28,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.AudioManager;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -186,7 +187,7 @@ public class PlayerActivity extends PlayerBaseActivity implements
 		public void run() {
 			updateController();
 			// 2차개발분. 기능구현은 완료
-			// updateCaption();
+			updateCaption();
 		}
 	}
 
@@ -310,6 +311,12 @@ public class PlayerActivity extends PlayerBaseActivity implements
 
 			mVideoController
 					.setCinePoxMode(result.equals(Const.RESULT_SUCCESS));
+
+			if (Util.Connection.getType(PlayerActivity.this) != ConnectivityManager.TYPE_WIFI
+					&& !"".equals(mConfigModel.get3GMessage()))
+				Toast.makeText(PlayerActivity.this,
+						mConfigModel.get3GMessage(),
+						mConfigModel.get3GMessageLength()).show();
 
 			if (result.contains(Const.RESULT_ERROR)) {
 				mVideoView.hideLoading();
@@ -520,23 +527,23 @@ public class PlayerActivity extends PlayerBaseActivity implements
 		mShaker.resume();
 		mShareDialog.show();
 	}
-	
+
 	private void showCaptionDialog() {
-//		ArrayList<String> names = mCaptionModel.getLangNames();
-//		if (names.size() > 1) {
-//			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-//			String[] s = new String[names.size()];
-//			dialog.setSingleChoiceItems(names.toArray(s),
-//					mCaptionModel.get,
-//					new DialogInterface.OnClickListener() {
-//						@Override
-//						public void onClick(DialogInterface dialog, int which) {
-//							dialog.dismiss();
-//							mCaptionModel.setCCLang(which);
-//						}
-//					});
-//			dialog.show();
-//		}
+		ArrayList<String> names = mCaptionModel.getLangNames();
+		if (names.size() > 1) {
+			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+			String[] s = new String[names.size()];
+			dialog.setSingleChoiceItems(names.toArray(s),
+					mCaptionModel.getCCLangIndex(),
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+							mCaptionModel.setCCLang(which);
+						}
+					});
+			dialog.show();
+		}
 	}
 
 	private void showBrightControl() {

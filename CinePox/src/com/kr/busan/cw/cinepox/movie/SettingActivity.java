@@ -11,7 +11,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 
-import com.kr.busan.cw.cinepox.R;
+import com.busan.cw.clsp20120924.R;
 
 @SuppressWarnings("deprecation")
 public class SettingActivity extends PreferenceActivity implements

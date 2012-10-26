@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#2a2d36"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:paddingBottom="20dp">
 
     <LinearLayout
         android:id="@+id/layout_best_btncontainer"

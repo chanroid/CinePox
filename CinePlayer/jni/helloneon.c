@@ -4,7 +4,7 @@
 #define JNI_TRUE 1
 #define JNI_FALSE 0
 
-jboolean Java_com_kr_busan_cw_cinepox_player_CinePlayer_isNeon(JNIEnv* env,
+jboolean Java_com_kr_busan_cw_cinepox_player_PlayerActivity_isNeon(JNIEnv* env,
 		jobject thiz) {
 	uint64_t features;
 	if (android_getCpuFamily() != ANDROID_CPU_FAMILY_ARM) {

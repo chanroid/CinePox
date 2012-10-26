@@ -35,7 +35,7 @@ import android.os.RemoteException;
 import android.telephony.SmsMessage;
 import android.widget.Toast;
 
-import com.kr.busan.cw.cinepox.R;
+import com.busan.cw.clsp20120924.R;
 import com.kr.busan.cw.cinepox.aidl.ICinepoxService;
 import com.kr.busan.cw.cinepox.aidl.ICinepoxServiceCallback;
 import com.kr.busan.cw.cinepox.downloader.DownManager;

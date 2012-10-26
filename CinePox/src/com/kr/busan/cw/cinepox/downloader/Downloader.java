@@ -21,7 +21,8 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 
-import com.kr.busan.cw.cinepox.R;
+import com.busan.cw.clsp20120924.R;
+import com.kr.busan.cw.cinepox.player.PlayerActivity;
 
 @SuppressLint("HandlerLeak")
 @SuppressWarnings("deprecation")
@@ -128,12 +129,15 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 
 		publishProgress(0);
 
+		int result = 0;
 		if (fileSize < lenghtOfFile) {
 			int readBytes = 0;
 			byte data[] = new byte[input.available()];
 			while ((readBytes = input.read(data)) != -1) {
-				if (isCanceled)
-					return 1;
+				if (isCanceled) {
+					result = 1;
+					break;
+				}
 				output.write(data, 0, readBytes);
 				fileSize += readBytes;
 				if (mProgress != Util.Math.getPercent(fileSize, lenghtOfFile))
@@ -145,7 +149,7 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 		input.close();
 		output.close();
 		conn.disconnect();
-		return 0;
+		return result;
 	}
 
 	private void notifyDownloadStart() {
@@ -157,13 +161,7 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 		@Override
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
-			Intent playerIntent;
-			if (Util.App
-					.isInstalled(mContext, "com.kr.busan.cw.cinepox.player")) {
-				playerIntent = new Intent("com.kr.busan.cw.cinepox.player.PLAY");
-			} else {
-				playerIntent = new Intent(Intent.ACTION_VIEW);
-			}
+			Intent playerIntent = new Intent(mContext, PlayerActivity.class);
 			PendingIntent i = PendingIntent.getActivity(mContext, 0,
 					playerIntent, 0);
 			switch (msg.what) {
@@ -254,6 +252,8 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 			e.printStackTrace();
 			cancel(true);
 			return -1;
+		} finally {
+			DownManager.getInstance(mContext).remove(this);
 		}
 	}
 
@@ -327,9 +327,7 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 					progress
 							+ mContext
 									.getString(R.string.download_progresstext),
-					PendingIntent.getActivity(mContext, 0, new Intent(
-							Intent.ACTION_VIEW, Uri.parse(mPath)),
-							PendingIntent.FLAG_UPDATE_CURRENT));
+					pi);
 			mNoti.flags |= Notification.FLAG_AUTO_CANCEL;
 			mNoti.icon = mIcon;
 			mNoti.contentIntent = pi;
@@ -347,8 +345,11 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 			mBuilder.setContentTitle(mTitle);
 			mBuilder.setSmallIcon(mIcon);
 			mBuilder.setAutoCancel(true);
-			mBuilder.setContentIntent(PendingIntent.getActivity(mContext, 0,
-					new Intent(Intent.ACTION_VIEW, Uri.parse(mPath)),
+			mBuilder.setContentIntent(PendingIntent.getActivity(
+					mContext,
+					0,
+					new Intent(Intent.ACTION_VIEW, Uri
+							.fromFile(new File(mPath))),
 					PendingIntent.FLAG_UPDATE_CURRENT));
 			mBuilder.setContentText(mContext
 					.getString(R.string.download_canceled));
@@ -367,7 +368,7 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 			mNoti.setLatestEventInfo(mContext, mTitle, mContext
 					.getString(R.string.download_canceled), PendingIntent
 					.getActivity(mContext, 0, new Intent(Intent.ACTION_VIEW,
-							Uri.parse(mPath)),
+							Uri.fromFile(new File(mPath))),
 							PendingIntent.FLAG_UPDATE_CURRENT));
 		}
 		DownManager.getInstance(mContext).remove(this);
@@ -387,8 +388,11 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 			mBuilder.setContentTitle(mTitle);
 			mBuilder.setSmallIcon(mIcon);
 			mBuilder.setAutoCancel(true);
-			mBuilder.setContentIntent(PendingIntent.getActivity(mContext, 0,
-					new Intent(Intent.ACTION_VIEW, Uri.parse(mPath)),
+			mBuilder.setContentIntent(PendingIntent.getActivity(
+					mContext,
+					0,
+					new Intent(Intent.ACTION_VIEW, Uri
+							.fromFile(new File(mPath))),
 					PendingIntent.FLAG_UPDATE_CURRENT));
 			mBuilder.setContentText(mContext.getString(R.string.download_error)
 					+ e);
@@ -407,7 +411,7 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 			mNoti.setLatestEventInfo(mContext, mTitle,
 					mContext.getString(R.string.download_error) + e,
 					PendingIntent.getActivity(mContext, 0, new Intent(
-							Intent.ACTION_VIEW, Uri.parse(mPath)),
+							Intent.ACTION_VIEW, Uri.fromFile(new File(mPath))),
 							PendingIntent.FLAG_UPDATE_CURRENT));
 		}
 		DownManager.getInstance(mContext).remove(this);
@@ -416,12 +420,7 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 
 	private void showComplete() {
 		// TODO Auto-generated method stub
-		Intent playerIntent;
-		if (Util.App.isInstalled(mContext, "com.kr.busan.cw.cinepox.player")) {
-			playerIntent = new Intent("com.kr.busan.cw.cinepox.player.PLAY");
-		} else {
-			playerIntent = new Intent(Intent.ACTION_VIEW);
-		}
+		Intent playerIntent = new Intent(mContext, PlayerActivity.class);
 		playerIntent.setData(Uri.fromFile(new File(mPath)));
 		PendingIntent intent = PendingIntent.getActivity(mContext, 0,
 				playerIntent, 0);

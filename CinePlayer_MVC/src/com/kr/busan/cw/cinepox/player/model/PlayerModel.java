@@ -1,6 +1,5 @@
 package com.kr.busan.cw.cinepox.player.model;
 
-import model.BaseModel;
 
 /**
  * <PRE>
@@ -14,7 +13,7 @@ import model.BaseModel;
  * 6. 작성일   : 2012. 10. 15. 오후 1:51:43
  * </PRE>
  */
-public class PlayerModel extends BaseModel {
+public class PlayerModel {
 
 	/**
 	 * <PRE>
@@ -38,6 +37,8 @@ public class PlayerModel extends BaseModel {
 
 		public static final String DEVICE = "android";
 
+		public static final String KEY_3G_MESSAGE = "3g_message";
+		public static final String KEY_3G_MESSAGE_LENGTH = "3g_message_length";
 		public static final String KEY_AD_NUM = "ad_seq";
 		public static final String KEY_BOOKMARK_DATE = "regdate";
 		public static final String KEY_BOOKMARK_DELETE_URL = "bookmark_delete_url";

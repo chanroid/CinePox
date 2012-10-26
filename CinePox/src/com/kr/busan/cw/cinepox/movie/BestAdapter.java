@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 
 import com.fedorvlasov.lazylist.ImageLoader;
-import com.kr.busan.cw.cinepox.R;
+import com.busan.cw.clsp20120924.R;
 
 public class BestAdapter extends SimpleAdapter implements Destroyable {
 

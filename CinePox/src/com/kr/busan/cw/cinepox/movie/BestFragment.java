@@ -3,8 +3,7 @@ package com.kr.busan.cw.cinepox.movie;
 import java.util.List;
 import java.util.Map;
 
-import kr.co.chan.util.R;
-import kr.co.chan.util.Util;
+import com.busan.cw.clsp20120924.R;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Color;
@@ -89,8 +88,6 @@ public class BestFragment extends Fragment implements OnItemClickListener,
 		layout.addView(bar);
 		mGridBase.setEmptyView(layout);
 		mGrid = mGridBase.getRefreshableView();
-		mGrid.setPadding(0, 0, 0,
-				(int) Util.Views.applyDimension(20, getActivity()));
 		mGrid.setOnItemClickListener(this);
 		initList();
 	}

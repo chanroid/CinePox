@@ -52,6 +52,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.AudioManager;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -89,9 +90,9 @@ import com.kr.busan.cw.cinepox.R;
  * @author CINEPOX
  * 
  */
-@SuppressLint({ "HandlerLeak", "ParserError" })
+@SuppressLint("HandlerLeak")
 @SuppressWarnings("deprecation")
-public class CinePlayer extends Activity implements OnErrorListener,
+public class PlayerActivity extends Activity implements OnErrorListener,
 		OnBufferingUpdateListener, OnCompletionListener, OnPreparedListener,
 		OnSeekCompleteListener, OnInfoListener, OnSeekBarChangeListener,
 		android.media.MediaPlayer.OnErrorListener,
@@ -116,6 +117,9 @@ public class CinePlayer extends Activity implements OnErrorListener,
 	private String mBugReportUrl;
 	private String mLogReportUrl;
 	private String mCaptionUrl;
+
+	private String m3GMessage;
+	private int m3GMessageLength;
 
 	private String mMovieSeq;
 	private String mMemberSeq;
@@ -246,6 +250,7 @@ public class CinePlayer extends Activity implements OnErrorListener,
 
 		setContentView(R.layout.player_main);
 		allocView();
+		allocController();
 		new UpdateSync().execute();
 	}
 
@@ -311,9 +316,7 @@ public class CinePlayer extends Activity implements OnErrorListener,
 			if (isBlock)
 				return;
 			else {
-				if (mWindow == null)
-					builtInController();
-				else
+				if (mWindow != null)
 					addControllerWindow();
 				resume();
 				addSWVideo();
@@ -573,7 +576,7 @@ public class CinePlayer extends Activity implements OnErrorListener,
 						} else {
 							pkgname = VitamioInstaller.VITAMIO_PACKAGE_ARMV7_VFPV3;
 						}
-						Util.App.goMarket(CinePlayer.this, pkgname);
+						Util.App.goMarket(PlayerActivity.this, pkgname);
 					}
 				});
 		dialog.show();
@@ -584,7 +587,7 @@ public class CinePlayer extends Activity implements OnErrorListener,
 		ProgressDialog mLoading;
 
 		PluginInstaller() {
-			mLoading = new ProgressDialog(CinePlayer.this);
+			mLoading = new ProgressDialog(PlayerActivity.this);
 			mLoading.setCancelable(false);
 			mLoading.setMessage("플레이어 초기 설정 중입니다...");
 		}
@@ -799,8 +802,8 @@ public class CinePlayer extends Activity implements OnErrorListener,
 			return false;
 		}
 	};
-
-	private void builtInController() {
+	
+	private void allocController() {
 		LinearLayout linear = new LinearLayout(this);
 		mController = (RelativeLayout) getLayoutInflater().inflate(
 				R.layout.mediacontroller, null);
@@ -843,7 +846,11 @@ public class CinePlayer extends Activity implements OnErrorListener,
 				.findViewById(R.id.video_controller_bottom);
 		// hideController();
 		linear.addView(mController);
-		mWindowManager.addView(mWindow = linear, getControllerWindowParams());
+		mWindow = linear;
+	}
+
+	private void builtInController() {
+		mWindowManager.addView(mWindow, getControllerWindowParams());
 	}
 
 	WindowManager.LayoutParams getControllerWindowParams() {
@@ -1101,6 +1108,7 @@ public class CinePlayer extends Activity implements OnErrorListener,
 							// 플러그인 설치 고고
 							showInstallPluginDialog();
 						} else if (mCodec != which) {
+							pause();
 							codecChange(which);
 						}
 					}
@@ -1488,6 +1496,10 @@ public class CinePlayer extends Activity implements OnErrorListener,
 	 */
 
 	void onPrepared() {
+		if (mWindow == null)
+			builtInController();
+		else
+			addControllerWindow();
 		mLoadingBar.setVisibility(View.GONE);
 		mDuration = getDuration();
 		mDurationText.setText(Util.stringForTime(mDuration));
@@ -1584,14 +1596,14 @@ public class CinePlayer extends Activity implements OnErrorListener,
 		switch (what) {
 		case 1:
 			switch (extra) {
-			// avformat_open_input: Invalid data found when processing input :
 			case -1094995529:
 			case -2147483648:
+			case -17:
 				showErrorDialog("죄송합니다. 재생할 수 없는 동영상입니다.", false, true);
 				break;
 			default:
 				finish();
-				Intent i = new Intent(this, CinePlayer.class);
+				Intent i = new Intent(this, PlayerActivity.class);
 				i.setData(getIntent().getData());
 				i.putExtra("set_time", mCurrent / 1000);
 				i.putExtra("error_count", mErrorCount++);
@@ -1614,7 +1626,7 @@ public class CinePlayer extends Activity implements OnErrorListener,
 	void showErrorDialog(final String message, boolean cancelable,
 			final boolean isCritical) {
 		removeControllerWindow();
-		Util.Views.showAlert(CinePlayer.this, getString(R.string.alert),
+		Util.Views.showAlert(PlayerActivity.this, getString(R.string.alert),
 				message, getString(R.string.done),
 				new DialogInterface.OnClickListener() {
 					@Override
@@ -1696,6 +1708,9 @@ public class CinePlayer extends Activity implements OnErrorListener,
 					mLogReportUrl = urlArray.getString(KEY_LOG_URL);
 					mPlaytimeUrl = urlArray.getString("play_time_url");
 					mConfig.setSendTimeURL(mPlaytimeUrl);
+
+					m3GMessage = urlArray.getString("3g_message");
+					m3GMessageLength = urlArray.getInt("3g_message_length");
 
 				} catch (JSONException e) {
 					isCriticalError = true;
@@ -1845,7 +1860,7 @@ public class CinePlayer extends Activity implements OnErrorListener,
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-						new LogPost(CinePlayer.this, getPackageName(), e)
+						new LogPost(PlayerActivity.this, getPackageName(), e)
 								.start();
 					}
 					currentTime = System.currentTimeMillis();
@@ -1873,10 +1888,10 @@ public class CinePlayer extends Activity implements OnErrorListener,
 			mProgress.dismiss();
 			resume();
 			if ("error".equals(result)) {
-				Toast.makeText(CinePlayer.this, R.string.send_failed,
+				Toast.makeText(PlayerActivity.this, R.string.send_failed,
 						Toast.LENGTH_SHORT).show();
 			} else {
-				Toast.makeText(CinePlayer.this, R.string.send_success,
+				Toast.makeText(PlayerActivity.this, R.string.send_success,
 						Toast.LENGTH_SHORT).show();
 			}
 			l.i("send complete");
@@ -1911,7 +1926,7 @@ public class CinePlayer extends Activity implements OnErrorListener,
 	@Override
 	public void onShake() {
 		// TODO Auto-generated method stub
-		 new UrlShareSendThread(mLocation).execute(mConfig.getCinepoxUrl());
+		new UrlShareSendThread(mLocation).execute(mConfig.getCinepoxUrl());
 		// mShaker.pause();
 	}
 
@@ -2006,7 +2021,7 @@ public class CinePlayer extends Activity implements OnErrorListener,
 			if (isMovieUrl(mPath)) {
 				if ("content".equalsIgnoreCase(mPath.getScheme())) {
 					String filePath = Util.File.getMediaPathfromUri(
-							CinePlayer.this, mPath);
+							PlayerActivity.this, mPath);
 					l.i(Util.File.changeExtension(filePath, "smi"));
 					if (captionParse(Util.File.changeExtension(filePath, "smi"))
 							|| captionParse(Util.File.changeExtension(filePath,
@@ -2088,6 +2103,11 @@ public class CinePlayer extends Activity implements OnErrorListener,
 				// mCaptionText.setVisibility(View.VISIBLE);
 				// else
 				// mCCBtn.setVisibility(View.GONE);
+				if (Util.Connection.getType(PlayerActivity.this) != ConnectivityManager.TYPE_WIFI) {
+					if (m3GMessage != null)
+						Toast.makeText(PlayerActivity.this, m3GMessage,
+								m3GMessageLength).show();
+				}
 			} else {
 				showErrorDialog(result, false, true);
 			}
@@ -2128,10 +2148,11 @@ public class CinePlayer extends Activity implements OnErrorListener,
 				try {
 					final JSONObject json = new JSONObject(result);
 					float updateVer = Float.valueOf(json.getString("ver"));
-					float currentVer = Util.App.getVersionNum(CinePlayer.this);
+					float currentVer = Util.App
+							.getVersionNum(PlayerActivity.this);
 					if (updateVer > currentVer) {
 						AlertDialog.Builder dialog = new AlertDialog.Builder(
-								CinePlayer.this);
+								PlayerActivity.this);
 						dialog.setMessage(json.getString(KEY_MSG));
 						dialog.setTitle("업데이트 발견");
 						dialog.setCancelable(false);
@@ -2162,7 +2183,7 @@ public class CinePlayer extends Activity implements OnErrorListener,
 					e.printStackTrace();
 				}
 				if (getIntent().getData() == null) {
-					startActivityForResult(new Intent(CinePlayer.this,
+					startActivityForResult(new Intent(PlayerActivity.this,
 							ReadQRActivity.class), REQUEST_READ_QRCODE);
 					isBlock = true;
 					return;
