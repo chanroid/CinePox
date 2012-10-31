@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import kr.co.chan.util.Util;
+import kr.co.chan.util.l;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -81,6 +82,7 @@ public class IntroActivity extends Activity {
 						"response_type:json"));
 				params.add(new BasicNameValuePair("SET_DEVICE", "android(APP)"));
 				JSONObject o = Util.Stream.jsonFromURLbyPOST(url, params);
+				l.i(o.toString());
 				if ("N".equalsIgnoreCase(o.getString(KEY_RESULT))) {
 					return o.getString(Parser.KEY_MSG);
 				}
@@ -134,8 +136,6 @@ public class IntroActivity extends Activity {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				Config.sendErrorLog(IntroActivity.this,
-						getConfig().ERROR_LOG_URL, e);
 				return e.getMessage();
 			}
 			return null;
@@ -407,7 +407,7 @@ public class IntroActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		// l.setEnabled(false);
+//		l.setEnabled(false);
 		setContentView(R.layout.intro);
 		mDataloader.execute();
 		setupShortcut();

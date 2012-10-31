@@ -65,7 +65,6 @@ public class CinepoxService extends Service {
 	public static final String ACTION_REFRESH_SERVICE = "com.kr.busan.cw.cinepox.service.refresh";
 	public static final String ACTION_RESTART_SERVICE = "com.kr.busan.cw.cinepox.service.restart";
 	public static final String ACTION_START_DOWNLOAD = "com.kr.busan.cw.cinepox.service.download";
-	public static final String ACTION_SEND_SHOW_TIME = "com.kr.busan.cw.cinepox.service.sendshowtime";
 	public static final String ACTION_SEND_PAYCODE = "com.kr.busan.cw.cinepox.service.paycode";
 	public static final String ACTION_SEND_ERRORLOG = "com.kr.busan.cw.cinepox.service.errorlog";
 	public static final String ACTION_LOAD_WIDGET_DATA = "com.kr.busan.cw.cinepox.service.widgetdata";
@@ -89,18 +88,13 @@ public class CinepoxService extends Service {
 			} else if (ACTION_START_DOWNLOAD.equalsIgnoreCase(intent
 					.getAction())) {
 				addDownload(intent.getStringExtra("url"));
-			} else if (ACTION_SEND_SHOW_TIME.equalsIgnoreCase(intent
-					.getAction())) {
-				new SendTimeThread(intent.getStringExtra("url")).start();
 			} else if (ACTION_SEND_PAYCODE.equalsIgnoreCase(intent.getAction())) {
 				SMS_KEY = intent.getStringExtra("sms_key");
 				registerReceiver(new CodeReceiver(), new IntentFilter(
 						"android.provider.Telephony.SMS_RECEIVED"));
 			} else if (ACTION_SEND_ERRORLOG
 					.equalsIgnoreCase(intent.getAction())) {
-				Config.sendErrorLog(CinepoxService.this,
-						intent.getStringExtra("url"),
-						(Throwable) intent.getSerializableExtra("error"));
+
 			} else if (ACTION_LOAD_WIDGET_DATA.equalsIgnoreCase(intent
 					.getAction())) {
 				unregisterWidgetDataAlarm();
@@ -232,8 +226,6 @@ public class CinepoxService extends Service {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				Config.sendErrorLog(CinepoxService.this,
-						getConfig().ERROR_LOG_URL, e);
 			}
 		}
 	}
@@ -253,8 +245,6 @@ public class CinepoxService extends Service {
 				Util.Stream.inStreamFromURL(url);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				Config.sendErrorLog(CinepoxService.this,
-						getConfig().ERROR_LOG_URL, e);
 				e.printStackTrace();
 			}
 		}
@@ -270,8 +260,6 @@ public class CinepoxService extends Service {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				Config.sendErrorLog(CinepoxService.this,
-						getConfig().ERROR_LOG_URL, e);
 			}
 			return null;
 		}
@@ -291,8 +279,6 @@ public class CinepoxService extends Service {
 				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-				Config.sendErrorLog(CinepoxService.this,
-						getConfig().ERROR_LOG_URL, e);
 				e.printStackTrace();
 				Toast.makeText(CinepoxService.this,
 						"다운로드 시도에 실패했습니다. 잠시 후 다시 시도해 주세요.", Toast.LENGTH_SHORT)
@@ -337,18 +323,12 @@ public class CinepoxService extends Service {
 				return new JSONArray(Util.Stream.stringFromURL(url));
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
-				Config.sendErrorLog(CinepoxService.this,
-						getConfig().ERROR_LOG_URL, e);
 				e.printStackTrace();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				Config.sendErrorLog(CinepoxService.this,
-						getConfig().ERROR_LOG_URL, e);
 				e.printStackTrace();
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-				Config.sendErrorLog(CinepoxService.this,
-						getConfig().ERROR_LOG_URL, e);
 				e.printStackTrace();
 			}
 			return null;
@@ -368,8 +348,6 @@ public class CinepoxService extends Service {
 						}
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
-						Config.sendErrorLog(CinepoxService.this,
-								getConfig().ERROR_LOG_URL, e);
 						e.printStackTrace();
 					}
 				}
@@ -403,7 +381,6 @@ public class CinepoxService extends Service {
 		filter.addAction(ACTION_REFRESH_SERVICE);
 		filter.addAction(ACTION_RESTART_SERVICE);
 		filter.addAction(ACTION_START_DOWNLOAD);
-		filter.addAction(ACTION_SEND_SHOW_TIME);
 		filter.addAction(ACTION_SEND_ERRORLOG);
 		filter.addAction(ACTION_SEND_PAYCODE);
 		filter.addAction(ACTION_LOAD_WIDGET_DATA);
@@ -537,8 +514,6 @@ public class CinepoxService extends Service {
 			try {
 				mCallbacks.getBroadcastItem(i).doActivity(what, data);
 			} catch (RemoteException e) {
-				Config.sendErrorLog(CinepoxService.this,
-						getConfig().ERROR_LOG_URL, e);
 				e.printStackTrace();
 			}
 		}

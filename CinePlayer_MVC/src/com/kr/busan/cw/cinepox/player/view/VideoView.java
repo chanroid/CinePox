@@ -27,8 +27,7 @@ import android.widget.TextView;
 
 import com.kr.busan.cw.cinepox.R;
 import com.kr.busan.cw.cinepox.player.iface.VideoCallback;
-import com.kr.busan.cw.cinepox.player.model.VideoModel;
-import com.kr.busan.cw.cinepox.player.model.VideoModel.PlayData;
+import com.kr.busan.cw.cinepox.player.model.PlayData;
 
 /**
  * <PRE>
@@ -206,6 +205,14 @@ public class VideoView extends LinearLayout implements OnPreparedListener,
 			return swVideoView.getVideoLayout();
 		return io.vov.vitamio.widget.VideoView.VIDEO_LAYOUT_ZOOM;
 	}
+
+	public void setSystemUiVisibility(int visibility) {
+		super.setSystemUiVisibility(visibility);
+		if (currentCodec == CODEC_HW)
+			hwVideoView.setSystemUiVisibility(visibility);
+		else if (currentCodec == CODEC_SW)
+			swVideoView.setSystemUiVisibility(visibility);
+	};
 
 	/**
 	 * 
@@ -519,21 +526,21 @@ public class VideoView extends LinearLayout implements OnPreparedListener,
 	public boolean setCodec(int codec) {
 		if (codec == currentCodec)
 			return false;
-		
+
 		if (codec == CODEC_SW && !isPluginInstalled()) {
 			showPluginInstall();
 			return false;
 		}
-		
+
 		currentCodec = codec;
-		
+
 		if (currentCodec == CODEC_HW)
 			swVideoView.pause();
 		else if (currentCodec == CODEC_SW) {
 			addSWVideo();
 			hwVideoView.pause();
 		}
-		
+
 		swVideoView.setVisibility(currentCodec == CODEC_SW ? VISIBLE
 				: INVISIBLE);
 		hwVideoView.setVisibility(currentCodec == CODEC_HW ? VISIBLE
@@ -613,12 +620,11 @@ public class VideoView extends LinearLayout implements OnPreparedListener,
 	}
 
 	public PlayData getPlayData() {
-		PlayData data = new VideoModel.PlayData();
+		PlayData data = new PlayData();
 		long current = getCurrentPosition();
 		if (current > getDuration())
 			current %= getDuration();
 		data.CURRENT = current;
-		data.BUFFER = getBufferPercentage();
 		data.DURATION = getDuration();
 		return data;
 	}
@@ -655,6 +661,10 @@ public class VideoView extends LinearLayout implements OnPreparedListener,
 		isSeeking = true;
 		showLoading();
 		return true;
+	}
+	
+	public Uri getVideoURI() {
+		return videoURI;
 	}
 
 	public void setVideoURI() {

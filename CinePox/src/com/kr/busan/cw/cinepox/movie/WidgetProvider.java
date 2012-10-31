@@ -70,9 +70,9 @@ public class WidgetProvider extends AppWidgetProvider {
 				.size() - 1)));
 		RemoteViews views = new RemoteViews(context.getPackageName(),
 				R.layout.widget_provider);
+		
 		Intent qrplayIntent = new Intent(context, IntroActivity.class);
 		qrplayIntent.setAction(ACTION_QRPLAY);
-		// Intent qrplayIntent = new Intent(context, QRPlayActivity.class);
 		PendingIntent qrpi = PendingIntent.getActivity(context, 0,
 				qrplayIntent, 0);
 		views.setOnClickPendingIntent(R.id.btn_widget_qrplay, qrpi);

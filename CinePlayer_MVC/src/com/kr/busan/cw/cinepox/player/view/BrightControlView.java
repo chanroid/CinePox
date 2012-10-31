@@ -36,16 +36,6 @@ public class BrightControlView extends LinearLayout {
 
 	private SeekBar brightSeekbar;
 
-	public BrightControlView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-		init();
-	}
-
-	public BrightControlView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		init();
-	}
-
 	public BrightControlView(Context context) {
 		super(context);
 		init();

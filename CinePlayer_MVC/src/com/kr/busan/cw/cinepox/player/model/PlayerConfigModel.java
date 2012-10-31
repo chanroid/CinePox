@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import kr.co.chan.util.Util;
 import kr.co.chan.util.l;
-import kr.co.chan.util.CinePox.LogPost;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -22,8 +21,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.net.Uri;
-
-import com.kr.busan.cw.cinepox.player.model.VideoModel.QualityData;
+import android.os.Build;
+import android.os.Debug;
 
 public class PlayerConfigModel extends PlayerModel {
 
@@ -48,7 +47,7 @@ public class PlayerConfigModel extends PlayerModel {
 	private String mOrderCode;
 	private CaptionModel mCaptionModel;
 	private VideoModel mVideoModel;
-	
+
 	private String m3GMessage;
 	private int m3GMessageLength;
 
@@ -99,11 +98,11 @@ public class PlayerConfigModel extends PlayerModel {
 		}
 		return -1;
 	}
-	
+
 	public int get3GMessageLength() {
 		return m3GMessageLength;
 	}
-	
+
 	public String get3GMessage() {
 		return m3GMessage;
 	}
@@ -226,18 +225,66 @@ public class PlayerConfigModel extends PlayerModel {
 		return js.getString("shake_key");
 	}
 
-	public void sendErrorLog(Throwable t) {
-		LogPost lp = new LogPost(mContext, mContext.getPackageName(), t);
-		lp.setServerUrl(mBugReportUrl);
-		lp.start();
+	public synchronized void sendErrorLog(Intent intent)
+			throws IllegalStateException, IOException {
+		// 서버작업 후 작성할것
+		StringBuffer sb = new StringBuffer();
+		sb.append("APP Ver : " + Util.App.getVersionNum(mContext) + "\n");
+		sb.append("Time : " + Util.Time.getCurrentTimeString1() + "\n");
+		sb.append("Model Name : " + Build.MODEL + "\n");
+		sb.append("Android Ver. : " + Build.VERSION.RELEASE + "\n");
+		sb.append("SDK Ver. : " + Build.VERSION.SDK_INT + "\n");
+		sb.append("aviliable Memory : " + Debug.getGlobalFreedSize() + "\n");
+
+		sb.append("movieProductInfo_seq : " + getMovieNum() + "\n");
+		sb.append("member_seq : " + getMemberNum() + "\n");
+		sb.append("cinepox url : " + getCinepoxURI().toString() + "\n");
+		sb.append("order code : " + mOrderCode + "\n");
+
+		Throwable exception = (Throwable) intent
+				.getSerializableExtra(KEY_EXCEPTION);
+		String video_url = intent.getStringExtra(KEY_MOVIE_URL);
+
+		if (video_url != null)
+			sb.append("video url : " + video_url + "\n");
+
+		if (exception != null) {
+			sb.append("Exception type : " + exception.getClass().getName()
+					+ "\n");
+			sb.append("================= Stack trace =================");
+			sb.append(Util.Stream.stringFromThrowable(exception));
+		} else {
+			String message = intent.getStringExtra(KEY_MSG);
+			if (message != null) {
+				sb.append("Exception type : unknown\n");
+				sb.append("================= Error Message =================");
+				sb.append(message);
+			}
+		}
+
+		ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair(KEY_TYPE, KEY_EXCEPTION));
+		params.add(new BasicNameValuePair(KEY_MSG, sb.toString()));
+		Util.Stream.inStreamFromURLbyPOST(mLogReportUrl, params);
+
 	}
 
 	public synchronized void sendPlayTime(long starttime, long playtime)
 			throws IllegalStateException, IOException {
 		long play_time = System.currentTimeMillis() - starttime;
-		String url = mPlaytimeUrl + "?order_code=" + mOrderCode + "&play_time="
-				+ (play_time / 1000) + "&soon_time=" + (playtime / 1000);
-		Util.Stream.inStreamFromURL(url);
+		ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("soon_time", (playtime / 1000) + ""));
+		params.add(new BasicNameValuePair(KEY_PLAY_TIME, (play_time / 1000)
+				+ ""));
+		params.add(new BasicNameValuePair(KEY_ORDER_CODE, mOrderCode));
+		Util.Stream.inStreamFromURLbyPOST(mPlaytimeUrl, params);
+	}
+
+	public synchronized void sendPlayTime(Intent intent)
+			throws IllegalStateException, IOException {
+		long starttime = intent.getLongExtra(KEY_START_TIME, 0l);
+		long playtime = intent.getLongExtra(KEY_PLAY_TIME, 0l);
+		sendPlayTime(starttime, playtime);
 	}
 
 	public synchronized JSONObject loadUpdate() {
@@ -299,6 +346,7 @@ public class PlayerConfigModel extends PlayerModel {
 					param.add(new BasicNameValuePair(KEY_ORDER_CODE, mOrderCode));
 					JSONObject config = Util.Stream.jsonFromURLbyPOST(
 							config_url, param);
+					l.i(config.toString());
 					try {
 						if ("N".equalsIgnoreCase(config.getString(KEY_RESULT)))
 							return RESULT_ERROR + config.getString(KEY_MSG);
@@ -365,7 +413,8 @@ public class PlayerConfigModel extends PlayerModel {
 						mLogReportUrl = urlArray.getString(KEY_LOG_URL);
 						mPlaytimeUrl = urlArray.getString(KEY_PLAY_TIME_URL);
 						m3GMessage = urlArray.getString(KEY_3G_MESSAGE);
-						m3GMessageLength = urlArray.getInt(KEY_3G_MESSAGE_LENGTH);
+						m3GMessageLength = urlArray
+								.getInt(KEY_3G_MESSAGE_LENGTH);
 						return RESULT_SUCCESS;
 					} catch (JSONException e) {
 						e.printStackTrace();

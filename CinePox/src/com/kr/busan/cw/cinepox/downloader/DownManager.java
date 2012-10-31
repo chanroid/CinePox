@@ -94,6 +94,13 @@ public class DownManager implements
 				R.drawable.ic_launcher, filename);
 	}
 
+	public int queue(Downloader param) {
+		mQueueStack.remove(param);
+		return queue(param.getUrl(), param.getPath(),
+				com.kr.busan.cw.cinepox.R.drawable.ic_launcher,
+				param.getTitle());
+	}
+
 	public void remove(Downloader d) {
 		d.performCancel();
 		mQueueStack.remove(d);

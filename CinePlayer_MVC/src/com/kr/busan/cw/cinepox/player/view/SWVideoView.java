@@ -50,14 +50,13 @@ public class SWVideoView extends io.vov.vitamio.widget.VideoView {
 		// TODO Auto-generated method stub
 
 		switch (layout) {
-		case io.vov.vitamio.widget.VideoView.VIDEO_LAYOUT_ZOOM:
+		case VIDEO_LAYOUT_ZOOM:
 			ViewGroup.LayoutParams localLayoutParams = getLayoutParams();
-			int width = Util.Display.getWindowSize(getContext())[0];
-			int height = Util.Display.getWindowSize(getContext())[1];
-			localLayoutParams.height = height;
-			localLayoutParams.width = width;
+			localLayoutParams.width = Util.Display.getWindowSize(getContext())[0];
+			localLayoutParams.height = Util.Display.getWindowSize(getContext())[1];
 			setLayoutParams(localLayoutParams);
-			getHolder().setFixedSize(width, height);
+			getHolder().setFixedSize(localLayoutParams.width,
+					localLayoutParams.height);
 			break;
 		default:
 			super.setVideoLayout(layout, aspectRatio);

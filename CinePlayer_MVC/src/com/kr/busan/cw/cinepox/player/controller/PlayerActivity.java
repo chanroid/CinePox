@@ -1,6 +1,5 @@
 package com.kr.busan.cw.cinepox.player.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Formatter;
@@ -46,8 +45,8 @@ import com.kr.busan.cw.cinepox.player.iface.VideoControllerCallback;
 import com.kr.busan.cw.cinepox.player.model.CaptionModel;
 import com.kr.busan.cw.cinepox.player.model.PlayerConfigModel;
 import com.kr.busan.cw.cinepox.player.model.PlayerModel.Const;
+import com.kr.busan.cw.cinepox.player.model.QualityData;
 import com.kr.busan.cw.cinepox.player.model.VideoModel;
-import com.kr.busan.cw.cinepox.player.model.VideoModel.QualityData;
 import com.kr.busan.cw.cinepox.player.view.VideoControllerView;
 import com.kr.busan.cw.cinepox.player.view.VideoView;
 
@@ -86,7 +85,6 @@ public class PlayerActivity extends PlayerBaseActivity implements
 	WindowManager mWindowManager;
 	WindowManager.LayoutParams mWindowParams;
 
-	SendTimeThread sendtimeThread;
 	UpdateThread updateThread;
 	UpdateRunnable updateRunnable;
 	UpdateReceiver updateReceiver;
@@ -98,7 +96,7 @@ public class PlayerActivity extends PlayerBaseActivity implements
 	public static final int REQUEST_MODIFY_BRIGHTNESS = 2;
 	// private final int REQUEST_ENABLE_BT = 3;
 
-	OnClickListener codecChangeListener = new OnClickListener() {
+	private OnClickListener codecChangeListener = new OnClickListener() {
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
 			dialog.dismiss();
@@ -114,7 +112,7 @@ public class PlayerActivity extends PlayerBaseActivity implements
 		}
 	};
 
-	OnClickListener qualityChangeListener = new OnClickListener() {
+	private OnClickListener qualityChangeListener = new OnClickListener() {
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
 			dialog.dismiss();
@@ -131,7 +129,7 @@ public class PlayerActivity extends PlayerBaseActivity implements
 		}
 	};
 
-	Handler backHandler = new Handler() {
+	private Handler backHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			if (msg.what == 0)
 				isBack = false;
@@ -147,20 +145,6 @@ public class PlayerActivity extends PlayerBaseActivity implements
 			} else if (Intent.ACTION_TIME_TICK.equalsIgnoreCase(intent
 					.getAction())) {
 				updateTime();
-			}
-		}
-	}
-
-	private class SendTimeThread extends Thread {
-		@Override
-		public void run() {
-			try {
-				mConfigModel.sendPlayTime(mStartTime,
-						mVideoView.getCurrentPosition());
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
 		}
 	}
@@ -263,6 +247,7 @@ public class PlayerActivity extends PlayerBaseActivity implements
 												.getString(Const.KEY_URL))));
 							} catch (JSONException e) {
 								// TODO Auto-generated catch block
+								sendErrorLog(e);
 								e.printStackTrace();
 							}
 							finish();
@@ -275,6 +260,7 @@ public class PlayerActivity extends PlayerBaseActivity implements
 					return;
 
 				} catch (JSONException e) {
+					sendErrorLog(e);
 					e.printStackTrace();
 				}
 			}
@@ -348,6 +334,7 @@ public class PlayerActivity extends PlayerBaseActivity implements
 			setTheme(android.R.style.Theme_Holo_NoActionBar_Fullscreen);
 
 		super.onCreate(savedInstanceState);
+		startService(new Intent(this, PlayerService.class));
 
 		mStartTime = System.currentTimeMillis();
 		mErrorCount = getIntent().getIntExtra(Const.KEY_ERROR_COUNT, 0);
@@ -358,7 +345,6 @@ public class PlayerActivity extends PlayerBaseActivity implements
 			mConfigModel = PlayerConfigModel.getInstance(this);
 			mCaptionModel = CaptionModel.getInstance();
 
-			sendtimeThread = new SendTimeThread();
 			updateRunnable = new UpdateRunnable();
 			updateThread = new UpdateThread();
 			updateReceiver = new UpdateReceiver();
@@ -373,8 +359,9 @@ public class PlayerActivity extends PlayerBaseActivity implements
 			mLocManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 			mAudioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
 			mShaker = new ShakeListener(this);
+			mShaker.pause();
 
-			mWindowManager = getWindowManager();
+			mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
 			mWindowParams = new WindowManager.LayoutParams();
 			mWindowParams.height = -1; // LayoutParams.MATCH_PARENT
 			mWindowParams.width = -1; // LayoutParams.MATCH_PARENT
@@ -395,6 +382,8 @@ public class PlayerActivity extends PlayerBaseActivity implements
 		super.onPause();
 		removeControllerView();
 		unregisterReceiver(updateReceiver);
+		if (mVideoView.getCurrentPosition() > 0l)
+			sendPlayTime();
 	}
 
 	@Override
@@ -444,13 +433,6 @@ public class PlayerActivity extends PlayerBaseActivity implements
 				break;
 			}
 		}
-	}
-
-	@Override
-	public void finish() {
-		mVideoView.setCodec(-1); // invaild codec
-		sendtimeThread.start();
-		super.finish();
 	}
 
 	private void prepareVideo() {
@@ -616,6 +598,27 @@ public class PlayerActivity extends PlayerBaseActivity implements
 				}, false);
 	}
 
+	private void sendErrorLog(String message) {
+		Intent i = new Intent(PlayerService.ACTION_SEND_ERROR);
+		i.putExtra(Const.KEY_MSG, message);
+		i.putExtra(Const.KEY_MOVIE_URL, mVideoView.getVideoURI());
+		sendBroadcast(i);
+	}
+
+	private void sendErrorLog(Throwable exception) {
+		Intent i = new Intent(PlayerService.ACTION_SEND_ERROR);
+		i.putExtra(Const.KEY_EXCEPTION, exception);
+		i.putExtra(Const.KEY_MOVIE_URL, mVideoView.getVideoURI());
+		sendBroadcast(i);
+	}
+
+	private void sendPlayTime() {
+		Intent i = new Intent(PlayerService.ACTION_SEND_TIME);
+		i.putExtra(Const.KEY_START_TIME, mStartTime);
+		i.putExtra(Const.KEY_PLAY_TIME, mVideoView.getCurrentPosition());
+		sendBroadcast(i);
+	}
+
 	private void start() {
 		mVideoController.setPlayBtnState(true);
 		mVideoView.start();
@@ -634,7 +637,7 @@ public class PlayerActivity extends PlayerBaseActivity implements
 	public void onProgressChanged(SeekBar seekBar, int progress,
 			boolean fromUser) {
 		if (fromUser) {
-			mVideoView.setCenterText(Util.stringForTime(mVideoView
+			mVideoView.setCenterText(Util.Time.stringForTime(mVideoView
 					.getDuration() / 100 * progress));
 		}
 	}
@@ -653,22 +656,37 @@ public class PlayerActivity extends PlayerBaseActivity implements
 
 	@Override
 	public void onClick(View v) {
-		if (v.getId() == R.id.btn_video_changequality) {
+		if (v.getId() == R.id.btn_video_changequality)
 			showQualityChange();
-		} else if (v.getId() == R.id.btn_video_changecodec) {
+		else if (v.getId() == R.id.btn_video_changecodec)
 			showCodecChange();
-		} else if (v.getId() == R.id.btn_video_shake) {
+		else if (v.getId() == R.id.btn_video_shake)
 			showShareDialog();
-		} else if (v.getId() == R.id.btn_video_caption) {
+		else if (v.getId() == R.id.btn_video_caption)
 			showCaptionDialog();
-		} else if (v.getId() == R.id.btn_video_volumn) {
+		else if (v.getId() == R.id.btn_video_volumn)
 			showVolumeControl();
-		} else if (v.getId() == R.id.btn_video_bright) {
+		else if (v.getId() == R.id.btn_video_bright)
 			showBrightControl();
-		} else if (v.getId() == R.id.btn_video_playpause) {
+		else if (v.getId() == R.id.btn_video_playpause)
 			togglePlayPause();
-		} else if (v.getId() == R.id.btn_video_fullscreen) {
+		else if (v.getId() == R.id.btn_video_fullscreen)
 			toggleScreenMode();
+	}
+
+	@Override
+	public void onVisiblityChanged(int visiblity) {
+		if (Build.VERSION.SDK_INT >= 14) {
+			if (visiblity == View.VISIBLE) {
+				mVideoView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+				mVideoController
+						.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+			} else {
+				mVideoView
+						.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+				mVideoController
+						.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+			}
 		}
 	}
 
@@ -689,7 +707,7 @@ public class PlayerActivity extends PlayerBaseActivity implements
 			time = mVideoView.getDuration();
 		else if (time < 0l)
 			time = 0l;
-		mVideoView.setCenterText(Util.stringForTime(time));
+		mVideoView.setCenterText(Util.Time.stringForTime(time));
 		mVideoController.setProgress(Util.Math.getPercent(time,
 				mVideoView.getDuration()));
 	}
@@ -724,17 +742,23 @@ public class PlayerActivity extends PlayerBaseActivity implements
 		switch (what) {
 		case 1:
 			switch (extra) {
+			case -1:
+			case -17:
 			case -1094995529:
+				showError("해당 기기에서 재생이 불가능한 동영상입니다.");
 			case -2147483648:
-				showError("죄송합니다. 재생할 수 없는 동영상입니다.");
+				sendErrorLog("[" + getIntent().getDataString()
+						+ "] player onError() : " + what + " : " + extra);
 				break;
 			default:
-				finish();
 				Intent i = new Intent(this, PlayerActivity.class);
 				i.setData(getIntent().getData());
 				i.putExtra("set_time", mVideoView.getCurrentPosition() / 1000);
 				i.putExtra("error_count", mErrorCount++);
 				startActivity(i);
+				sendErrorLog("[" + getIntent().getDataString()
+						+ "] player onError() : " + what + ", " + extra);
+				finish();
 				break;
 			}
 			break;
@@ -742,6 +766,8 @@ public class PlayerActivity extends PlayerBaseActivity implements
 			mVideoView.setVideoURI();
 			break;
 		case 200:
+			sendErrorLog("[" + getIntent().getDataString()
+					+ "] player onError() : " + what + " : " + extra);
 			break;
 		}
 	}

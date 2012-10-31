@@ -101,39 +101,4 @@ public class VideoModel extends PlayerModel {
 		return Util.Phone.getBattStat(mContext) + "%";
 	}
 
-	/**
-	 * 
-	 * <PRE>
-	 * 1. ClassName : QualityData
-	 * 2. FileName  : VideoModel.java
-	 * 3. Package  : com.kr.busan.cw.cinepox.player.model
-	 * 4. Comment  : 화질별 각종 정보를 가지고 있는 구조체
-	 * 5. 작성자   : 박찬우
-	 * 6. 작성일   : 2012. 10. 15. 오후 3:57:08
-	 * </PRE>
-	 */
-	public static class QualityData {
-		public String NAME;
-		public String TYPE;
-		public String URL;
-		public String KEY;
-	}
-
-	/**
-	 * 
-	 * <PRE>
-	 * 1. ClassName : PlayData
-	 * 2. FileName  : VideoModel.java
-	 * 3. Package  : com.kr.busan.cw.cinepox.player.model
-	 * 4. Comment  : 플레이어 상태 정보를 가지고 있는 구조체
-	 * 5. 작성자   : 박찬우
-	 * 6. 작성일   : 2012. 10. 15. 오후 7:27:43
-	 * </PRE>
-	 */
-	public static class PlayData {
-		public int BUFFER;
-		public long CURRENT;
-		public long DURATION;
-	}
-
 }

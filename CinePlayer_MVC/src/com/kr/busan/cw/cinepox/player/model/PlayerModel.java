@@ -54,9 +54,11 @@ public class PlayerModel {
 		public static final String KEY_CLICK_CHECK_URL = "click_url";
 		public static final String KEY_CODEC = "codec";
 		public static final String KEY_CONFIG = "config";
+		public static final String KEY_CUSTOM_URL = "cinepox_url";
 		public static final String KEY_DATA = "data";
 		public static final String KEY_DEVICE_TYPE = "device_type";
 		public static final String KEY_ERROR_COUNT = "error_count";
+		public static final String KEY_EXCEPTION = "exceptions";
 		public static final String KEY_GET_AD_URL = "get_ad_url";
 		public static final String KEY_GET_BOOKMARK_LIST = "get_bookmark_list";
 		public static final String KEY_GET_TEXT_BANNER_URL = "get_text_banner_url";
@@ -72,11 +74,13 @@ public class PlayerModel {
 		public static final String KEY_MOVIE = "movie";
 		public static final String KEY_MOVIE_LIST = "movie_list";
 		public static final String KEY_MOVIE_NUM = "productInfo_seq";
+		public static final String KEY_MOVIE_URL = "movie_url";
 		public static final String KEY_MSG = "msg";
 		public static final String KEY_NAME = "name";
 		public static final String KEY_NEXT_TIME = "next_time";
 		public static final String KEY_NUM = "num";
 		public static final String KEY_ORDER_CODE = "order_code";
+		public static final String KEY_PLAY_TIME = "play_time";
 		public static final String KEY_PLAY_TIME_URL = "play_time_url";
 		public static final String KEY_PLAYER_ERRORCNT = "error_count";
 		public static final String KEY_PROTOCOL_TYPE = "p_type";
@@ -85,6 +89,7 @@ public class PlayerModel {
 		public static final String KEY_SET_TIME = "set_time";
 		public static final String KEY_SET_URL = "set_url";
 		public static final String KEY_SETTING = "setting";
+		public static final String KEY_START_TIME = "start_time";
 		public static final String KEY_SHAKE_KEY = "shake_key";
 		public static final String KEY_SHOW_TIME = "show_time";
 		public static final String KEY_START_VIEW = "is_start_view";

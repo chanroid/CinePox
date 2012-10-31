@@ -7,7 +7,6 @@ import java.util.Locale;
 
 import kr.co.chan.util.ShakeListener;
 import kr.co.chan.util.l;
-import kr.co.chan.util.CinePox.LogPost;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -332,12 +331,6 @@ public class Config {
 	public void setSendTimeURL(String mPlaytimeUrl) {
 		// TODO Auto-generated method stub
 		mEdit.putString("time", mPlaytimeUrl).commit();
-	}
-
-	public static void sendErrorLog(Context ctx, String url, Throwable t) {
-		LogPost lp = new LogPost(ctx, ctx.getPackageName(), t);
-		lp.setServerUrl(url);
-		lp.start();
 	}
 
 	public String getWidgetUrl() {

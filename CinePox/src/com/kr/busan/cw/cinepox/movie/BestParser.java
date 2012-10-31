@@ -47,7 +47,6 @@ public class BestParser extends AsyncTask<String, Integer, String> {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			Config.sendErrorLog(mContext, getConfig().ERROR_LOG_URL, e);
 			return e.getMessage();
 		}
 		return null;

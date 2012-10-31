@@ -41,13 +41,14 @@
     <string name="send_success">전송에 성공했습니다.</string>
     <string name="send_failed">전송에 실패했습니다.</string>
     <string name="download_cancel">다운로드 중단</string>
+    <string name="download_restart">다운로드를 계속 하시겠습니까?</string>
     <string name="noti_download_cancel">다운로드를 취소하시겠습니까? 다음에 이어받기를 하시려면 취소 버튼을, 아니면 삭제 버튼을 눌러 주세요.</string>
     <string name="delete">삭제</string>
     <string name="continue_">계속</string>
     <string name="download_already_completed">이미 다운로드가 완료된 파일입니다.</string>
     <string name="download_preparing">다운로드를 시작하는 중입니다.</string>
     <string name="download_canceled">다운로드가 취소되었습니다.</string>
-    <string name="download_error">다운로드 중에 오류가 발생했습니다. </string>
+    <string name="download_error">다운로드 중에 오류가 발생했습니다. 클릭하시면 다시 시도합니다.</string>
     <string name="download_completed">다운로드가 완료되었습니다.</string>
     <string name="download_exist">이미 존재하는 파일입니다.</string>
     <string name="download_progresstext">% 다운로드 중..</string>

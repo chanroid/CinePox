@@ -161,11 +161,11 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 		@Override
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
-			Intent playerIntent = new Intent(mContext, PlayerActivity.class);
-			PendingIntent i = PendingIntent.getActivity(mContext, 0,
-					playerIntent, 0);
 			switch (msg.what) {
 			case 0:
+				Intent playerIntent = new Intent(mContext, PlayerActivity.class);
+				PendingIntent i = PendingIntent.getActivity(mContext, 0,
+						playerIntent, 0);
 				playerIntent.setData(Uri.fromFile(new File(mPath)));
 				if (Build.VERSION.SDK_INT > 13) {
 					Notification.Builder mBuilder = new Notification.Builder(
@@ -204,7 +204,8 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 							.getString(R.string.download_preparing));
 					mBuilder.setTicker(mContext
 							.getString(R.string.download_preparing));
-					mBuilder.setContentIntent(i);
+					mBuilder.setContentIntent(PendingIntent.getActivity(
+							mContext, 0, new Intent(), 0));
 					mNoti = mBuilder.getNotification();
 				} else {
 					mNoti = new Notification(mIcon,
@@ -212,7 +213,8 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 							System.currentTimeMillis());
 					mNoti.vibrate = new long[] { 0, 200, 300, 200 };
 					mNoti.flags |= Notification.FLAG_AUTO_CANCEL;
-					mNoti.contentIntent = i;
+					mNoti.contentIntent = PendingIntent.getActivity(mContext,
+							0, new Intent(), 0);
 					mNoti.setLatestEventInfo(mContext,
 							mContext.getString(R.string.download_preparing),
 							mContext.getString(R.string.download_preparing),
@@ -250,27 +252,8 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			cancel(true);
 			return -1;
-		} finally {
-			DownManager.getInstance(mContext).remove(this);
 		}
-	}
-
-	@Override
-	protected void onCancelled() {
-		// TODO Auto-generated method stub
-		super.onCancelled();
-		mNotimanager.cancel(mId);
-		showError();
-	}
-
-	@Override
-	protected void onCancelled(Integer result) {
-		// TODO Auto-generated method stub
-		super.onCancelled(result);
-		mNotimanager.cancel(mId);
-		showError();
 	}
 
 	@Override
@@ -345,12 +328,8 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 			mBuilder.setContentTitle(mTitle);
 			mBuilder.setSmallIcon(mIcon);
 			mBuilder.setAutoCancel(true);
-			mBuilder.setContentIntent(PendingIntent.getActivity(
-					mContext,
-					0,
-					new Intent(Intent.ACTION_VIEW, Uri
-							.fromFile(new File(mPath))),
-					PendingIntent.FLAG_UPDATE_CURRENT));
+			mBuilder.setContentIntent(PendingIntent.getActivity(mContext, 0,
+					new Intent(), PendingIntent.FLAG_UPDATE_CURRENT));
 			mBuilder.setContentText(mContext
 					.getString(R.string.download_canceled));
 			mBuilder.setTicker(mContext.getString(R.string.download_canceled));
@@ -367,8 +346,7 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 			mNoti.tickerText = mContext.getString(R.string.download_canceled);
 			mNoti.setLatestEventInfo(mContext, mTitle, mContext
 					.getString(R.string.download_canceled), PendingIntent
-					.getActivity(mContext, 0, new Intent(Intent.ACTION_VIEW,
-							Uri.fromFile(new File(mPath))),
+					.getActivity(mContext, 0, new Intent(),
 							PendingIntent.FLAG_UPDATE_CURRENT));
 		}
 		DownManager.getInstance(mContext).remove(this);
@@ -381,6 +359,10 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 	}
 
 	private void showError(String e) {
+		Intent cancelIntent = new Intent(mContext, DownRestartActivity.class);
+		cancelIntent.putExtra("num", mId);
+		PendingIntent pi = PendingIntent.getActivity(mContext, 0, cancelIntent,
+				PendingIntent.FLAG_UPDATE_CURRENT);
 		if (Build.VERSION.SDK_INT > 13) {
 			Notification.Builder mBuilder = new Notification.Builder(mContext);
 			mBuilder.setVibrate(new long[] { 0, 200, 300, 200 });
@@ -388,12 +370,7 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 			mBuilder.setContentTitle(mTitle);
 			mBuilder.setSmallIcon(mIcon);
 			mBuilder.setAutoCancel(true);
-			mBuilder.setContentIntent(PendingIntent.getActivity(
-					mContext,
-					0,
-					new Intent(Intent.ACTION_VIEW, Uri
-							.fromFile(new File(mPath))),
-					PendingIntent.FLAG_UPDATE_CURRENT));
+			mBuilder.setContentIntent(pi);
 			mBuilder.setContentText(mContext.getString(R.string.download_error)
 					+ e);
 			mBuilder.setTicker(mContext.getString(R.string.download_error) + e);
@@ -409,12 +386,8 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 			mNoti.ledOnMS = 500;
 			mNoti.tickerText = mContext.getString(R.string.download_error) + e;
 			mNoti.setLatestEventInfo(mContext, mTitle,
-					mContext.getString(R.string.download_error) + e,
-					PendingIntent.getActivity(mContext, 0, new Intent(
-							Intent.ACTION_VIEW, Uri.fromFile(new File(mPath))),
-							PendingIntent.FLAG_UPDATE_CURRENT));
+					mContext.getString(R.string.download_error) + e, pi);
 		}
-		DownManager.getInstance(mContext).remove(this);
 		mNotimanager.notify(mId, mNoti);
 	}
 

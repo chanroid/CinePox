@@ -37,12 +37,11 @@ public class DownloaderActivity extends Activity {
 			sendBroadcast(i);
 			finish();
 		} catch (Exception e) {
-			Config.sendErrorLog(this, getConfig().ERROR_LOG_URL, e);
 			e.printStackTrace();
 		}
 	}
 
-	private Config getConfig() {
+	Config getConfig() {
 		// TODO Auto-generated method stub
 		return Config.getInstance(this);
 	}

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.busan.cw.clsp20120924"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="4"
+    android:versionName="2.01" >
 
     <uses-sdk android:minSdkVersion="7" />
 
@@ -105,6 +105,9 @@
         </activity>
         <activity
             android:name="com.kr.busan.cw.cinepox.downloader.DownCancelActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="com.kr.busan.cw.cinepox.downloader.DownRestartActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name="com.kr.busan.cw.cinepox.downloader.DownloaderActivity"
@@ -271,15 +274,11 @@
 
         <!-- 플레이어 관련 매니페스트 -->
         <activity
-            android:name="com.kr.busan.cw.cinepox.player.PluginInstallActivity"
+            android:name="com.kr.busan.cw.cinepox.player.controller.VolumeActivity"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
         <activity
-            android:name="com.kr.busan.cw.cinepox.player.VolumeActivity"
-            android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
-        <activity
-            android:name="com.kr.busan.cw.cinepox.player.BrightActivity"
+            android:name="com.kr.busan.cw.cinepox.player.controller.BrightActivity"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
         <activity
@@ -288,7 +287,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" >
         </activity>
         <activity
-            android:name="com.kr.busan.cw.cinepox.player.PlayerActivity"
+            android:name="com.kr.busan.cw.cinepox.player.controller.PlayerActivity"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale"
             android:label="@string/cineplayer"
             android:screenOrientation="landscape"

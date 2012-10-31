@@ -15,14 +15,14 @@ import android.widget.VideoView;
 
 public class HWVideoView extends VideoView implements OnPreparedListener {
 
-	MediaPlayer mMediaPlayer;
+	private MediaPlayer mMediaPlayer;
 
-	OnPreparedListener mPreparedListener;
-	OnBufferingUpdateListener mBufferingUpdateListener;
-	OnCompletionListener mCompletionListener;
-	OnErrorListener mErrorListener;
-	OnInfoListener mInfoListener;
-	OnSeekCompleteListener mSeekCompleteListener;
+	private OnPreparedListener mPreparedListener;
+	private OnBufferingUpdateListener mBufferingUpdateListener;
+	private OnCompletionListener mCompletionListener;
+	private OnErrorListener mErrorListener;
+	private OnInfoListener mInfoListener;
+	private OnSeekCompleteListener mSeekCompleteListener;
 
 	int mLayout = io.vov.vitamio.widget.VideoView.VIDEO_LAYOUT_ORIGIN;
 
@@ -77,7 +77,7 @@ public class HWVideoView extends VideoView implements OnPreparedListener {
 			return;
 
 		try {
-			
+
 			ViewGroup.LayoutParams localLayoutParams = getLayoutParams();
 
 			int width = 0, height = 0;
@@ -158,11 +158,25 @@ public class HWVideoView extends VideoView implements OnPreparedListener {
 		changeMediaCallback();
 	}
 
+	@Override
+	public void setOnCompletionListener(OnCompletionListener l) {
+		mCompletionListener = l;
+		changeMediaCallback();
+	}
+
+	@Override
+	public void setOnErrorListener(OnErrorListener l) {
+		mErrorListener = l;
+		changeMediaCallback();
+	}
+
 	void changeMedia(MediaPlayer mp) {
 		if (mMediaPlayer != null) {
 			mMediaPlayer.setOnBufferingUpdateListener(null);
 			mMediaPlayer.setOnInfoListener(null);
 			mMediaPlayer.setOnSeekCompleteListener(null);
+			mMediaPlayer.setOnCompletionListener(null);
+			mMediaPlayer.setOnErrorListener(null);
 		}
 		mMediaPlayer = mp;
 		changeMediaCallback();
@@ -173,6 +187,8 @@ public class HWVideoView extends VideoView implements OnPreparedListener {
 			mMediaPlayer.setOnBufferingUpdateListener(mBufferingUpdateListener);
 			mMediaPlayer.setOnInfoListener(mInfoListener);
 			mMediaPlayer.setOnSeekCompleteListener(mSeekCompleteListener);
+			mMediaPlayer.setOnCompletionListener(mCompletionListener);
+			mMediaPlayer.setOnErrorListener(mErrorListener);
 		}
 	}
 

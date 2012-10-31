@@ -63,11 +63,11 @@ public class MainActivity extends FragmentActivity implements
 	ImageButton mSearchBtn;
 	FragmentTransaction mFragmentTrans;
 	BestFragment mBestFragment;
-//	ShakeListener mShaker;
+	// ShakeListener mShaker;
 	LocationManager mLocManager;
 	Location mLocation;
 	ProgressDialog mProgress;
-//	MenuItem mMotionMenu;
+	// MenuItem mMotionMenu;
 	static final int REQ_QRPLAY = 0;
 
 	MenuItem mLoginoutMenu;
@@ -119,13 +119,13 @@ public class MainActivity extends FragmentActivity implements
 		filter.addAction("qrplay");
 		filter.addAction("play");
 		registerReceiver(mWebReceiver, filter);
-//		mShaker = new ShakeListener(this);
-//		mShaker.setOnShakeListener(this);
-//		if (getConfig().isUseMotion()) {
-//			mShaker.resume();
-//		} else {
-//			mShaker.pause();
-//		}
+		// mShaker = new ShakeListener(this);
+		// mShaker.setOnShakeListener(this);
+		// if (getConfig().isUseMotion()) {
+		// mShaker.resume();
+		// } else {
+		// mShaker.pause();
+		// }
 		mLocManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 		Criteria criteria = new Criteria();
 		String provider = mLocManager.getBestProvider(criteria, true);
@@ -210,7 +210,7 @@ public class MainActivity extends FragmentActivity implements
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-//		mShaker.resume();
+		// mShaker.resume();
 		mBestFragment = new BestFragment();
 		mFragmentTrans = getSupportFragmentManager().beginTransaction();
 		mFragmentTrans.replace(R.id.main_fragment_container, mBestFragment);
@@ -224,7 +224,7 @@ public class MainActivity extends FragmentActivity implements
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-//		mShaker.pause();
+		// mShaker.pause();
 	}
 
 	@Override
@@ -243,13 +243,13 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
-//		mLoginoutMenu = menu.add(R.string.login);
-//		mJoinMenu = menu.add(R.string.join);
-//		mMotionMenu = menu.add(R.string.motion_disable);
-//		menu.add(R.string.motion_sensitive);
+		// mLoginoutMenu = menu.add(R.string.login);
+		// mJoinMenu = menu.add(R.string.join);
+		// mMotionMenu = menu.add(R.string.motion_disable);
+		// menu.add(R.string.motion_sensitive);
 		// menu.add(R.string.noti_item);
 		// menu.add(R.string.noti_interval);
-//		refreshPref();
+		// refreshPref();
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -308,22 +308,7 @@ public class MainActivity extends FragmentActivity implements
 							return URLDecoder.decode(js.getString("url"),
 									HTTP.UTF_8);
 						Thread.sleep(500);
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						Config.sendErrorLog(MainActivity.this,
-								getConfig().ERROR_LOG_URL, e);
-						e.printStackTrace();
-					} catch (IllegalStateException e) {
-						// TODO Auto-generated catch block
-						Config.sendErrorLog(MainActivity.this,
-								getConfig().ERROR_LOG_URL, e);
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						Config.sendErrorLog(MainActivity.this,
-								getConfig().ERROR_LOG_URL, e);
-						e.printStackTrace();
-					} catch (InterruptedException e) {
+					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
@@ -355,48 +340,48 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
-//	private void showSensitiveDialog() {
-//		final AlertDialog.Builder mSensitiveDialog = new AlertDialog.Builder(
-//				this);
-//		mSensitiveDialog.setTitle(R.string.motion_sensitive);
-//		mSensitiveDialog.setMessage(getString(R.string.sensitive_message));
-//		LinearLayout linear = new LinearLayout(this);
-//		linear.setOrientation(LinearLayout.VERTICAL);
-//		SeekBar seek = new SeekBar(this);
-//		seek.setPadding(10, 10, 10, 10);
-//		final TextView text = new TextView(this);
-//		text.setText(getConfig().getMotionSensitive() - 300 + "");
-//		text.setPadding(10, 10, 10, 10);
-//		seek.setMax(1000);
-//		seek.setProgress(getConfig().getMotionSensitive() - 300);
-//		seek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-//
-//			@Override
-//			public void onStopTrackingTouch(SeekBar seekBar) {
-//				// TODO Auto-generated method stub
-//
-//			}
-//
-//			@Override
-//			public void onStartTrackingTouch(SeekBar seekBar) {
-//				// TODO Auto-generated method stub
-//
-//			}
-//
-//			@Override
-//			public void onProgressChanged(SeekBar seekBar, int progress,
-//					boolean fromUser) {
-//				text.setText(progress + "");
-//				mShaker.setThreshold(progress + 300);
-//				getConfig().setMotionSensitive(progress + 300);
-//			}
-//		});
-//		linear.addView(seek);
-//		linear.addView(text);
-//		mSensitiveDialog.setView(linear);
-//		mSensitiveDialog.setPositiveButton(R.string.done, null);
-//		mSensitiveDialog.show();
-//	}
+	// private void showSensitiveDialog() {
+	// final AlertDialog.Builder mSensitiveDialog = new AlertDialog.Builder(
+	// this);
+	// mSensitiveDialog.setTitle(R.string.motion_sensitive);
+	// mSensitiveDialog.setMessage(getString(R.string.sensitive_message));
+	// LinearLayout linear = new LinearLayout(this);
+	// linear.setOrientation(LinearLayout.VERTICAL);
+	// SeekBar seek = new SeekBar(this);
+	// seek.setPadding(10, 10, 10, 10);
+	// final TextView text = new TextView(this);
+	// text.setText(getConfig().getMotionSensitive() - 300 + "");
+	// text.setPadding(10, 10, 10, 10);
+	// seek.setMax(1000);
+	// seek.setProgress(getConfig().getMotionSensitive() - 300);
+	// seek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+	//
+	// @Override
+	// public void onStopTrackingTouch(SeekBar seekBar) {
+	// // TODO Auto-generated method stub
+	//
+	// }
+	//
+	// @Override
+	// public void onStartTrackingTouch(SeekBar seekBar) {
+	// // TODO Auto-generated method stub
+	//
+	// }
+	//
+	// @Override
+	// public void onProgressChanged(SeekBar seekBar, int progress,
+	// boolean fromUser) {
+	// text.setText(progress + "");
+	// mShaker.setThreshold(progress + 300);
+	// getConfig().setMotionSensitive(progress + 300);
+	// }
+	// });
+	// linear.addView(seek);
+	// linear.addView(text);
+	// mSensitiveDialog.setView(linear);
+	// mSensitiveDialog.setPositiveButton(R.string.done, null);
+	// mSensitiveDialog.show();
+	// }
 
 	private void showLocSettingDialog() {
 		// TODO Auto-generated method stub
@@ -425,10 +410,10 @@ public class MainActivity extends FragmentActivity implements
 			mLoginoutMenu.setTitle(R.string.login);
 			mJoinMenu.setTitle(R.string.join);
 		}
-//		if (getConfig().isUseMotion())
-//			mMotionMenu.setTitle(R.string.motion_disable);
-//		else
-//			mMotionMenu.setTitle(R.string.motion_enable);
+		// if (getConfig().isUseMotion())
+		// mMotionMenu.setTitle(R.string.motion_disable);
+		// else
+		// mMotionMenu.setTitle(R.string.motion_enable);
 	}
 
 	void logoutConfirm() {
@@ -458,35 +443,36 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
-//		String title = item.getTitle().toString();
-//		if (getString(R.string.login).equalsIgnoreCase(title)) {
-//			if (!getConfig().isLogined())
-//				startActivity(new Intent(this, LoginActivity.class));
-//		} else if (getString(R.string.logout).equalsIgnoreCase(title)) {
-//			if (getConfig().isLogined())
-//				logoutConfirm();
-//		} else if (getString(R.string.join).equalsIgnoreCase(title)) {
-//			if (!getConfig().isLogined())
-//				startActivity(new Intent(
-//						Intent.ACTION_VIEW,
-//						Uri.parse(WebDomain + "member/join.html?SET_DEVICE=android(APP)")));
-//		} else if (getString(R.string.leave).equalsIgnoreCase(title)) {
-//
-//		} else if (getString(R.string.noti_item).equalsIgnoreCase(title)) {
-//			 mAlarmDialog.show();
-//		} else if (getString(R.string.noti_interval).equalsIgnoreCase(title)) {
-//			 mAlarmIntervalDialog.show();
-//		} else if (getString(R.string.motion_enable).equals(title)) {
-//			getConfig().setUseMotion(true);
-//			mShaker.resume();
-//			mMotionMenu.setTitle(R.string.motion_disable);
-//		} else if (getString(R.string.motion_disable).equals(title)) {
-//			getConfig().setUseMotion(false);
-//			mShaker.pause();
-//			mMotionMenu.setTitle(R.string.motion_enable);
-//		} else if (getString(R.string.motion_sensitive).equals(title)) {
-//			showSensitiveDialog();
-//		}
+		// String title = item.getTitle().toString();
+		// if (getString(R.string.login).equalsIgnoreCase(title)) {
+		// if (!getConfig().isLogined())
+		// startActivity(new Intent(this, LoginActivity.class));
+		// } else if (getString(R.string.logout).equalsIgnoreCase(title)) {
+		// if (getConfig().isLogined())
+		// logoutConfirm();
+		// } else if (getString(R.string.join).equalsIgnoreCase(title)) {
+		// if (!getConfig().isLogined())
+		// startActivity(new Intent(
+		// Intent.ACTION_VIEW,
+		// Uri.parse(WebDomain + "member/join.html?SET_DEVICE=android(APP)")));
+		// } else if (getString(R.string.leave).equalsIgnoreCase(title)) {
+		//
+		// } else if (getString(R.string.noti_item).equalsIgnoreCase(title)) {
+		// mAlarmDialog.show();
+		// } else if (getString(R.string.noti_interval).equalsIgnoreCase(title))
+		// {
+		// mAlarmIntervalDialog.show();
+		// } else if (getString(R.string.motion_enable).equals(title)) {
+		// getConfig().setUseMotion(true);
+		// mShaker.resume();
+		// mMotionMenu.setTitle(R.string.motion_disable);
+		// } else if (getString(R.string.motion_disable).equals(title)) {
+		// getConfig().setUseMotion(false);
+		// mShaker.pause();
+		// mMotionMenu.setTitle(R.string.motion_enable);
+		// } else if (getString(R.string.motion_sensitive).equals(title)) {
+		// showSensitiveDialog();
+		// }
 		return super.onOptionsItemSelected(item);
 	}
 

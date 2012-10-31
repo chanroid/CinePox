@@ -4,7 +4,6 @@ import kr.co.chan.util.Util;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.AudioManager;
-import android.os.Build;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -20,7 +19,7 @@ import android.widget.TextView;
 
 import com.kr.busan.cw.cinepox.R;
 import com.kr.busan.cw.cinepox.player.iface.VideoControllerCallback;
-import com.kr.busan.cw.cinepox.player.model.VideoModel.PlayData;
+import com.kr.busan.cw.cinepox.player.model.PlayData;
 
 /**
  * <PRE>
@@ -42,6 +41,7 @@ public class VideoControllerView extends LinearLayout implements
 
 	private boolean isTracking = false;
 	private boolean isControllerVisible = true;
+	private int mBuffer = 0;
 
 	private TextView batteryText;
 	private TextView timeText;
@@ -225,8 +225,8 @@ public class VideoControllerView extends LinearLayout implements
 		int visiblity = (mode ? View.VISIBLE : View.GONE);
 		qualityText.setVisibility(visiblity);
 		// 2차개발분. 기능구현은 완료
-//		shakeBtn.setVisibility(visiblity);
-//		captionBtn.setVisibility(visiblity);
+		// shakeBtn.setVisibility(visiblity);
+		// captionBtn.setVisibility(visiblity);
 	}
 
 	/**
@@ -266,6 +266,8 @@ public class VideoControllerView extends LinearLayout implements
 		controllerBottom.setVisibility(View.VISIBLE);
 		controllerHandler.sendEmptyMessageDelayed(
 				HANDLE_WHAT_CONTROLLER_AUTO_HIDE, time);
+		if (callback != null)
+			callback.onVisiblityChanged(View.VISIBLE);
 	}
 
 	/**
@@ -288,10 +290,8 @@ public class VideoControllerView extends LinearLayout implements
 		controllerBottom.startAnimation(bottomHideAnimation);
 		controllerBottom.setVisibility(View.GONE);
 		controllerHandler.removeMessages(HANDLE_WHAT_CONTROLLER_AUTO_HIDE);
-		if (Build.VERSION.SDK_INT >= 14)
-			setSystemUiVisibility(SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-		else if (Build.VERSION.SDK_INT >= 11)
-			setSystemUiVisibility(STATUS_BAR_HIDDEN);
+		if (callback != null)
+			callback.onVisiblityChanged(View.GONE);
 	}
 
 	/**
@@ -385,14 +385,15 @@ public class VideoControllerView extends LinearLayout implements
 	}
 
 	public void setBufferProgress(int progress) {
+		if (Math.abs(progress - mBuffer) < 10)
+			mBuffer = progress;
 		seekBar.setSecondaryProgress(progress);
 	}
 
 	public void setPlayData(PlayData data) {
-		seekBar.setProgress(Util.Math.getPercent(data.CURRENT, data.DURATION));
-		seekBar.setSecondaryProgress(data.BUFFER);
-		currentText.setText(Util.stringForTime(data.CURRENT));
-		durationText.setText(Util.stringForTime(data.DURATION));
+		setProgress(Util.Math.getPercent(data.CURRENT, data.DURATION));
+		currentText.setText(Util.Time.stringForTime(data.CURRENT));
+		durationText.setText(Util.Time.stringForTime(data.DURATION));
 	}
 
 	/**

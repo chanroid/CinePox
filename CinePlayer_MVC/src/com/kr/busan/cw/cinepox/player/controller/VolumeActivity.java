@@ -111,7 +111,7 @@ public class VolumeActivity extends Activity implements
 			sync();
 			return true;
 		default:
-			return super.dispatchKeyEvent(event);
+			return super.onKeyDown(keyCode, event);
 		}
 	}
 

@@ -25,7 +25,7 @@ public class AddBookMarkActivity extends Activity {
 		getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 		mTime = getIntent().getStringExtra(Intent.EXTRA_TEXT);
 		mTimeText = (TextView) findViewById(R.id.textview_bookmark_time);
-		mTimeText.setText(Util.stringForTime(mTime));
+		mTimeText.setText(Util.Time.stringForTime(mTime));
 	}
 
 }

@@ -522,7 +522,7 @@ public class PlayerActivity extends Activity implements OnErrorListener,
 			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 			dialog.setTitle("이어보기");
 			dialog.setMessage("이전에 "
-					+ Util.stringForTime(mConfig.getShowntime(mPath.toString()))
+					+ Util.Time.stringForTime(mConfig.getShowntime(mPath.toString()))
 					+ " 까지 시청하셨습니다. 계속해서 보시겠습니까?");
 			dialog.setNegativeButton(R.string.cancel, null);
 			dialog.setPositiveButton("이어보기",
@@ -760,8 +760,8 @@ public class PlayerActivity extends Activity implements OnErrorListener,
 								+ distanceX : 0;
 						if (time > mDuration)
 							return true;
-						mCenterText.setText(Util.stringForTime(time));
-						mCurrentText.setText(Util.stringForTime(time));
+						mCenterText.setText(Util.Time.stringForTime(time));
+						mCurrentText.setText(Util.Time.stringForTime(time));
 						mSeekBar.setProgress(Util.Math.getPercent(time,
 								mDuration));
 						mTimeHandler.removeMessages(1);
@@ -802,7 +802,7 @@ public class PlayerActivity extends Activity implements OnErrorListener,
 			return false;
 		}
 	};
-	
+
 	private void allocController() {
 		LinearLayout linear = new LinearLayout(this);
 		mController = (RelativeLayout) getLayoutInflater().inflate(
@@ -1229,34 +1229,39 @@ public class PlayerActivity extends Activity implements OnErrorListener,
 	}
 
 	private void setVideoURI(Uri uri) {
-		switch (mCodec) {
-		case HW_CODEC:
-			mHWVideoView.setOnBufferingUpdateListener(this);
-			mHWVideoView.setOnCompletionListener(this);
-			mHWVideoView.setOnErrorListener(this);
-			mHWVideoView.setOnInfoListener(this);
-			mHWVideoView.setOnSeekCompleteListener(this);
-			setOnSystemUiVisibilityChangeListener();
-			mHWVideoView.setVisibility(View.VISIBLE);
-			mHWVideoView.setVideoURI((mPath = uri));
-			mCodecBtn.setText("H/W");
-			if (checkPlugin())
-				mVideoView.setVisibility(View.GONE);
-			break;
-		case SW_CODEC:
-			mHWVideoView.setVisibility(View.GONE);
-			setOnSystemUiVisibilityChangeListener();
-			if (checkPlugin()) {
-				mCodecBtn.setText("S/W");
-				mVideoView.setOnBufferingUpdateListener(this);
-				mVideoView.setOnCompletionListener(this);
-				mVideoView.setOnErrorListener(this);
-				mVideoView.setOnInfoListener(this);
-				mVideoView.setOnSeekCompleteListener(this);
-				mVideoView.setVisibility(View.VISIBLE);
-				mVideoView.setVideoURI((mPath = uri));
+		try {
+			switch (mCodec) {
+			case HW_CODEC:
+				mHWVideoView.setOnBufferingUpdateListener(this);
+				mHWVideoView.setOnCompletionListener(this);
+				mHWVideoView.setOnErrorListener(this);
+				mHWVideoView.setOnInfoListener(this);
+				mHWVideoView.setOnSeekCompleteListener(this);
+				setOnSystemUiVisibilityChangeListener();
+				mHWVideoView.setVisibility(View.VISIBLE);
+				mHWVideoView.setVideoURI((mPath = uri));
+				mCodecBtn.setText("H/W");
+				if (checkPlugin())
+					mVideoView.setVisibility(View.GONE);
+				break;
+			case SW_CODEC:
+				mHWVideoView.setVisibility(View.GONE);
+				setOnSystemUiVisibilityChangeListener();
+				if (checkPlugin()) {
+					mCodecBtn.setText("S/W");
+					mVideoView.setOnBufferingUpdateListener(this);
+					mVideoView.setOnCompletionListener(this);
+					mVideoView.setOnErrorListener(this);
+					mVideoView.setOnInfoListener(this);
+					mVideoView.setOnSeekCompleteListener(this);
+					mVideoView.setVisibility(View.VISIBLE);
+					mVideoView.setVideoURI((mPath = uri));
+				}
+				break;
 			}
-			break;
+		} catch (IllegalStateException e) {
+			Toast.makeText(this, "처리할 수 없는 상태입니다. 잠시후에 시도해 주세요.",
+					Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -1381,11 +1386,11 @@ public class PlayerActivity extends Activity implements OnErrorListener,
 			boolean fromUser) {
 		// TODO Auto-generated method stub
 		mCurrentText
-				.setText(Util.stringForTime(getDuration() / 100 * progress));
+				.setText(Util.Time.stringForTime(getDuration() / 100 * progress));
 		if (fromUser) {
 			isSeeking = true;
 			mTimeHandler.removeMessages(1);
-			mCenterText.setText(Util.stringForTime(getDuration() / 100
+			mCenterText.setText(Util.Time.stringForTime(getDuration() / 100
 					* progress));
 			mCenterText.setVisibility(View.VISIBLE);
 			mTimeHandler.sendEmptyMessageDelayed(1, 3000);
@@ -1502,7 +1507,7 @@ public class PlayerActivity extends Activity implements OnErrorListener,
 			addControllerWindow();
 		mLoadingBar.setVisibility(View.GONE);
 		mDuration = getDuration();
-		mDurationText.setText(Util.stringForTime(mDuration));
+		mDurationText.setText(Util.Time.stringForTime(mDuration));
 		if (mDuration / 1000 <= mCurrent / 1000)
 			mCurrent = 0;
 		if (mCurrent > 0)
@@ -1597,17 +1602,18 @@ public class PlayerActivity extends Activity implements OnErrorListener,
 		case 1:
 			switch (extra) {
 			case -1094995529:
-			case -2147483648:
+			case -2147483648: // KOMI
 			case -17:
+			case -1:
 				showErrorDialog("죄송합니다. 재생할 수 없는 동영상입니다.", false, true);
 				break;
 			default:
-				finish();
 				Intent i = new Intent(this, PlayerActivity.class);
 				i.setData(getIntent().getData());
 				i.putExtra("set_time", mCurrent / 1000);
 				i.putExtra("error_count", mErrorCount++);
 				startActivity(i);
+				finish();
 				PlayerConfig.sendErrorLog(this, mBugReportUrl,
 						new IllegalStateException(getIntent().getDataString()
 								+ " : " + extra));
@@ -1860,8 +1866,6 @@ public class PlayerActivity extends Activity implements OnErrorListener,
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-						new LogPost(PlayerActivity.this, getPackageName(), e)
-								.start();
 					}
 					currentTime = System.currentTimeMillis();
 				}
@@ -1896,7 +1900,6 @@ public class PlayerActivity extends Activity implements OnErrorListener,
 			}
 			l.i("send complete");
 		}
-
 	}
 
 	@Override
@@ -1937,7 +1940,7 @@ public class PlayerActivity extends Activity implements OnErrorListener,
 			while (true) {
 				try {
 					mTimeHandler.sendEmptyMessage(0);
-					Thread.sleep(1000);
+					Thread.sleep(600);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					return;
@@ -2037,10 +2040,10 @@ public class PlayerActivity extends Activity implements OnErrorListener,
 				String set_time = mPath.getQueryParameter("set_time");
 				mOrderCode = mPath.getQueryParameter("order_code");
 
-				if (getIntent().getLongExtra("set_time", 0) > 0)
-					mCurrent = getIntent().getLongExtra("set_time", 0) * 1000;
+				if (getIntent().getLongExtra("set_time", 0l) > 0l)
+					mCurrent = getIntent().getLongExtra("set_time", 0l) * 1000l;
 				else if (set_time != null)
-					mCurrent = Long.parseLong(set_time) * 1000;
+					mCurrent = Long.parseLong(set_time) * 1000l;
 
 				if (set_url != null)
 					mPath = Uri.parse(set_url);
@@ -2084,7 +2087,7 @@ public class PlayerActivity extends Activity implements OnErrorListener,
 			if (result.contains("error")) { // 로딩중 에러 발생시
 				l.i("player error");
 				boolean cancelable = false;
-				showErrorDialog(getString(R.string.error_connect), cancelable,
+				showErrorDialog(getString(R.string.error_config), cancelable,
 						true);
 			} else if ("movie".equalsIgnoreCase(result)) { // 일반 동영상 파일
 															// 로딩시(스트리밍, 로컬)
@@ -2183,14 +2186,22 @@ public class PlayerActivity extends Activity implements OnErrorListener,
 					e.printStackTrace();
 				}
 				if (getIntent().getData() == null) {
-					startActivityForResult(new Intent(PlayerActivity.this,
-							ReadQRActivity.class), REQUEST_READ_QRCODE);
-					isBlock = true;
-					return;
-				}
-				new PrepareSync().execute();
+					Toast.makeText(PlayerActivity.this,
+							"파라미터 오류입니다. 다시 실행해 주세요.", Toast.LENGTH_LONG)
+							.show();
+					finish();
+				} else
+					new PrepareSync().execute();
 			}
 		}
+	}
+	
+	void sendError(Throwable t) {
+		Intent errorIntent = new Intent(
+				"com.kr.busan.cw.cinepox.service.errorlog");
+		errorIntent.putExtra("url", mBugReportUrl);
+		errorIntent.putExtra("error", t);
+		sendBroadcast(errorIntent);
 	}
 
 	// boolean login() {
@@ -2212,12 +2223,12 @@ public class PlayerActivity extends Activity implements OnErrorListener,
 	}
 
 	void updatePlayInfo(long current, long duration) {
-		mCurrent = current;
 		mDuration = duration;
 		if (current > duration)
-			return;
-		mCurrentText.setText(Util.stringForTime(mCurrent));
-		mDurationText.setText(Util.stringForTime(mDuration));
+			current %= duration;
+		mCurrent = current;
+		mCurrentText.setText(Util.Time.stringForTime(mCurrent));
+		mDurationText.setText(Util.Time.stringForTime(mDuration));
 	}
 
 	void updateProgress() {
