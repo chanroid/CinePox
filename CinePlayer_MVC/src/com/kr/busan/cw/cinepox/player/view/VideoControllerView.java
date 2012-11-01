@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.kr.busan.cw.cinepox.R;
 import com.kr.busan.cw.cinepox.player.iface.VideoControllerCallback;
-import com.kr.busan.cw.cinepox.player.model.PlayData;
+import com.kr.busan.cw.cinepox.player.structs.PlayData;
 
 /**
  * <PRE>

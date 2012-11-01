@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.Formatter;
 import java.util.Locale;
 
+import com.kr.busan.cw.cinepox.player.structs.QualityData;
+
 import kr.co.chan.util.Util;
 import android.content.Context;
 

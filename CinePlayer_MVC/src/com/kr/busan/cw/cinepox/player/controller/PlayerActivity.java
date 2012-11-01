@@ -45,8 +45,8 @@ import com.kr.busan.cw.cinepox.player.iface.VideoControllerCallback;
 import com.kr.busan.cw.cinepox.player.model.CaptionModel;
 import com.kr.busan.cw.cinepox.player.model.PlayerConfigModel;
 import com.kr.busan.cw.cinepox.player.model.PlayerModel.Const;
-import com.kr.busan.cw.cinepox.player.model.QualityData;
 import com.kr.busan.cw.cinepox.player.model.VideoModel;
+import com.kr.busan.cw.cinepox.player.structs.QualityData;
 import com.kr.busan.cw.cinepox.player.view.VideoControllerView;
 import com.kr.busan.cw.cinepox.player.view.VideoView;
 

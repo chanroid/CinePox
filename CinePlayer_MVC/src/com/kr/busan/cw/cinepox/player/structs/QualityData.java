@@ -10,7 +10,7 @@
  *		2012. 10. 31. 오후 4:02:15 : 신규
  *
  */
-package com.kr.busan.cw.cinepox.player.model;
+package com.kr.busan.cw.cinepox.player.structs;
 
 /**
  * <PRE>
