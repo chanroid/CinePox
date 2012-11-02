@@ -6,6 +6,7 @@ import io.vov.vitamio.VitamioInstaller;
 import kr.co.chan.util.Util;
 import kr.co.chan.util.VerticalProgressBar;
 import kr.co.chan.util.Classes.AnimatedImageView;
+import view.CCBaseView;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -19,9 +20,7 @@ import android.media.MediaPlayer.OnSeekCompleteListener;
 import android.net.Uri;
 import android.os.Handler;
 import android.text.Html;
-import android.util.AttributeSet;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -41,7 +40,7 @@ import com.kr.busan.cw.cinepox.player.structs.PlayData;
  * </PRE>
  */
 @SuppressLint("HandlerLeak")
-public class VideoView extends LinearLayout implements OnPreparedListener,
+public class VideoView extends CCBaseView implements OnPreparedListener,
 		io.vov.vitamio.MediaPlayer.OnPreparedListener,
 		OnBufferingUpdateListener,
 		io.vov.vitamio.MediaPlayer.OnBufferingUpdateListener,
@@ -50,6 +49,11 @@ public class VideoView extends LinearLayout implements OnPreparedListener,
 		io.vov.vitamio.MediaPlayer.OnErrorListener, OnInfoListener,
 		io.vov.vitamio.MediaPlayer.OnInfoListener, OnCompletionListener,
 		android.media.MediaPlayer.OnCompletionListener {
+
+	public VideoView(Context context) {
+		super(context);
+		// TODO Auto-generated constructor stub
+	}
 
 	private VideoCallback callback;
 	private HWVideoView hwVideoView;
@@ -146,40 +150,15 @@ public class VideoView extends LinearLayout implements OnPreparedListener,
 		};
 	};
 
-	public VideoView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-		init();
+	@Override
+	public int getLayoutId() {
+		// TODO Auto-generated method stub
+		return R.layout.player_main;
 	}
 
-	public VideoView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		init();
-	}
-
-	public VideoView(Context context) {
-		super(context);
-		init();
-	}
-
-	/**
-	 * 
-	 * <PRE>
-	 * 1. MethodName : init
-	 * 2. ClassName  : VideoView
-	 * 3. Comment   : 
-	 * 		생성자 호출시 공통으로 호출되는 메서드.
-	 * 		내부 뷰 초기화
-	 * 4. 작성자    : 박찬우
-	 * 5. 작성일    : 2012. 10. 15. 오후 7:42:34
-	 * </PRE>
-	 * 
-	 * @return void
-	 */
-	private void init() {
-		RelativeLayout videoLayout = (RelativeLayout) View.inflate(
-				getContext(), R.layout.player_main, null);
-		addView(videoLayout, LayoutParams.MATCH_PARENT,
-				LayoutParams.MATCH_PARENT);
+	@Override
+	public void allocViews() {
+		// TODO Auto-generated method stub
 		videoContainer = (RelativeLayout) findViewById(R.id.video_container);
 		addHWVideo();
 		addVolumeView();
@@ -188,7 +167,6 @@ public class VideoView extends LinearLayout implements OnPreparedListener,
 		progressImage = (AnimatedImageView) findViewById(R.id.progressBar_video_loading);
 		captionView = (TextView) findViewById(R.id.textView_video_caption);
 		centerText = (TextView) findViewById(R.id.textView_video_center);
-
 	}
 
 	public void setVideoLayout(int layout) {
@@ -379,7 +357,6 @@ public class VideoView extends LinearLayout implements OnPreparedListener,
 	 * 2. ClassName  : VideoView
 	 * 3. Comment   : 소프트웨어 코덱이 설치되어 있을 시 호출하면
 	 * 				소프트웨어 비디오 뷰를 추가함 (중복호출해도 상관없음)
-	 * 				onPause 마다 호출하는것을 권장
 	 * 4. 작성자    : 박찬우
 	 * 5. 작성일    : 2012. 10. 15. 오후 7:19:26
 	 * </PRE>
@@ -662,7 +639,7 @@ public class VideoView extends LinearLayout implements OnPreparedListener,
 		showLoading();
 		return true;
 	}
-	
+
 	public Uri getVideoURI() {
 		return videoURI;
 	}

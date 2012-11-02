@@ -50,6 +50,8 @@ import com.kr.busan.cw.cinepox.player.structs.QualityData;
 import com.kr.busan.cw.cinepox.player.view.VideoControllerView;
 import com.kr.busan.cw.cinepox.player.view.VideoView;
 
+import controller.CCBaseActivity;
+
 /**
  * <PRE>
  * 1. ClassName : 
@@ -62,7 +64,7 @@ import com.kr.busan.cw.cinepox.player.view.VideoView;
  * </PRE>
  */
 @SuppressLint("HandlerLeak")
-public class PlayerActivity extends PlayerBaseActivity implements
+public class PlayerActivity extends CCBaseActivity implements
 		VideoControllerCallback, VideoCallback, OnShakeListener,
 		LocationListener {
 
@@ -95,7 +97,7 @@ public class PlayerActivity extends PlayerBaseActivity implements
 	public static final int REQUEST_READ_QRCODE = 1;
 	public static final int REQUEST_MODIFY_BRIGHTNESS = 2;
 	// private final int REQUEST_ENABLE_BT = 3;
-
+ 
 	private OnClickListener codecChangeListener = new OnClickListener() {
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
@@ -239,14 +241,12 @@ public class PlayerActivity extends PlayerBaseActivity implements
 					DialogInterface.OnClickListener updateClickListener = new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
 							dialog.dismiss();
 							try {
 								startActivity(new Intent(Intent.ACTION_VIEW,
 										Uri.parse(result
 												.getString(Const.KEY_URL))));
 							} catch (JSONException e) {
-								// TODO Auto-generated catch block
 								sendErrorLog(e);
 								e.printStackTrace();
 							}
@@ -380,7 +380,7 @@ public class PlayerActivity extends PlayerBaseActivity implements
 	@Override
 	protected void onPause() {
 		super.onPause();
-		removeControllerView();
+//		removeControllerView();
 		unregisterReceiver(updateReceiver);
 		if (mVideoView.getCurrentPosition() > 0l)
 			sendPlayTime();
@@ -457,11 +457,11 @@ public class PlayerActivity extends PlayerBaseActivity implements
 				Locale.getDefault());
 		mVideoController.setTimeText(mFormatter.format("%02d:%02d", hour, min)
 				.toString());
+		mFormatter.close();
 	}
 
 	private void updateBatt() {
 		mVideoController.setBatteryText(Util.Phone.getBattStat(this) + "%");
-
 	}
 
 	private void updateController() {
@@ -483,6 +483,14 @@ public class PlayerActivity extends PlayerBaseActivity implements
 		}
 	}
 
+	private void buildShareDialog() {
+		if (mShareDialog == null) {
+			mShareDialog = new ProgressDialog(this);
+			mShareDialog.setMessage(getString(R.string.noti_readymotion));
+			mShareDialog.setCancelable(false);
+		}
+	}
+
 	private void removeControllerView() {
 		if (mVideoController != null)
 			try {
@@ -491,16 +499,21 @@ public class PlayerActivity extends PlayerBaseActivity implements
 			}
 	}
 
+	private void showError(String message) {
+		removeControllerView();
+		Util.Views.showAlert(this, getString(R.string.alert), message,
+				getString(R.string.done),
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						finish();
+					}
+				}, false);
+	}
+	
 	private void showVolumeControl() {
 		startActivity(new Intent(this, VolumeActivity.class));
-	}
-
-	private void buildShareDialog() {
-		if (mShareDialog == null) {
-			mShareDialog = new ProgressDialog(this);
-			mShareDialog.setMessage(getString(R.string.noti_readymotion));
-			mShareDialog.setCancelable(false);
-		}
 	}
 
 	private void showShareDialog() {
@@ -583,19 +596,6 @@ public class PlayerActivity extends PlayerBaseActivity implements
 		}
 		int layout = (mVideoView.getVideoLayout() + 1) % 3;
 		mVideoView.setVideoLayout(layout);
-	}
-
-	private void showError(String message) {
-		removeControllerView();
-		Util.Views.showAlert(this, getString(R.string.alert), message,
-				getString(R.string.done),
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-						finish();
-					}
-				}, false);
 	}
 
 	private void sendErrorLog(String message) {
@@ -747,6 +747,7 @@ public class PlayerActivity extends PlayerBaseActivity implements
 			case -1094995529:
 				showError("해당 기기에서 재생이 불가능한 동영상입니다.");
 			case -2147483648:
+				removeControllerView();
 				sendErrorLog("[" + getIntent().getDataString()
 						+ "] player onError() : " + what + " : " + extra);
 				break;

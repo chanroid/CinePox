@@ -12,7 +12,7 @@
  */
 package com.busan.cw.clsp20120924.controller;
 
-import com.busan.cw.clsp20120924.base.Controller;
+import controller.CCBaseActivity;
 
 
 /**
@@ -25,6 +25,6 @@ import com.busan.cw.clsp20120924.base.Controller;
  * 6. 작성일   : 2012. 10. 31. 오후 5:40:15
  * </PRE>
  */
-public class MainActivity implements Controller {
+public class MainActivity extends CCBaseActivity {
 
 }

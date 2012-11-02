@@ -102,71 +102,51 @@ public final class R {
         public static int time_bar_btn=0x7f020052;
     }
     public static final class id {
-        public static int background=0x7f070035;
-        public static int btn_video_bright=0x7f07002b;
-        public static int btn_video_caption=0x7f070028;
-        public static int btn_video_changecodec=0x7f070029;
-        public static int btn_video_changequality=0x7f070027;
-        public static int btn_video_fullscreen=0x7f070021;
-        public static int btn_video_playpause=0x7f07001d;
-        public static int btn_video_shake=0x7f070026;
-        public static int btn_video_volumn=0x7f07002a;
+        public static int background=0x7f070021;
+        public static int btn_video_bright=0x7f070017;
+        public static int btn_video_caption=0x7f070014;
+        public static int btn_video_changecodec=0x7f070015;
+        public static int btn_video_changequality=0x7f070013;
+        public static int btn_video_fullscreen=0x7f07000d;
+        public static int btn_video_playpause=0x7f070009;
+        public static int btn_video_shake=0x7f070012;
+        public static int btn_video_volumn=0x7f070016;
         public static int button1=0x7f070003;
-        public static int current=0x7f07000f;
         public static int editText1=0x7f070002;
-        public static int ffwd=0x7f07000d;
-        public static int imageView1=0x7f070023;
+        public static int imageView1=0x7f07000f;
         public static int imageView2=0x7f070000;
-        public static int layout_player_volumecontrol=0x7f07002f;
-        public static int loading=0x7f070013;
-        public static int loadinglayout=0x7f070012;
-        public static int loadingtext=0x7f070014;
-        public static int mediapanel=0x7f070009;
-        public static int next=0x7f07000e;
-        public static int pause=0x7f07000c;
-        public static int prev=0x7f07000a;
-        public static int progress=0x7f070010;
-        public static int progressBar_video_loading=0x7f07002e;
+        public static int layout_player_volumecontrol=0x7f07001b;
+        public static int progress=0x7f070023;
+        public static int progressBar_video_loading=0x7f07001a;
         public static int relativeLayout1=0x7f070005;
-        public static int rew=0x7f07000b;
-        public static int secondaryProgress=0x7f070036;
+        public static int secondaryProgress=0x7f070022;
         public static int seekBar_brightness=0x7f070001;
-        public static int seekBar_video_controller=0x7f07001f;
-        public static int seekBar_volume=0x7f070034;
-        public static int seekbar_player_volume=0x7f070030;
+        public static int seekBar_video_controller=0x7f07000b;
+        public static int seekBar_volume=0x7f070020;
+        public static int seekbar_player_volume=0x7f07001c;
         public static int status_icon=0x7f070004;
         public static int status_progress=0x7f070007;
         public static int status_text=0x7f070006;
-        public static int surfaceView_video_view_hw=0x7f07002d;
-        public static int textView1=0x7f070017;
-        public static int textView2=0x7f070019;
-        public static int textView3=0x7f07001b;
-        public static int textView4=0x7f07001a;
-        public static int textView5=0x7f070018;
-        public static int textView_player_volume=0x7f070031;
-        public static int textView_video_battstat=0x7f070024;
-        public static int textView_video_caption=0x7f070032;
-        public static int textView_video_center=0x7f070033;
-        public static int textView_video_currenttime=0x7f07001e;
-        public static int textView_video_duration=0x7f070020;
-        public static int textView_video_time=0x7f070025;
-        public static int time=0x7f070011;
-        public static int videoView1=0x7f070008;
-        public static int video_container=0x7f07002c;
-        public static int video_controller_bottom=0x7f07001c;
-        public static int video_controller_top=0x7f070022;
-        public static int volumecontrollayout=0x7f070016;
-        public static int volumelayout=0x7f070015;
+        public static int surfaceView_video_view_hw=0x7f070019;
+        public static int textView_player_volume=0x7f07001d;
+        public static int textView_video_battstat=0x7f070010;
+        public static int textView_video_caption=0x7f07001e;
+        public static int textView_video_center=0x7f07001f;
+        public static int textView_video_currenttime=0x7f07000a;
+        public static int textView_video_duration=0x7f07000c;
+        public static int textView_video_time=0x7f070011;
+        public static int video_container=0x7f070018;
+        public static int video_controller_bottom=0x7f070008;
+        public static int video_controller_top=0x7f07000e;
     }
     public static final class layout {
         public static int bright=0x7f030000;
         public static int claearable_edittext=0x7f030001;
         public static int download_progress=0x7f030002;
         public static int main=0x7f030003;
-        public static int mediacontrolbox=0x7f030004;
-        public static int mediacontroller=0x7f030005;
-        public static int player_main=0x7f030006;
-        public static int volumn=0x7f030007;
+        public static int mediacontroller=0x7f030004;
+        public static int player_main=0x7f030005;
+        public static int volumn=0x7f030006;
     }
     public static final class string {
         public static int alert=0x7f050014;
@@ -235,8 +215,8 @@ public final class R {
         public static int update=0x7f050038;
     }
     public static final class style {
-        public static int AppTheme=0x7f060001;
-        public static int EpoNgsProgressStyle=0x7f060000;
+        public static int AppTheme=0x7f060000;
+        public static int EpoNgsProgressStyle=0x7f060001;
     }
     public static final class styleable {
         /** Attributes that can be used with a ProgressBar.

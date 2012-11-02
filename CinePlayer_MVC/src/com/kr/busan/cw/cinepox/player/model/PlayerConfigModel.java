@@ -1,6 +1,46 @@
 package com.kr.busan.cw.cinepox.player.model;
 
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.*;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.ACCESS_DOMAIN;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.CAPTION_EXT_SMI;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.CAPTION_EXT_SRT;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.DEVICE;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_3G_MESSAGE;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_3G_MESSAGE_LENGTH;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_BOOKMARK_DELETE_URL;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_BOOKMARK_INSERT_URL;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_BUG_INSERT_URL;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_DEVICE_TYPE;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_EXCEPTION;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_GET_AD_URL;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_GET_BOOKMARK_LIST;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_GET_TEXT_BANNER_URL;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_KEY;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_LANG;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_LOG_URL;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_MEMBER_NUM;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_MOVIE_LIST;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_MOVIE_NUM;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_MOVIE_URL;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_MSG;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_NAME;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_ORDER_CODE;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_PLAY_TIME;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_PLAY_TIME_URL;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_PROTOCOL_TYPE;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_QUALITY;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_RESULT;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_SETTING;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_SET_TIME;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_SET_URL;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_SHAKE_KEY;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_START_TIME;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_TYPE;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_URL;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.RESPONSE_JSON;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.RESULT_ERROR;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.RESULT_MOVIE;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.RESULT_SUCCESS;
+import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.SHAKE_REQUEST_URL;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -16,8 +56,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.kr.busan.cw.cinepox.player.structs.QualityData;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,6 +63,8 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Debug;
+
+import com.kr.busan.cw.cinepox.player.structs.QualityData;
 
 public class PlayerConfigModel extends PlayerModel {
 

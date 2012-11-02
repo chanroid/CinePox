@@ -12,11 +12,8 @@
  */
 package com.kr.busan.cw.cinepox.player.view;
 
+import view.CCBaseView;
 import android.content.Context;
-import android.util.AttributeSet;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
@@ -32,30 +29,33 @@ import com.kr.busan.cw.cinepox.R;
  * 6. 작성일   : 2012. 10. 18. 오후 2:49:15
  * </PRE>
  */
-public class BrightControlView extends LinearLayout {
+public class BrightControlView extends CCBaseView {
 
 	private SeekBar brightSeekbar;
 
 	public BrightControlView(Context context) {
 		super(context);
-		init();
 	}
 
-	private void init() {
-		RelativeLayout brightlayout = (RelativeLayout) View.inflate(getContext(),
-				R.layout.bright, null);
-		addView(brightlayout, -1, -1);
-		
-		brightSeekbar = (SeekBar) findViewById(R.id.seekBar_brightness);
-		brightSeekbar.setMax(90);
-	}
-	
 	public void setOnSeekbarChangeListener(OnSeekBarChangeListener l) {
 		brightSeekbar.setOnSeekBarChangeListener(l);
 	}
 	
 	public void setProgress(int progress) {
 		brightSeekbar.setProgress(progress);
+	}
+
+	@Override
+	public int getLayoutId() {
+		// TODO Auto-generated method stub
+		return R.layout.bright;
+	}
+
+	@Override
+	public void allocViews() {
+		// TODO Auto-generated method stub
+		brightSeekbar = (SeekBar) findViewById(R.id.seekBar_brightness);
+		brightSeekbar.setMax(90);
 	}
 
 }

@@ -16,8 +16,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-import com.busan.cw.clsp20120924.base.Controller;
-
 /**
  * <PRE>
  * 1. ClassName : 
@@ -28,7 +26,7 @@ import com.busan.cw.clsp20120924.base.Controller;
  * 6. 작성일   : 2012. 10. 31. 오후 6:17:52
  * </PRE>
  */
-public class CinePoxService extends Service implements Controller {
+public class CinePoxService extends Service {
 
 	/* (non-Javadoc)
 	 * @see android.app.Service#onBind(android.content.Intent)

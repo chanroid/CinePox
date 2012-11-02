@@ -78,6 +78,7 @@ public class VideoModel extends PlayerModel {
 	 * 
 	 * @return String
 	 */
+	@SuppressWarnings("resource")
 	public String getTimeText() {
 		int hour = mCalendar.get(Calendar.HOUR_OF_DAY);
 		int min = mCalendar.get(Calendar.MINUTE);

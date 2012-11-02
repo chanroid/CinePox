@@ -2,7 +2,6 @@ package com.kr.busan.cw.cinepox.player.controller;
 
 import kr.co.chan.util.Util;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -16,8 +15,10 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import com.kr.busan.cw.cinepox.player.model.PlayerModel.Const;
 import com.kr.busan.cw.cinepox.player.view.BrightControlView;
 
+import controller.CCBaseActivity;
+
 @SuppressLint("HandlerLeak")
-public class BrightActivity extends Activity implements OnSeekBarChangeListener {
+public class BrightActivity extends CCBaseActivity implements OnSeekBarChangeListener {
 
 	private BrightControlView mBrightView;
 	private WindowManager.LayoutParams lp;

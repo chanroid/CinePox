@@ -13,12 +13,12 @@
 package com.busan.cw.clsp20120924.view;
 
 import java.util.List;
-import java.util.Map;
 
+import view.CCBaseAdapter;
 import android.content.Context;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.SimpleAdapter;
+
+import com.busan.cw.clsp20120924.structs.BestItemData;
 
 /**
  * <PRE>
@@ -29,43 +29,20 @@ import android.widget.SimpleAdapter;
  * 5. 작성자   : 박찬우
  * 6. 작성일   : 2012. 10. 31. 오후 5:56:54
  * </PRE>
+ * @param <BestItemData>
  */
-public class MainBestAdapter extends SimpleAdapter {
+public class MainBestAdapter extends CCBaseAdapter<BestItemData> {
 
-	/**
-	 * <PRE>
-	 * 1. MethodName : BestAdapter
-	 * 2. ClassName  : BestAdapter
-	 * 3. Comment   : 
-	 * 4. 작성자    : 박찬우
-	 * 5. 작성일    : 2012. 10. 31. 오후 5:57:19
-	 * </PRE>
-	 *   @param context
-	 *   @param data
-	 *   @param resource
-	 *   @param from
-	 *   @param to
-	 */ 
-	public MainBestAdapter(Context context, List<? extends Map<String, ?>> data,
-			int resource, String[] from, int[] to) {
-		super(context, data, resource, from, to);
-	}
-	
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		return super.getView(position, convertView, parent);
+	public MainBestAdapter(Context context, int resource,
+			List<BestItemData> data) {
+		super(context, resource, data);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public long getItemId(int position) {
+	public View initItem(BestItemData data, View convertView) {
 		// TODO Auto-generated method stub
-		return position;
-	}
-
-	@Override
-	public int getCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 }

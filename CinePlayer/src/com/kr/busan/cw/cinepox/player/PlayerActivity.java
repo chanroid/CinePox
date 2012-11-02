@@ -90,7 +90,7 @@ import com.kr.busan.cw.cinepox.R;
  * @author CINEPOX
  * 
  */
-@SuppressLint("HandlerLeak")
+@SuppressLint({ "HandlerLeak", "NewApi" })
 @SuppressWarnings("deprecation")
 public class PlayerActivity extends Activity implements OnErrorListener,
 		OnBufferingUpdateListener, OnCompletionListener, OnPreparedListener,
@@ -1080,6 +1080,7 @@ public class PlayerActivity extends Activity implements OnErrorListener,
 		Formatter mFormatter = new Formatter(mFormatBuilder,
 				Locale.getDefault());
 		mTimeText.setText(mFormatter.format("%02d:%02d", hour, min).toString());
+		mFormatter.close();
 	}
 
 	private void updateBatt() {

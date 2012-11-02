@@ -1,18 +1,17 @@
 package com.kr.busan.cw.cinepox.player.view;
 
 import kr.co.chan.util.Util;
+import view.CCBaseView;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.AudioManager;
 import android.os.Handler;
-import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -32,8 +31,7 @@ import com.kr.busan.cw.cinepox.player.structs.PlayData;
  * </PRE>
  */
 @SuppressLint("HandlerLeak")
-@SuppressWarnings("deprecation")
-public class VideoControllerView extends LinearLayout implements
+public class VideoControllerView extends CCBaseView implements
 		OnSeekBarChangeListener {
 
 	private static final int HANDLE_WHAT_CONTROLLER_AUTO_HIDE = 201;
@@ -145,68 +143,8 @@ public class VideoControllerView extends LinearLayout implements
 		}
 	};
 
-	public VideoControllerView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-		init();
-	}
-
-	public VideoControllerView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		init();
-	}
-
 	public VideoControllerView(Context context) {
 		super(context);
-		init();
-	}
-
-	/**
-	 * <PRE>
-	 * 1. MethodName : init
-	 * 2. ClassName  : VideoControllerView
-	 * 3. Comment   : 
-	 * 		생성자 호출시 공통으로 호출되는 메서드.
-	 * 		내부 뷰 초기화
-	 * 4. 작성자    : 박찬우
-	 * 5. 작성일    : 2012. 10. 15. 오후 1:31:25
-	 * </PRE>
-	 */
-	private void init() {
-		RelativeLayout controllerLayout = (RelativeLayout) View.inflate(
-				getContext(), R.layout.mediacontroller, null);
-		setOnTouchListener(controllerTouchlistener);
-		addView(controllerLayout, LayoutParams.MATCH_PARENT,
-				LayoutParams.MATCH_PARENT);
-
-		batteryText = (TextView) findViewById(R.id.textView_video_battstat);
-		timeText = (TextView) findViewById(R.id.textView_video_time);
-		currentText = (TextView) findViewById(R.id.textView_video_currenttime);
-		durationText = (TextView) findViewById(R.id.textView_video_duration);
-		codecText = (TextView) findViewById(R.id.btn_video_changecodec);
-		qualityText = (TextView) findViewById(R.id.btn_video_changequality);
-
-		shakeBtn = (ImageButton) findViewById(R.id.btn_video_shake);
-		bolumeBtn = (ImageButton) findViewById(R.id.btn_video_volumn);
-		brightBtn = (ImageButton) findViewById(R.id.btn_video_bright);
-		playPauseBtn = (ImageButton) findViewById(R.id.btn_video_playpause);
-		screenModeBtn = (ImageButton) findViewById(R.id.btn_video_fullscreen);
-		captionBtn = (ImageButton) findViewById(R.id.btn_video_caption);
-
-		seekBar = (SeekBar) findViewById(R.id.seekBar_video_controller);
-		seekBar.setOnSeekBarChangeListener(this);
-
-		controllerTop = (LinearLayout) findViewById(R.id.video_controller_top);
-		controllerBottom = (LinearLayout) findViewById(R.id.video_controller_bottom);
-
-		topShowAnimation = AnimationUtils.loadAnimation(getContext(),
-				R.anim.navi_top_up_ani);
-		topHideAnimation = AnimationUtils.loadAnimation(getContext(),
-				R.anim.navi_top_down_ani);
-		bottomShowAnimation = AnimationUtils.loadAnimation(getContext(),
-				R.anim.navi_up_ani);
-		bottomHideAnimation = AnimationUtils.loadAnimation(getContext(),
-				R.anim.navi_down_ani);
-
 	}
 
 	public boolean isTracking() {
@@ -446,6 +384,47 @@ public class VideoControllerView extends LinearLayout implements
 		controllerHandler.sendEmptyMessageDelayed(
 				HANDLE_WHAT_CONTROLLER_AUTO_HIDE, AUTO_HIDE_DELAY);
 		callback.onStopTrackingTouch(seekBar);
+	}
+
+	@Override
+	public int getLayoutId() {
+		// TODO Auto-generated method stub
+		return R.layout.mediacontroller;
+	}
+
+	@Override
+	public void allocViews() {
+		// TODO Auto-generated method stub
+		setOnTouchListener(controllerTouchlistener);
+		batteryText = (TextView) findViewById(R.id.textView_video_battstat);
+		timeText = (TextView) findViewById(R.id.textView_video_time);
+		currentText = (TextView) findViewById(R.id.textView_video_currenttime);
+		durationText = (TextView) findViewById(R.id.textView_video_duration);
+		codecText = (TextView) findViewById(R.id.btn_video_changecodec);
+		qualityText = (TextView) findViewById(R.id.btn_video_changequality);
+
+		shakeBtn = (ImageButton) findViewById(R.id.btn_video_shake);
+		bolumeBtn = (ImageButton) findViewById(R.id.btn_video_volumn);
+		brightBtn = (ImageButton) findViewById(R.id.btn_video_bright);
+		playPauseBtn = (ImageButton) findViewById(R.id.btn_video_playpause);
+		screenModeBtn = (ImageButton) findViewById(R.id.btn_video_fullscreen);
+		captionBtn = (ImageButton) findViewById(R.id.btn_video_caption);
+
+		seekBar = (SeekBar) findViewById(R.id.seekBar_video_controller);
+		seekBar.setOnSeekBarChangeListener(this);
+
+		controllerTop = (LinearLayout) findViewById(R.id.video_controller_top);
+		controllerBottom = (LinearLayout) findViewById(R.id.video_controller_bottom);
+
+		topShowAnimation = AnimationUtils.loadAnimation(getContext(),
+				R.anim.navi_top_up_ani);
+		topHideAnimation = AnimationUtils.loadAnimation(getContext(),
+				R.anim.navi_top_down_ani);
+		bottomShowAnimation = AnimationUtils.loadAnimation(getContext(),
+				R.anim.navi_up_ani);
+		bottomHideAnimation = AnimationUtils.loadAnimation(getContext(),
+				R.anim.navi_down_ani);
+
 	}
 
 }

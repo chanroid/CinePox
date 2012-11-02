@@ -2,7 +2,6 @@ package com.kr.busan.cw.cinepox.player.controller;
 
 import kr.co.chan.util.Util;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
@@ -20,8 +19,10 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import com.kr.busan.cw.cinepox.R;
 import com.kr.busan.cw.cinepox.player.view.VolumeControllView;
 
+import controller.CCBaseActivity;
+
 @SuppressLint("HandlerLeak")
-public class VolumeActivity extends Activity implements
+public class VolumeActivity extends CCBaseActivity implements
 		OnSeekBarChangeListener, OnClickListener {
 
 	private VolumeControllView mVolumeView;
@@ -57,13 +58,7 @@ public class VolumeActivity extends Activity implements
 		}
 		return super.dispatchTouchEvent(ev);
 	}
-
-	@Override
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-	}
-
+	
 	private Handler mHandler = new Handler() {
 		@Override
 		public void handleMessage(android.os.Message msg) {
