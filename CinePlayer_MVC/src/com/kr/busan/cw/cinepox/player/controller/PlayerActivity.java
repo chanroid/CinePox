@@ -63,7 +63,7 @@ import controller.CCBaseActivity;
  * 6. 작성일   : 2012. 10. 15. 오후 1:38:34
  * </PRE>
  */
-@SuppressLint("HandlerLeak")
+@SuppressLint({ "HandlerLeak", "NewApi" })
 public class PlayerActivity extends CCBaseActivity implements
 		VideoControllerCallback, VideoCallback, OnShakeListener,
 		LocationListener {
@@ -97,20 +97,21 @@ public class PlayerActivity extends CCBaseActivity implements
 	public static final int REQUEST_READ_QRCODE = 1;
 	public static final int REQUEST_MODIFY_BRIGHTNESS = 2;
 	// private final int REQUEST_ENABLE_BT = 3;
- 
+
 	private OnClickListener codecChangeListener = new OnClickListener() {
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
 			dialog.dismiss();
 			mConfigModel.setContinuePosition(mVideoView.getCurrentPosition());
 
-			if (mVideoView.setCodec(which))
+			if (mVideoView.setCodec(which)) {
+				if (which == VideoView.CODEC_HW)
+					mVideoController.setCodecText("H/W");
+				else if (which == VideoView.CODEC_SW)
+					mVideoController.setCodecText("S/W");
 				return;
+			}
 
-			if (which == VideoView.CODEC_HW)
-				mVideoController.setCodecText("H/W");
-			else if (which == VideoView.CODEC_SW)
-				mVideoController.setCodecText("S/W");
 		}
 	};
 
@@ -380,7 +381,7 @@ public class PlayerActivity extends CCBaseActivity implements
 	@Override
 	protected void onPause() {
 		super.onPause();
-//		removeControllerView();
+		removeControllerView();
 		unregisterReceiver(updateReceiver);
 		if (mVideoView.getCurrentPosition() > 0l)
 			sendPlayTime();
@@ -477,10 +478,9 @@ public class PlayerActivity extends CCBaseActivity implements
 	}
 
 	private void addControllerView() {
-		if (mVideoController != null) {
+		if (mVideoController != null)
 			mWindowManager.addView(mVideoController, mWindowParams);
-			mVideoController.showController();
-		}
+		mVideoController.showController();
 	}
 
 	private void buildShareDialog() {
@@ -511,7 +511,7 @@ public class PlayerActivity extends CCBaseActivity implements
 					}
 				}, false);
 	}
-	
+
 	private void showVolumeControl() {
 		startActivity(new Intent(this, VolumeActivity.class));
 	}
@@ -678,14 +678,11 @@ public class PlayerActivity extends CCBaseActivity implements
 	public void onVisiblityChanged(int visiblity) {
 		if (Build.VERSION.SDK_INT >= 14) {
 			if (visiblity == View.VISIBLE) {
-				mVideoView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-				mVideoController
-						.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+				getWindow().getDecorView().setSystemUiVisibility(
+						View.SYSTEM_UI_FLAG_VISIBLE);
 			} else {
-				mVideoView
-						.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-				mVideoController
-						.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+				getWindow().getDecorView().setSystemUiVisibility(
+						View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 			}
 		}
 	}

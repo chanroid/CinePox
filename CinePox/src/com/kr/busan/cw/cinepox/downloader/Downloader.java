@@ -22,9 +22,9 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.busan.cw.clsp20120924.R;
-import com.kr.busan.cw.cinepox.player.PlayerActivity;
+import com.kr.busan.cw.cinepox.player.controller.PlayerActivity;
 
-@SuppressLint("HandlerLeak")
+@SuppressLint({ "HandlerLeak", "NewApi" })
 @SuppressWarnings("deprecation")
 public class Downloader extends AsyncTask<String, Integer, Integer> {
 

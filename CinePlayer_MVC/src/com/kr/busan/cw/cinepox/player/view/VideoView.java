@@ -367,7 +367,6 @@ public class VideoView extends CCBaseView implements OnPreparedListener,
 		if (isPluginInstalled() && swVideoView == null) {
 			swVideoView = new SWVideoView(getContext());
 			swVideoView.setVisibility(View.INVISIBLE);
-			// MATCH_PARENT
 			videoContainer.addView(swVideoView, 0, new LayoutParams(-1, -1));
 			initSWVideo();
 			return true;

@@ -1,10 +1,12 @@
 package com.kr.busan.cw.cinepox.player.view;
 
 import kr.co.chan.util.Util;
+import kr.co.chan.util.l;
 import view.CCBaseView;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
@@ -74,73 +76,6 @@ public class VideoControllerView extends CCBaseView implements
 				break;
 			}
 		};
-	};
-
-	private OnTouchListener controllerTouchlistener = new OnTouchListener() {
-
-		float pointX = 0.0f;
-		float pointY = 0.0f;
-		boolean isMoving = false;
-		long distanceX = 0;
-		long distanceY = 0;
-		int action = -1;
-		int currentVol = 0;
-
-		@Override
-		public boolean onTouch(View v, MotionEvent event) {
-			// TODO Auto-generated method stub
-			switch (event.getAction()) {
-			case MotionEvent.ACTION_UP:
-				if (!(distanceX < 1000l && distanceX > -1000l) && action == 0) {
-					if (callback != null)
-						callback.onUp(distanceX);
-				}
-				if (action == -1)
-					toggleController();
-				if (isMoving) {
-					distanceX = 0;
-					distanceY = 0;
-					pointX = 0.0f;
-					pointY = 0.0f;
-					action = -1;
-					isMoving = false;
-					return true;
-				}
-				return true;
-			case MotionEvent.ACTION_DOWN:
-				currentVol = Util.Phone.getVolume(getContext(),
-						AudioManager.STREAM_MUSIC);
-				pointX = event.getX();
-				pointY = event.getY();
-				return true;
-			case MotionEvent.ACTION_MOVE:
-				isMoving = true;
-				float currentX = event.getX();
-				float currentY = event.getY();
-				distanceX = (long) (currentX - pointX) * 20;
-				distanceY = (long) -(currentY - pointY) / 20;
-				if (!(distanceX < 1000l && distanceX > -1000l)) {
-					if (action == -1)
-						action = 0;
-					if (action == 0) {
-						if (callback != null)
-							callback.onScrollX(distanceX);
-						return true;
-					}
-				} else if (!(distanceY < 1 && distanceY > -1)) {
-					if (action == -1)
-						action = 1;
-					if (action == 1) {
-						if (callback != null)
-							callback.onScrollY(currentVol + distanceY);
-						return true;
-					}
-				}
-				return true;
-			default:
-				return false;
-			}
-		}
 	};
 
 	public VideoControllerView(Context context) {
@@ -361,6 +296,19 @@ public class VideoControllerView extends CCBaseView implements
 		callback = cb;
 	}
 
+	public void setOnSystemUiVisibilityChangeListener() {
+		if (Build.VERSION.SDK_INT >= 11) {
+			setOnSystemUiVisibilityChangeListener(new OnSystemUiVisibilityChangeListener() {
+				@Override
+				public void onSystemUiVisibilityChange(int visibility) {
+					// TODO Auto-generated method stub
+					if (visibility == View.SYSTEM_UI_FLAG_VISIBLE)
+						showController();
+				}
+			});
+		}
+	};
+
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int progress,
 			boolean fromUser) {
@@ -392,10 +340,74 @@ public class VideoControllerView extends CCBaseView implements
 		return R.layout.mediacontroller;
 	}
 
+	float pointX = 0.0f;
+	float pointY = 0.0f;
+	boolean isMoving = false;
+	long distanceX = 0;
+	long distanceY = 0;
+	int action = -1;
+	int currentVol = 0;
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// TODO Auto-generated method stub
+		switch (event.getAction()) {
+		case MotionEvent.ACTION_UP:
+			if (!(distanceX < 1000l && distanceX > -1000l) && action == 0) {
+				if (callback != null)
+					callback.onUp(distanceX);
+			}
+			if (action == -1)
+				toggleController();
+			if (isMoving) {
+				distanceX = 0;
+				distanceY = 0;
+				pointX = 0.0f;
+				pointY = 0.0f;
+				action = -1;
+				isMoving = false;
+				return true;
+			}
+			return true;
+		case MotionEvent.ACTION_DOWN:
+			currentVol = Util.Phone.getVolume(getContext(),
+					AudioManager.STREAM_MUSIC);
+			pointX = event.getX();
+			pointY = event.getY();
+			return true;
+		case MotionEvent.ACTION_MOVE:
+			isMoving = true;
+			float currentX = event.getX();
+			float currentY = event.getY();
+			distanceX = (long) (currentX - pointX) * 20;
+			distanceY = (long) -(currentY - pointY) / 20;
+			if (!(distanceX < 1000l && distanceX > -1000l)) {
+				if (action == -1)
+					action = 0;
+				if (action == 0) {
+					if (callback != null)
+						callback.onScrollX(distanceX);
+					return true;
+				}
+			} else if (!(distanceY < 1 && distanceY > -1)) {
+				if (action == -1)
+					action = 1;
+				if (action == 1) {
+					if (callback != null)
+						callback.onScrollY(currentVol + distanceY);
+					return true;
+				}
+			}
+			return true;
+		default:
+			return false;
+		}
+	}
+
 	@Override
 	public void allocViews() {
 		// TODO Auto-generated method stub
-		setOnTouchListener(controllerTouchlistener);
+		setOnSystemUiVisibilityChangeListener();
 		batteryText = (TextView) findViewById(R.id.textView_video_battstat);
 		timeText = (TextView) findViewById(R.id.textView_video_time);
 		currentText = (TextView) findViewById(R.id.textView_video_currenttime);

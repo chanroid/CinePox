@@ -6,15 +6,15 @@
 
     <RelativeLayout
         android:id="@+id/video_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_centerInParent="true" >
 
         <com.kr.busan.cw.cinepox.player.view.HWVideoView
             android:id="@+id/surfaceView_video_view_hw"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true" />
     </RelativeLayout>
 
