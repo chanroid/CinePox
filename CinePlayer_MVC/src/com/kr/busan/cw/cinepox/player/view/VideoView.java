@@ -519,11 +519,15 @@ public class VideoView extends CCBaseView implements OnPreparedListener,
 			hwVideoView.pause();
 		}
 
-		swVideoView.setVisibility(currentCodec == CODEC_SW ? VISIBLE
-				: INVISIBLE);
-		hwVideoView.setVisibility(currentCodec == CODEC_HW ? VISIBLE
-				: INVISIBLE);
-		setVideoURI();
+		try {
+			swVideoView.setVisibility(currentCodec == CODEC_SW ? VISIBLE
+					: INVISIBLE);
+			hwVideoView.setVisibility(currentCodec == CODEC_HW ? VISIBLE
+					: INVISIBLE);
+			setVideoURI();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return true;
 	}
 

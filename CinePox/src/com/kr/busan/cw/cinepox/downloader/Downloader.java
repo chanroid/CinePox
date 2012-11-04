@@ -171,7 +171,7 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 			case 0:
 				Intent playerIntent = new Intent(mContext, PlayerActivity.class);
 				PendingIntent i = PendingIntent.getActivity(mContext, 0,
-						playerIntent, 0);
+						playerIntent, Intent.FLAG_ACTIVITY_NEW_TASK);
 				playerIntent.setData(Uri.fromFile(new File(mPath)));
 				if (Build.VERSION.SDK_INT > 13) {
 					Notification.Builder mBuilder = new Notification.Builder(
@@ -212,7 +212,7 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 							.getString(R.string.download_preparing));
 					mBuilder.setContentIntent(PendingIntent.getActivity(
 							mContext, 0, new Intent(mContext,
-									PlayerActivity.class), 0));
+									PlayerActivity.class), Intent.FLAG_ACTIVITY_NEW_TASK));
 					mNoti = mBuilder.getNotification();
 				} else {
 					mNoti = new Notification(mIcon,
@@ -221,7 +221,7 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 					mNoti.vibrate = new long[] { 0, 200, 300, 200 };
 					mNoti.flags |= Notification.FLAG_AUTO_CANCEL;
 					mNoti.contentIntent = PendingIntent.getActivity(mContext,
-							0, new Intent(mContext, PlayerActivity.class), 0);
+							0, new Intent(mContext, PlayerActivity.class), Intent.FLAG_ACTIVITY_NEW_TASK);
 					mNoti.setLatestEventInfo(mContext,
 							mContext.getString(R.string.download_preparing),
 							mContext.getString(R.string.download_preparing),
@@ -311,7 +311,7 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 		Intent cancelIntent = new Intent(mContext, DownCancelActivity.class);
 		cancelIntent.putExtra("num", mId);
 		PendingIntent pi = PendingIntent.getActivity(mContext, 0, cancelIntent,
-				0);
+				Intent.FLAG_ACTIVITY_NEW_TASK);
 		if (Build.VERSION.SDK_INT >= 14) {
 			Notification.Builder mBuilder = new Notification.Builder(mContext);
 			mBuilder.setProgress(100, mProgress, false);
@@ -414,7 +414,7 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 		Intent playerIntent = new Intent(mContext, PlayerActivity.class);
 		playerIntent.setData(Uri.fromFile(new File(mPath)));
 		PendingIntent intent = PendingIntent.getActivity(mContext, 0,
-				playerIntent, 0);
+				playerIntent, Intent.FLAG_ACTIVITY_NEW_TASK);
 
 		if (Build.VERSION.SDK_INT > 13) {
 			Notification.Builder mBuilder = new Notification.Builder(mContext);
