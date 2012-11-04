@@ -22,7 +22,9 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.busan.cw.clsp20120924.R;
+import com.kr.busan.cw.cinepox.movie.CinepoxService;
 import com.kr.busan.cw.cinepox.player.controller.PlayerActivity;
+import com.kr.busan.cw.cinepox.player.model.PlayerModel.Const;
 
 @SuppressLint({ "HandlerLeak", "NewApi" })
 @SuppressWarnings("deprecation")
@@ -156,6 +158,10 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 		// TODO Auto-generated method stub
 		h.sendEmptyMessage(1);
 	}
+	
+	public void removeNoti() {
+		mNotimanager.cancelAll();
+	}
 
 	class ServiceHandler extends Handler {
 		@Override
@@ -205,7 +211,8 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 					mBuilder.setTicker(mContext
 							.getString(R.string.download_preparing));
 					mBuilder.setContentIntent(PendingIntent.getActivity(
-							mContext, 0, new Intent(), 0));
+							mContext, 0, new Intent(mContext,
+									PlayerActivity.class), 0));
 					mNoti = mBuilder.getNotification();
 				} else {
 					mNoti = new Notification(mIcon,
@@ -214,7 +221,7 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 					mNoti.vibrate = new long[] { 0, 200, 300, 200 };
 					mNoti.flags |= Notification.FLAG_AUTO_CANCEL;
 					mNoti.contentIntent = PendingIntent.getActivity(mContext,
-							0, new Intent(), 0);
+							0, new Intent(mContext, PlayerActivity.class), 0);
 					mNoti.setLatestEventInfo(mContext,
 							mContext.getString(R.string.download_preparing),
 							mContext.getString(R.string.download_preparing),
@@ -260,17 +267,28 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 	protected void onPostExecute(Integer result) {
 		// TODO Auto-generated method stub
 		super.onPostExecute(result);
-		switch (result) {
-		case -1:
-			showError();
-			break;
-		case 0:
-			showComplete();
-			break;
-		case 1:
-			showCancel();
-			break;
+		try {
+			switch (result) {
+			case -1:
+				showError();
+				break;
+			case 0:
+				showComplete();
+				break;
+			case 1:
+				showCancel();
+				break;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+	}
+	
+	public void sendError(Throwable t) {
+		Intent i = new Intent(CinepoxService.ACTION_SEND_ERRORLOG);
+		i.putExtra(Const.KEY_EXCEPTION, t);
+		i.putExtra(Const.KEY_MOVIE_URL, mUrl);
+		mContext.sendBroadcast(i);
 	}
 
 	@Override

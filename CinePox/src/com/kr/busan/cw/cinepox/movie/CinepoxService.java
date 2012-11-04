@@ -40,6 +40,7 @@ import com.kr.busan.cw.cinepox.aidl.ICinepoxService;
 import com.kr.busan.cw.cinepox.aidl.ICinepoxServiceCallback;
 import com.kr.busan.cw.cinepox.downloader.DownManager;
 import com.kr.busan.cw.cinepox.movie.WidgetProvider.UpdateData;
+import com.kr.busan.cw.cinepox.player.model.PlayerConfigModel;
 
 @SuppressLint("HandlerLeak")
 public class CinepoxService extends Service {
@@ -58,6 +59,8 @@ public class CinepoxService extends Service {
 	// private ShakeListener mShaker;
 	// private SensorManager sensorManager;
 	// private Sensor accelerormeterSensor;
+	
+	private PlayerConfigModel mConfigModel;
 
 	public static final int WHAT_CHANGED_ALARM = 2011;
 	public static final int WHAT_CHANGED_INTERVAL = 2012;
@@ -94,7 +97,7 @@ public class CinepoxService extends Service {
 						"android.provider.Telephony.SMS_RECEIVED"));
 			} else if (ACTION_SEND_ERRORLOG
 					.equalsIgnoreCase(intent.getAction())) {
-
+				new SendErrorThread(intent).start();
 			} else if (ACTION_LOAD_WIDGET_DATA.equalsIgnoreCase(intent
 					.getAction())) {
 				unregisterWidgetDataAlarm();
@@ -103,6 +106,23 @@ public class CinepoxService extends Service {
 			}
 		}
 	};
+
+	private class SendErrorThread extends Thread {
+
+		private Intent intent;
+ 
+		private SendErrorThread(Intent intent) {
+			this.intent = intent;
+		}
+
+		public void run() {
+			try {
+				mConfigModel.sendErrorLog(intent);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	class CodeReceiver extends BroadcastReceiver {
 		@Override
@@ -375,6 +395,7 @@ public class CinepoxService extends Service {
 	}
 
 	void initService() {
+		mConfigModel = PlayerConfigModel.getInstance(this);
 		mDownManager = DownManager.getInstance(this);
 		mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 		IntentFilter filter = new IntentFilter();
@@ -519,6 +540,11 @@ public class CinepoxService extends Service {
 		}
 		mCallbacks.finishBroadcast();
 	}
+	
+	private void cancelAllDownload() {
+		// TODO Auto-generated method stub
+		mDownManager.cancelAllDownload();
+	}
 
 	@Override
 	public void onCreate() {
@@ -529,6 +555,7 @@ public class CinepoxService extends Service {
 
 	@Override
 	public void onDestroy() {
+		cancelAllDownload();
 		unregisterReceiver(mReceiver);
 		unregisterAlarm();
 		// unregisterReceiver(mHandleMessageReceiver);

@@ -8,6 +8,7 @@ import kr.co.chan.util.VerticalProgressBar;
 import kr.co.chan.util.Classes.AnimatedImageView;
 import view.CCBaseView;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -184,6 +185,7 @@ public class VideoView extends CCBaseView implements OnPreparedListener,
 		return io.vov.vitamio.widget.VideoView.VIDEO_LAYOUT_ZOOM;
 	}
 
+	@TargetApi(11)
 	public void setSystemUiVisibility(int visibility) {
 		super.setSystemUiVisibility(visibility);
 		if (currentCodec == CODEC_HW)

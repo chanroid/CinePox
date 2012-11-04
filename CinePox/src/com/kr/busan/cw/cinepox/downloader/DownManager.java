@@ -57,6 +57,13 @@ public class DownManager implements
 	public void setCallBack(OnProgressUpdateListener l) {
 		listen = l;
 	}
+	
+	public void cancelAllDownload() {
+		for (Downloader d : mQueueStack) {
+			d.cancel(true);
+			d.removeNoti();
+		}
+	}
 
 	boolean checkDuplicateUrl(String url) {
 		for (Downloader d : mQueueStack) {

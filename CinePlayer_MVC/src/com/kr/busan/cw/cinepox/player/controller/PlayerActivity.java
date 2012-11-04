@@ -299,7 +299,12 @@ public class PlayerActivity extends CCBaseActivity implements
 			mVideoController
 					.setCinePoxMode(result.equals(Const.RESULT_SUCCESS));
 
-			if (Util.Connection.getType(PlayerActivity.this) != ConnectivityManager.TYPE_WIFI
+			if (Build.VERSION.SDK_INT < 9)
+				Toast.makeText(
+						PlayerActivity.this,
+						"운영체제를 안드로이드 2.3버전 이상으로 업그레이드 하시면 초고화질의 동영상을 더욱 원활하게 시청하실 수 있습니다.",
+						Toast.LENGTH_LONG).show();
+			else if (Util.Connection.getType(PlayerActivity.this) != ConnectivityManager.TYPE_WIFI
 					&& !"".equals(mConfigModel.get3GMessage()))
 				Toast.makeText(PlayerActivity.this,
 						mConfigModel.get3GMessage(),
@@ -383,8 +388,6 @@ public class PlayerActivity extends CCBaseActivity implements
 		super.onPause();
 		removeControllerView();
 		unregisterReceiver(updateReceiver);
-		if (mVideoView.getCurrentPosition() > 0l)
-			sendPlayTime();
 	}
 
 	@Override
@@ -405,6 +408,8 @@ public class PlayerActivity extends CCBaseActivity implements
 			isBack = true;
 			Toast.makeText(this, R.string.backtoexit, Toast.LENGTH_LONG).show();
 			backHandler.sendEmptyMessageDelayed(0, 2000);
+			if (mVideoView.getCurrentPosition() > 0l)
+				sendPlayTime();
 		}
 	}
 
@@ -759,6 +764,8 @@ public class PlayerActivity extends CCBaseActivity implements
 				finish();
 				break;
 			}
+			if (mVideoView.getCurrentPosition() > 0l)
+				sendPlayTime();
 			break;
 		case 100:
 			mVideoView.setVideoURI();
@@ -768,6 +775,13 @@ public class PlayerActivity extends CCBaseActivity implements
 					+ "] player onError() : " + what + " : " + extra);
 			break;
 		}
+	}
+
+	@Override
+	public void finish() {
+		// TODO Auto-generated method stub
+		mVideoView.setCodec(-1);
+		super.finish();
 	}
 
 	@Override

@@ -383,7 +383,12 @@ public class PlayerConfigModel extends PlayerModel {
 					param.add(new BasicNameValuePair(KEY_MOVIE_NUM, movie_num));
 					param.add(new BasicNameValuePair(KEY_MEMBER_NUM, member_seq));
 					param.add(new BasicNameValuePair(KEY_SETTING, RESPONSE_JSON));
-					param.add(new BasicNameValuePair(KEY_PROTOCOL_TYPE, "http"));
+					if (Build.VERSION.SDK_INT > 8)
+						param.add(new BasicNameValuePair(KEY_PROTOCOL_TYPE,
+								"http"));
+					else
+						param.add(new BasicNameValuePair(KEY_PROTOCOL_TYPE,
+								"rtsp"));
 					param.add(new BasicNameValuePair(KEY_DEVICE_TYPE, DEVICE));
 					param.add(new BasicNameValuePair(KEY_ORDER_CODE, mOrderCode));
 					JSONObject config = Util.Stream.jsonFromURLbyPOST(
