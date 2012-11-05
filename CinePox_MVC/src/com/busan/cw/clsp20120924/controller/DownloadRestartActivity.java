@@ -12,7 +12,7 @@
  */
 package com.busan.cw.clsp20120924.controller;
 
-import controller.CCBaseActivity;
+import controller.CCActivity;
 
 
 /**
@@ -25,6 +25,6 @@ import controller.CCBaseActivity;
  * 6. 작성일   : 2012. 10. 31. 오후 5:43:23
  * </PRE>
  */
-public class DownloadRestartActivity extends CCBaseActivity {
+public class DownloadRestartActivity extends CCActivity {
 
 }

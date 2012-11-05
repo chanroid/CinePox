@@ -13,7 +13,7 @@
 package com.kr.busan.cw.cinepox.player.view;
 
 import kr.co.chan.util.Util;
-import view.CCBaseView;
+import view.CCView;
 import android.content.Context;
 import android.media.AudioManager;
 import android.widget.ImageView;
@@ -32,7 +32,7 @@ import com.kr.busan.cw.cinepox.R;
  * 6. 작성일   : 2012. 10. 18. 오후 2:48:57
  * </PRE>
  */
-public class VolumeControllView extends CCBaseView {
+public class VolumeControllView extends CCView {
 
 	private SeekBar volumeSeekbar;
 	private ImageView muteButton;

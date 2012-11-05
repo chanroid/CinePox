@@ -14,7 +14,7 @@ package com.busan.cw.clsp20120924.view;
 
 import java.util.List;
 
-import view.CCBaseAdapter;
+import view.CCAdapter;
 import android.content.Context;
 import android.view.View;
 
@@ -31,7 +31,7 @@ import com.busan.cw.clsp20120924.structs.BestItemData;
  * </PRE>
  * @param <BestItemData>
  */
-public class MainBestAdapter extends CCBaseAdapter<BestItemData> {
+public class MainBestAdapter extends CCAdapter<BestItemData> {
 
 	public MainBestAdapter(Context context, int resource,
 			List<BestItemData> data) {

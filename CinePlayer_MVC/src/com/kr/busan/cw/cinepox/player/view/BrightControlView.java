@@ -12,7 +12,7 @@
  */
 package com.kr.busan.cw.cinepox.player.view;
 
-import view.CCBaseView;
+import view.CCView;
 import android.content.Context;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -29,7 +29,7 @@ import com.kr.busan.cw.cinepox.R;
  * 6. 작성일   : 2012. 10. 18. 오후 2:49:15
  * </PRE>
  */
-public class BrightControlView extends CCBaseView {
+public class BrightControlView extends CCView {
 
 	private SeekBar brightSeekbar;
 

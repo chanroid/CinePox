@@ -19,10 +19,10 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import com.kr.busan.cw.cinepox.R;
 import com.kr.busan.cw.cinepox.player.view.VolumeControllView;
 
-import controller.CCBaseActivity;
+import controller.CCActivity;
 
 @SuppressLint("HandlerLeak")
-public class VolumeActivity extends CCBaseActivity implements
+public class VolumeActivity extends CCActivity implements
 		OnSeekBarChangeListener, OnClickListener {
 
 	private VolumeControllView mVolumeView;

@@ -6,7 +6,7 @@ import io.vov.vitamio.VitamioInstaller;
 import kr.co.chan.util.Util;
 import kr.co.chan.util.VerticalProgressBar;
 import kr.co.chan.util.Classes.AnimatedImageView;
-import view.CCBaseView;
+import view.CCView;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -41,7 +41,7 @@ import com.kr.busan.cw.cinepox.player.structs.PlayData;
  * </PRE>
  */
 @SuppressLint("HandlerLeak")
-public class VideoView extends CCBaseView implements OnPreparedListener,
+public class VideoView extends CCView implements OnPreparedListener,
 		io.vov.vitamio.MediaPlayer.OnPreparedListener,
 		OnBufferingUpdateListener,
 		io.vov.vitamio.MediaPlayer.OnBufferingUpdateListener,
@@ -604,8 +604,12 @@ public class VideoView extends CCBaseView implements OnPreparedListener,
 	public PlayData getPlayData() {
 		PlayData data = new PlayData();
 		long current = getCurrentPosition();
-		if (current > getDuration())
-			current %= getDuration();
+		try {
+			if (current > getDuration())
+				current %= getDuration();
+		} catch (ArithmeticException e) {
+			current = 0l;
+		}
 		data.CURRENT = current;
 		data.DURATION = getDuration();
 		return data;

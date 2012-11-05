@@ -60,6 +60,7 @@ public class DownRestartActivity extends Activity {
 		}
 
 		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+		dialog.setCancelable(false);
 		dialog.setTitle(R.string.download_cancel);
 		dialog.setMessage(title + getString(R.string.download_restart));
 		dialog.setPositiveButton(R.string.cancel, cancelListener);

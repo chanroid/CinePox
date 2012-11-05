@@ -41,6 +41,7 @@ public class DownCancelActivity extends Activity {
 		}
 		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 		dialog.setTitle(R.string.download_cancel);
+		dialog.setCancelable(false);
 		dialog.setMessage(title + getString(R.string.noti_download_cancel));
 		dialog.setPositiveButton(R.string.cancel, cancelListener);
 		dialog.setNeutralButton(R.string.delete, deleteListener);

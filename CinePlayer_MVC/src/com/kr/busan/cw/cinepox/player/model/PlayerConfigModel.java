@@ -272,7 +272,7 @@ public class PlayerConfigModel extends PlayerModel {
 		// 서버작업 후 작성할것
 		StringBuffer sb = new StringBuffer();
 		sb.append("APP Ver : " + Util.App.getVersionNum(mContext) + "\n");
-		sb.append("Time : " + Util.Time.getCurrentTimeString1() + "\n");
+		sb.append("Time : " + Util.Time.getCurrentDateTimeString() + "\n");
 		sb.append("Model Name : " + Build.MODEL + "\n");
 		sb.append("Android Ver. : " + Build.VERSION.RELEASE + "\n");
 		sb.append("SDK Ver. : " + Build.VERSION.SDK_INT + "\n");

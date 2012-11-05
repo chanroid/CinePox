@@ -14,7 +14,7 @@ package com.busan.cw.clsp20120924.view;
 
 import java.util.List;
 
-import view.CCBaseAdapter;
+import view.CCAdapter;
 import android.content.Context;
 import android.view.View;
 
@@ -30,7 +30,7 @@ import com.busan.cw.clsp20120924.structs.SearchItemData;
  * 6. 작성일   : 2012. 10. 31. 오후 6:49:37
  * </PRE>
  */
-public class SearchAdapter extends CCBaseAdapter<SearchItemData> {
+public class SearchAdapter extends CCAdapter<SearchItemData> {
 
 	public SearchAdapter(Context context, int resource,
 			List<SearchItemData> data) {

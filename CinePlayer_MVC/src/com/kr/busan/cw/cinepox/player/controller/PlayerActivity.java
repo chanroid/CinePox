@@ -50,7 +50,7 @@ import com.kr.busan.cw.cinepox.player.structs.QualityData;
 import com.kr.busan.cw.cinepox.player.view.VideoControllerView;
 import com.kr.busan.cw.cinepox.player.view.VideoView;
 
-import controller.CCBaseActivity;
+import controller.CCActivity;
 
 /**
  * <PRE>
@@ -64,7 +64,7 @@ import controller.CCBaseActivity;
  * </PRE>
  */
 @SuppressLint({ "HandlerLeak", "NewApi" })
-public class PlayerActivity extends CCBaseActivity implements
+public class PlayerActivity extends CCActivity implements
 		VideoControllerCallback, VideoCallback, OnShakeListener,
 		LocationListener {
 

@@ -15,10 +15,10 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import com.kr.busan.cw.cinepox.player.model.PlayerModel.Const;
 import com.kr.busan.cw.cinepox.player.view.BrightControlView;
 
-import controller.CCBaseActivity;
+import controller.CCActivity;
 
 @SuppressLint("HandlerLeak")
-public class BrightActivity extends CCBaseActivity implements OnSeekBarChangeListener {
+public class BrightActivity extends CCActivity implements OnSeekBarChangeListener {
 
 	private BrightControlView mBrightView;
 	private WindowManager.LayoutParams lp;

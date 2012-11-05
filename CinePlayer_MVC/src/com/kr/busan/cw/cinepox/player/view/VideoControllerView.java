@@ -1,8 +1,7 @@
 package com.kr.busan.cw.cinepox.player.view;
 
 import kr.co.chan.util.Util;
-import kr.co.chan.util.l;
-import view.CCBaseView;
+import view.CCView;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.AudioManager;
@@ -33,7 +32,7 @@ import com.kr.busan.cw.cinepox.player.structs.PlayData;
  * </PRE>
  */
 @SuppressLint("HandlerLeak")
-public class VideoControllerView extends CCBaseView implements
+public class VideoControllerView extends CCView implements
 		OnSeekBarChangeListener {
 
 	private static final int HANDLE_WHAT_CONTROLLER_AUTO_HIDE = 201;

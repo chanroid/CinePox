@@ -3,23 +3,15 @@ package com.kr.busan.cw.cinepox.movie;
 import static com.kr.busan.cw.cinepox.movie.Constants.KEY_RESULT;
 import static com.kr.busan.cw.cinepox.movie.Constants.KEY_TITLE;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import kr.co.chan.util.Util;
 import kr.co.chan.util.l;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -256,22 +248,7 @@ public class IntroActivity extends Activity {
 
 		void parseCategory(int index, String url)
 				throws ClientProtocolException, IOException, JSONException {
-			StringBuilder sb = new StringBuilder();
-			HttpClient client = new DefaultHttpClient();
-			HttpGet post = new HttpGet(url);
-			HttpResponse res = client.execute(post);
-			HttpEntity entity = res.getEntity();
-			if (entity != null) {
-				InputStream in = entity.getContent();
-				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(in));
-				String line = null;
-				while ((line = reader.readLine()) != null) {
-					sb.append(line + "\n");
-				}
-				in.close();
-			}
-			JSONObject o = new JSONObject(sb.toString());
+			JSONObject o = Util.Stream.jsonFromURL(url);
 			String title = o.getString(KEY_TITLE);
 			getConfig().addCategoryName(index, title);
 			getConfig().addCategoryUrl(index, url);

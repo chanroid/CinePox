@@ -24,12 +24,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.kr.busan.cw.cinepox.player.model.PlayerModel.Const;
-
 import kr.co.chan.util.Util;
 import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.HTMLElementName;
 import net.htmlparser.jericho.Source;
+
+import com.kr.busan.cw.cinepox.player.model.PlayerModel.Const;
 
 /**
  * <PRE>
@@ -53,9 +53,6 @@ public class CaptionModel {
 		return instance;
 	}
 
-	private CaptionModel() {
-
-	}
 
 	private Map<String, ArrayList<CaptionData>> mCaptionArray;
 	private ArrayList<String> mLangNames;
