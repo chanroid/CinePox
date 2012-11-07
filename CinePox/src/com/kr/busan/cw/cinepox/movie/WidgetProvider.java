@@ -13,7 +13,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.widget.RemoteViews;
 
-import com.busan.cw.clsp20120924.R;
+import com.busan.cw.clsp20120924_test.R;
 
 public class WidgetProvider extends AppWidgetProvider {
 

@@ -7,7 +7,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
-import com.busan.cw.clsp20120924.R;
+import com.busan.cw.clsp20120924_test.R;
 
 public class DownCancelActivity extends Activity {
 

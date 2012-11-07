@@ -1,6 +1,6 @@
 package com.kr.busan.cw.cinepox.movie;
 
-import com.busan.cw.clsp20120924.R;
+import com.busan.cw.clsp20120924_test.R;
 
 import kr.co.chan.util.l;
 import android.app.Activity;

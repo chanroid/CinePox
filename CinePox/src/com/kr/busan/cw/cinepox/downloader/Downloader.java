@@ -21,7 +21,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 
-import com.busan.cw.clsp20120924.R;
+import com.busan.cw.clsp20120924_test.R;
 import com.kr.busan.cw.cinepox.movie.CinepoxService;
 import com.kr.busan.cw.cinepox.player.controller.PlayerActivity;
 import com.kr.busan.cw.cinepox.player.model.PlayerModel.Const;
