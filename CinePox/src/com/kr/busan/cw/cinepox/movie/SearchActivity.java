@@ -66,8 +66,8 @@ public class SearchActivity extends Activity implements OnClickListener,
 		mSearchEdit.textBox.setOnKeyListener(this);
 		mSearchEdit.textBox.setHint("검색어");
 		mSearchEdit.textBox.setTextColor(Color.BLACK);
-		mSearchEdit.textBox
-				.setBackgroundResource(R.drawable.bg_form);
+		mSearchEdit.textBox.setPrivateImeOptions("defaultInputmode=korea;");
+		mSearchEdit.textBox.setBackgroundResource(R.drawable.bg_form);
 		mSearchEdit.textBox.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
 		mSearchEdit.textBox.setSingleLine();
 		mSearchBtn.setOnClickListener(this);

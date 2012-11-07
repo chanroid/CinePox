@@ -384,7 +384,7 @@ public class IntroActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-//		l.setEnabled(false);
+		l.setEnabled(false);
 		setContentView(R.layout.intro);
 		mDataloader.execute();
 		setupShortcut();

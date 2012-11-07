@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="cinepox">씨네폭스</string>
-    <string name="cineplayer">씨네폭스 플레이어</string>
+    <string name="cinepox">씨네폭스_test</string>
+    <string name="cineplayer">씨네폭스 플레이어_test</string>
     <string name="qrplay">씨네폭스 QR Play!</string>
     <string name="login_success">로그인에 성공했습니다!</string>
     <string name="logout_success">로그아웃 되었습니다.</string>
