@@ -653,14 +653,14 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #ProgressBar_android_max com.busan.cw.clsp20120924_test:android_max}</code></td><td></td></tr>
-           <tr><td><code>{@link #ProgressBar_android_maxHeight com.busan.cw.clsp20120924_test:android_maxHeight}</code></td><td></td></tr>
-           <tr><td><code>{@link #ProgressBar_android_maxWidth com.busan.cw.clsp20120924_test:android_maxWidth}</code></td><td></td></tr>
-           <tr><td><code>{@link #ProgressBar_android_minHeight com.busan.cw.clsp20120924_test:android_minHeight}</code></td><td></td></tr>
-           <tr><td><code>{@link #ProgressBar_android_minWidth com.busan.cw.clsp20120924_test:android_minWidth}</code></td><td></td></tr>
-           <tr><td><code>{@link #ProgressBar_android_progress com.busan.cw.clsp20120924_test:android_progress}</code></td><td></td></tr>
-           <tr><td><code>{@link #ProgressBar_android_progressDrawable com.busan.cw.clsp20120924_test:android_progressDrawable}</code></td><td></td></tr>
-           <tr><td><code>{@link #ProgressBar_android_secondaryProgress com.busan.cw.clsp20120924_test:android_secondaryProgress}</code></td><td></td></tr>
+           <tr><td><code>{@link #ProgressBar_android_max com.busan.cw.clsp20120924:android_max}</code></td><td></td></tr>
+           <tr><td><code>{@link #ProgressBar_android_maxHeight com.busan.cw.clsp20120924:android_maxHeight}</code></td><td></td></tr>
+           <tr><td><code>{@link #ProgressBar_android_maxWidth com.busan.cw.clsp20120924:android_maxWidth}</code></td><td></td></tr>
+           <tr><td><code>{@link #ProgressBar_android_minHeight com.busan.cw.clsp20120924:android_minHeight}</code></td><td></td></tr>
+           <tr><td><code>{@link #ProgressBar_android_minWidth com.busan.cw.clsp20120924:android_minWidth}</code></td><td></td></tr>
+           <tr><td><code>{@link #ProgressBar_android_progress com.busan.cw.clsp20120924:android_progress}</code></td><td></td></tr>
+           <tr><td><code>{@link #ProgressBar_android_progressDrawable com.busan.cw.clsp20120924:android_progressDrawable}</code></td><td></td></tr>
+           <tr><td><code>{@link #ProgressBar_android_secondaryProgress com.busan.cw.clsp20120924:android_secondaryProgress}</code></td><td></td></tr>
            </table>
            @see #ProgressBar_android_max
            @see #ProgressBar_android_maxHeight
@@ -676,49 +676,49 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
             0x01010138, 0x0101013c, 0x0101013f, 0x01010140
         };
         /**
-          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924_test.R.attr#android_max}
+          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924.R.attr#android_max}
           attribute's value can be found in the {@link #ProgressBar} array.
           @attr name android:android_max
         */
         public static final int ProgressBar_android_max = 2;
         /**
-          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924_test.R.attr#android_maxHeight}
+          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924.R.attr#android_maxHeight}
           attribute's value can be found in the {@link #ProgressBar} array.
           @attr name android:android_maxHeight
         */
         public static final int ProgressBar_android_maxHeight = 1;
         /**
-          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924_test.R.attr#android_maxWidth}
+          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924.R.attr#android_maxWidth}
           attribute's value can be found in the {@link #ProgressBar} array.
           @attr name android:android_maxWidth
         */
         public static final int ProgressBar_android_maxWidth = 0;
         /**
-          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924_test.R.attr#android_minHeight}
+          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924.R.attr#android_minHeight}
           attribute's value can be found in the {@link #ProgressBar} array.
           @attr name android:android_minHeight
         */
         public static final int ProgressBar_android_minHeight = 7;
         /**
-          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924_test.R.attr#android_minWidth}
+          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924.R.attr#android_minWidth}
           attribute's value can be found in the {@link #ProgressBar} array.
           @attr name android:android_minWidth
         */
         public static final int ProgressBar_android_minWidth = 6;
         /**
-          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924_test.R.attr#android_progress}
+          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924.R.attr#android_progress}
           attribute's value can be found in the {@link #ProgressBar} array.
           @attr name android:android_progress
         */
         public static final int ProgressBar_android_progress = 3;
         /**
-          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924_test.R.attr#android_progressDrawable}
+          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924.R.attr#android_progressDrawable}
           attribute's value can be found in the {@link #ProgressBar} array.
           @attr name android:android_progressDrawable
         */
         public static final int ProgressBar_android_progressDrawable = 5;
         /**
-          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924_test.R.attr#android_secondaryProgress}
+          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924.R.attr#android_secondaryProgress}
           attribute's value can be found in the {@link #ProgressBar} array.
           @attr name android:android_secondaryProgress
         */
@@ -729,13 +729,13 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #PullToRefresh_ptrAdapterViewBackground com.busan.cw.clsp20120924_test:ptrAdapterViewBackground}</code></td><td></td></tr>
-           <tr><td><code>{@link #PullToRefresh_ptrDrawable com.busan.cw.clsp20120924_test:ptrDrawable}</code></td><td></td></tr>
-           <tr><td><code>{@link #PullToRefresh_ptrHeaderBackground com.busan.cw.clsp20120924_test:ptrHeaderBackground}</code></td><td></td></tr>
-           <tr><td><code>{@link #PullToRefresh_ptrHeaderSubTextColor com.busan.cw.clsp20120924_test:ptrHeaderSubTextColor}</code></td><td></td></tr>
-           <tr><td><code>{@link #PullToRefresh_ptrHeaderTextColor com.busan.cw.clsp20120924_test:ptrHeaderTextColor}</code></td><td></td></tr>
-           <tr><td><code>{@link #PullToRefresh_ptrMode com.busan.cw.clsp20120924_test:ptrMode}</code></td><td></td></tr>
-           <tr><td><code>{@link #PullToRefresh_ptrShowIndicator com.busan.cw.clsp20120924_test:ptrShowIndicator}</code></td><td></td></tr>
+           <tr><td><code>{@link #PullToRefresh_ptrAdapterViewBackground com.busan.cw.clsp20120924:ptrAdapterViewBackground}</code></td><td></td></tr>
+           <tr><td><code>{@link #PullToRefresh_ptrDrawable com.busan.cw.clsp20120924:ptrDrawable}</code></td><td></td></tr>
+           <tr><td><code>{@link #PullToRefresh_ptrHeaderBackground com.busan.cw.clsp20120924:ptrHeaderBackground}</code></td><td></td></tr>
+           <tr><td><code>{@link #PullToRefresh_ptrHeaderSubTextColor com.busan.cw.clsp20120924:ptrHeaderSubTextColor}</code></td><td></td></tr>
+           <tr><td><code>{@link #PullToRefresh_ptrHeaderTextColor com.busan.cw.clsp20120924:ptrHeaderTextColor}</code></td><td></td></tr>
+           <tr><td><code>{@link #PullToRefresh_ptrMode com.busan.cw.clsp20120924:ptrMode}</code></td><td></td></tr>
+           <tr><td><code>{@link #PullToRefresh_ptrShowIndicator com.busan.cw.clsp20120924:ptrShowIndicator}</code></td><td></td></tr>
            </table>
            @see #PullToRefresh_ptrAdapterViewBackground
            @see #PullToRefresh_ptrDrawable
@@ -750,7 +750,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
             0x7f010004, 0x7f010005, 0x7f010006
         };
         /**
-          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924_test.R.attr#ptrAdapterViewBackground}
+          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924.R.attr#ptrAdapterViewBackground}
           attribute's value can be found in the {@link #PullToRefresh} array.
 
 
@@ -762,7 +762,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int PullToRefresh_ptrAdapterViewBackground = 0;
         /**
-          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924_test.R.attr#ptrDrawable}
+          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924.R.attr#ptrDrawable}
           attribute's value can be found in the {@link #PullToRefresh} array.
 
 
@@ -772,7 +772,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int PullToRefresh_ptrDrawable = 6;
         /**
-          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924_test.R.attr#ptrHeaderBackground}
+          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924.R.attr#ptrHeaderBackground}
           attribute's value can be found in the {@link #PullToRefresh} array.
 
 
@@ -784,7 +784,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int PullToRefresh_ptrHeaderBackground = 1;
         /**
-          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924_test.R.attr#ptrHeaderSubTextColor}
+          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924.R.attr#ptrHeaderSubTextColor}
           attribute's value can be found in the {@link #PullToRefresh} array.
 
 
@@ -796,7 +796,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int PullToRefresh_ptrHeaderSubTextColor = 3;
         /**
-          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924_test.R.attr#ptrHeaderTextColor}
+          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924.R.attr#ptrHeaderTextColor}
           attribute's value can be found in the {@link #PullToRefresh} array.
 
 
@@ -808,7 +808,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int PullToRefresh_ptrHeaderTextColor = 2;
         /**
-          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924_test.R.attr#ptrMode}
+          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924.R.attr#ptrMode}
           attribute's value can be found in the {@link #PullToRefresh} array.
 
 
@@ -826,7 +826,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static final int PullToRefresh_ptrMode = 4;
         /**
-          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924_test.R.attr#ptrShowIndicator}
+          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924.R.attr#ptrShowIndicator}
           attribute's value can be found in the {@link #PullToRefresh} array.
 
 
@@ -842,8 +842,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #SeekBar_android_thumb com.busan.cw.clsp20120924_test:android_thumb}</code></td><td></td></tr>
-           <tr><td><code>{@link #SeekBar_android_thumbOffset com.busan.cw.clsp20120924_test:android_thumbOffset}</code></td><td></td></tr>
+           <tr><td><code>{@link #SeekBar_android_thumb com.busan.cw.clsp20120924:android_thumb}</code></td><td></td></tr>
+           <tr><td><code>{@link #SeekBar_android_thumbOffset com.busan.cw.clsp20120924:android_thumbOffset}</code></td><td></td></tr>
            </table>
            @see #SeekBar_android_thumb
            @see #SeekBar_android_thumbOffset
@@ -852,13 +852,13 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
             0x01010142, 0x01010143
         };
         /**
-          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924_test.R.attr#android_thumb}
+          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924.R.attr#android_thumb}
           attribute's value can be found in the {@link #SeekBar} array.
           @attr name android:android_thumb
         */
         public static final int SeekBar_android_thumb = 0;
         /**
-          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924_test.R.attr#android_thumbOffset}
+          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924.R.attr#android_thumbOffset}
           attribute's value can be found in the {@link #SeekBar} array.
           @attr name android:android_thumbOffset
         */
@@ -869,7 +869,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #Theme_android_disabledAlpha com.busan.cw.clsp20120924_test:android_disabledAlpha}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_android_disabledAlpha com.busan.cw.clsp20120924:android_disabledAlpha}</code></td><td></td></tr>
            </table>
            @see #Theme_android_disabledAlpha
          */
@@ -877,7 +877,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
             0x01010033
         };
         /**
-          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924_test.R.attr#android_disabledAlpha}
+          <p>This symbol is the offset where the {@link com.busan.cw.clsp20120924.R.attr#android_disabledAlpha}
           attribute's value can be found in the {@link #Theme} array.
           @attr name android:android_disabledAlpha
         */

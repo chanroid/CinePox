@@ -3,7 +3,7 @@ package com.kr.busan.cw.cinepox.movie;
 import java.util.List;
 import java.util.Map;
 
-import com.busan.cw.clsp20120924_test.R;
+import com.busan.cw.clsp20120924.R;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Color;

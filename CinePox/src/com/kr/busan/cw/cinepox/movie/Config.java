@@ -17,10 +17,10 @@ public class Config {
 
 	public static String[] IntervalArray;
 	public static String[] AlarmArray;
-//	public static final String WebDomain = "http://m.cinepox.com/";
-//	public static final String Domain = "http://access.cinepox.com/";
-	public static final String WebDomain = "http://mtest4.cinepox.com/";
-	public static final String Domain = "http://test4.cinepox.com/";
+	public static final String WebDomain = "http://m.cinepox.com/";
+	public static final String Domain = "http://access.cinepox.com/";
+//	public static final String WebDomain = "http://mtest4.cinepox.com/";
+//	public static final String Domain = "http://test4.cinepox.com/";
 
 	private static Config instance;
 

@@ -12,7 +12,7 @@
  */
 package com.kr.busan.cw.cinepox.downloader;
 
-import com.busan.cw.clsp20120924_test.R;
+import com.busan.cw.clsp20120924.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;

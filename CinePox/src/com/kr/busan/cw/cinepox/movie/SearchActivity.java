@@ -31,7 +31,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-import com.busan.cw.clsp20120924_test.R;
+import com.busan.cw.clsp20120924.R;
 import com.kr.busan.cw.cinepox.movie.SearchParser.ParserCallback;
 
 public class SearchActivity extends Activity implements OnClickListener,

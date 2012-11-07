@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.busan.cw.clsp20120924_test.R;
+import com.busan.cw.clsp20120924.R;
 
 public class SearchAdapter extends ArrayAdapter<String> {
 

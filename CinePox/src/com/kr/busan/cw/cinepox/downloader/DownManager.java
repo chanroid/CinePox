@@ -8,7 +8,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
 
-import com.busan.cw.clsp20120924_test.R;
+import com.busan.cw.clsp20120924.R;
 
 /**
  * 이슈사항 정리
