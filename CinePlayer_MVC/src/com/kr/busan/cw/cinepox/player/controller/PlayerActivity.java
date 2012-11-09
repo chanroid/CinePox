@@ -105,6 +105,7 @@ public class PlayerActivity extends CCActivity implements
 			mConfigModel.setContinuePosition(mVideoView.getCurrentPosition());
 
 			if (mVideoView.setCodec(which)) {
+				mVideoController.setBufferProgress(0);
 				if (which == VideoView.CODEC_HW)
 					mVideoController.setCodecText("H/W");
 				else if (which == VideoView.CODEC_SW)
@@ -122,6 +123,7 @@ public class PlayerActivity extends CCActivity implements
 			if (which == mQuality)
 				return;
 			mQuality = which;
+			mVideoController.setBufferProgress(0);
 			mConfigModel.setContinuePosition(mVideoView.getCurrentPosition());
 			mConfigModel.setDefaultQuality(mPlayerModel.getQualityArray().get(
 					mQuality).TYPE);
@@ -686,8 +688,12 @@ public class PlayerActivity extends CCActivity implements
 				getWindow().getDecorView().setSystemUiVisibility(
 						View.SYSTEM_UI_FLAG_VISIBLE);
 			} else {
-				getWindow().getDecorView().setSystemUiVisibility(
-						View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+				if (Util.Display.isTablet(this))
+					getWindow().getDecorView().setSystemUiVisibility(
+							View.SYSTEM_UI_FLAG_LOW_PROFILE);
+				else
+					getWindow().getDecorView().setSystemUiVisibility(
+							View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 			}
 		}
 	}
@@ -720,6 +726,13 @@ public class PlayerActivity extends CCActivity implements
 				AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
 		distance = Util.Phone.getVolume(this, AudioManager.STREAM_MUSIC);
 		mVideoView.setVolume((int) distance);
+	}
+
+	@Override
+	public void onZoom(float scale) {
+		// TODO Auto-generated method stub
+		if (mVideoView.setVideoScale(scale))
+			mVideoView.setCenterText((int) (scale * 100) + "%");
 	}
 
 	/**

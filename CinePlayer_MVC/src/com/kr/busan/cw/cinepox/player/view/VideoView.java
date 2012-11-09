@@ -21,7 +21,9 @@ import android.media.MediaPlayer.OnSeekCompleteListener;
 import android.net.Uri;
 import android.os.Handler;
 import android.text.Html;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -59,7 +61,7 @@ public class VideoView extends CCView implements OnPreparedListener,
 	private VideoCallback callback;
 	private HWVideoView hwVideoView;
 	private SWVideoView swVideoView;
-	private RelativeLayout videoContainer;
+	private FrameLayout videoContainer;
 	private AnimatedImageView progressImage;
 	private TextView captionView;
 	private TextView centerText;
@@ -160,7 +162,7 @@ public class VideoView extends CCView implements OnPreparedListener,
 	@Override
 	public void allocViews() {
 		// TODO Auto-generated method stub
-		videoContainer = (RelativeLayout) findViewById(R.id.video_container);
+		videoContainer = (FrameLayout) findViewById(R.id.video_container);
 		addHWVideo();
 		addVolumeView();
 		if (!addSWVideo())
@@ -170,7 +172,16 @@ public class VideoView extends CCView implements OnPreparedListener,
 		centerText = (TextView) findViewById(R.id.textView_video_center);
 	}
 
+	public boolean setVideoScale(float scale) {
+		if (currentCodec == CODEC_HW)
+			return hwVideoView.setScale(scale);
+		// else if (currentCodec == CODEC_SW)
+		// return swVideoView.setScale(scale);
+		return false;
+	}
+
 	public void setVideoLayout(int layout) {
+		setVideoScale(1.0f);
 		if (currentCodec == CODEC_HW)
 			hwVideoView.setVideoLayout(layout);
 		else if (currentCodec == CODEC_SW)
@@ -369,7 +380,10 @@ public class VideoView extends CCView implements OnPreparedListener,
 		if (isPluginInstalled() && swVideoView == null) {
 			swVideoView = new SWVideoView(getContext());
 			swVideoView.setVisibility(View.INVISIBLE);
-			videoContainer.addView(swVideoView, 0, new LayoutParams(-1, -1));
+			FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(-1,
+					-1);
+			params.gravity = Gravity.CENTER;
+			videoContainer.addView(swVideoView, 0, params);
 			initSWVideo();
 			return true;
 		} else {
@@ -592,11 +606,16 @@ public class VideoView extends CCView implements OnPreparedListener,
 	}
 
 	public boolean isPlaying() {
-		if (currentCodec == CODEC_HW) {
-			return hwVideoView.isPlaying();
-		} else if (currentCodec == CODEC_SW) {
-			return swVideoView.isPlaying();
-		} else {
+		try {
+			if (currentCodec == CODEC_HW) {
+				return hwVideoView.isPlaying();
+			} else if (currentCodec == CODEC_SW) {
+				return swVideoView.isPlaying();
+			} else {
+				return false;
+			}
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
 			return false;
 		}
 	}

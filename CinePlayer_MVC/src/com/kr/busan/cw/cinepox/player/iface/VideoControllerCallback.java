@@ -31,4 +31,5 @@ public interface VideoControllerCallback extends OnClickListener,
 	public void onScrollX(long distance);
 	public void onScrollY(long distance);
 	public void onVisiblityChanged(int visiblity);
+	public void onZoom(float scale);
 }

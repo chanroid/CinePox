@@ -8,6 +8,8 @@ import android.media.AudioManager;
 import android.os.Build;
 import android.os.Handler;
 import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
+import android.view.ScaleGestureDetector.SimpleOnScaleGestureListener;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -77,8 +79,27 @@ public class VideoControllerView extends CCView implements
 		};
 	};
 
+	private ScaleGestureDetector mMultiTouchDetector;
+	private SimpleOnScaleGestureListener mMultiTouchListener = new SimpleOnScaleGestureListener() {
+		private float scaleFactor = 0.7f;
+
+		@Override
+		public boolean onScale(ScaleGestureDetector detector) {
+			action = 2;
+			controllerHandler.removeMessages(HANDLE_WHAT_CONTROLLER_AUTO_HIDE);
+			scaleFactor *= detector.getScaleFactor();
+			scaleFactor = Math.max(0.3f, Math.min(scaleFactor, 5.0f));
+			if (callback != null)
+				callback.onZoom(scaleFactor);
+			return true;
+		};
+	};
+
 	public VideoControllerView(Context context) {
 		super(context);
+		setOnSystemUiVisibilityChangeListener();
+		mMultiTouchDetector = new ScaleGestureDetector(context,
+				mMultiTouchListener);
 	}
 
 	public boolean isTracking() {
@@ -350,8 +371,12 @@ public class VideoControllerView extends CCView implements
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		// TODO Auto-generated method stub
-		switch (event.getAction()) {
+		mMultiTouchDetector.onTouchEvent(event);
+
+		switch (event.getAction() & MotionEvent.ACTION_MASK) {
 		case MotionEvent.ACTION_UP:
+			controllerHandler.sendEmptyMessageDelayed(
+					HANDLE_WHAT_CONTROLLER_AUTO_HIDE, AUTO_HIDE_DELAY);
 			if (!(distanceX < 1000l && distanceX > -1000l) && action == 0) {
 				if (callback != null)
 					callback.onUp(distanceX);
@@ -406,7 +431,6 @@ public class VideoControllerView extends CCView implements
 	@Override
 	public void allocViews() {
 		// TODO Auto-generated method stub
-		setOnSystemUiVisibilityChangeListener();
 		batteryText = (TextView) findViewById(R.id.textView_video_battstat);
 		timeText = (TextView) findViewById(R.id.textView_video_time);
 		currentText = (TextView) findViewById(R.id.textView_video_currenttime);
@@ -435,7 +459,6 @@ public class VideoControllerView extends CCView implements
 				R.anim.navi_up_ani);
 		bottomHideAnimation = AnimationUtils.loadAnimation(getContext(),
 				R.anim.navi_down_ani);
-
 	}
 
 }

@@ -6,17 +6,11 @@ import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.CAPTION_EXT
 import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.DEVICE;
 import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_3G_MESSAGE;
 import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_3G_MESSAGE_LENGTH;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_BOOKMARK_DELETE_URL;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_BOOKMARK_INSERT_URL;
 import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_BUG_INSERT_URL;
 import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_DEVICE_TYPE;
 import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_EXCEPTION;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_GET_AD_URL;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_GET_BOOKMARK_LIST;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_GET_TEXT_BANNER_URL;
 import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_KEY;
 import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_LANG;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_LOG_URL;
 import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_MEMBER_NUM;
 import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_MOVIE_LIST;
 import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_MOVIE_NUM;
@@ -63,6 +57,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Debug;
+import android.widget.Toast;
 
 import com.kr.busan.cw.cinepox.player.structs.QualityData;
 
@@ -90,17 +85,17 @@ public class PlayerConfigModel extends PlayerModel {
 	private CaptionModel mCaptionModel;
 	private VideoModel mVideoModel;
 
-	private String m3GMessage;
-	private int m3GMessageLength;
+	private String m3GMessage = "WI-FI 환경에서 감상하시는 것을 권장합니다.";
+	private int m3GMessageLength = Toast.LENGTH_LONG;
 
 	private String mBugReportUrl;
 	private String mPlaytimeUrl;
-	private String mTextBannerUrl;
-	private String mADUrl;
-	private String mBookmarkListUrl;
-	private String mBookmarkInsertUrl;
-	private String mBookmarkDeleteUrl;
-	private String mLogReportUrl;
+//	private String mTextBannerUrl;
+//	private String mADUrl;
+//	private String mBookmarkListUrl;
+//	private String mBookmarkInsertUrl;
+//	private String mBookmarkDeleteUrl;
+//	private String mLogReportUrl;
 
 	private PlayerConfigModel(Context ctx) {
 		mContext = ctx;
@@ -307,7 +302,7 @@ public class PlayerConfigModel extends PlayerModel {
 		ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair(KEY_TYPE, KEY_EXCEPTION));
 		params.add(new BasicNameValuePair(KEY_MSG, sb.toString()));
-		Util.Stream.inStreamFromURLbyPOST(mLogReportUrl, params);
+		Util.Stream.inStreamFromURLbyPOST(mBugReportUrl, params);
 
 	}
 
@@ -447,21 +442,21 @@ public class PlayerConfigModel extends PlayerModel {
 
 					try {
 						JSONObject urlArray = config.getJSONObject(KEY_URL);
-						mBookmarkListUrl = urlArray
-								.getString(KEY_GET_BOOKMARK_LIST);
-						mBookmarkInsertUrl = urlArray
-								.getString(KEY_BOOKMARK_INSERT_URL);
-						mTextBannerUrl = urlArray
-								.getString(KEY_GET_TEXT_BANNER_URL);
-						mADUrl = urlArray.getString(KEY_GET_AD_URL);
-						mBookmarkDeleteUrl = urlArray
-								.getString(KEY_BOOKMARK_DELETE_URL);
 						mBugReportUrl = urlArray.getString(KEY_BUG_INSERT_URL);
-						mLogReportUrl = urlArray.getString(KEY_LOG_URL);
 						mPlaytimeUrl = urlArray.getString(KEY_PLAY_TIME_URL);
 						m3GMessage = urlArray.getString(KEY_3G_MESSAGE);
 						m3GMessageLength = urlArray
 								.getInt(KEY_3G_MESSAGE_LENGTH);
+//						mBookmarkListUrl = urlArray
+//								.getString(KEY_GET_BOOKMARK_LIST);
+//						mBookmarkInsertUrl = urlArray
+//								.getString(KEY_BOOKMARK_INSERT_URL);
+//						mTextBannerUrl = urlArray
+//								.getString(KEY_GET_TEXT_BANNER_URL);
+//						mADUrl = urlArray.getString(KEY_GET_AD_URL);
+//						mBookmarkDeleteUrl = urlArray
+//								.getString(KEY_BOOKMARK_DELETE_URL);
+//						mLogReportUrl = urlArray.getString(KEY_LOG_URL);
 						return RESULT_SUCCESS;
 					} catch (JSONException e) {
 						e.printStackTrace();

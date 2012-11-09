@@ -9,6 +9,7 @@ import android.media.MediaPlayer.OnErrorListener;
 import android.media.MediaPlayer.OnInfoListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.media.MediaPlayer.OnSeekCompleteListener;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.VideoView;
@@ -78,8 +79,6 @@ public class HWVideoView extends VideoView implements OnPreparedListener {
 
 		try {
 
-			ViewGroup.LayoutParams localLayoutParams = getLayoutParams();
-
 			int width = 0, height = 0;
 			width = Util.Display.getWindowSize(getContext())[0];
 			height = Util.Display.getWindowSize(getContext())[1];
@@ -105,17 +104,46 @@ public class HWVideoView extends VideoView implements OnPreparedListener {
 			default:
 				return;
 			}
-
-			localLayoutParams.height = height;
-			localLayoutParams.width = width;
-
-			setLayoutParams(localLayoutParams);
-			getHolder().setFixedSize(width, height);
-
+			setVideoSize(width, height);
 		} catch (IllegalStateException e) {
 		}
 
 		mLayout = layout;
+	}
+
+	public boolean setScale(float scale) {
+		// TODO Auto-generated method stub
+		if (mMediaPlayer == null)
+			return false;
+
+		try {
+			int width = (int) ((float) mMediaPlayer.getVideoWidth() * scale);
+			int height = (int) ((float) mMediaPlayer.getVideoHeight() * scale);
+			return setVideoSize(width, height);
+		} catch (IllegalStateException e) {
+			return false;
+		}
+
+	}
+
+	public boolean setVideoSize(int width, int height) {
+
+		if (Build.VERSION.SDK_INT < 11) {
+			int[] windowsize = Util.Display.getWindowSize(getContext());
+			int windowwidth = windowsize[0];
+			int windowheight = windowsize[1];
+			if (width > windowwidth || height > windowheight)
+				return false;
+		}
+
+		ViewGroup.LayoutParams localLayoutParams = getLayoutParams();
+		localLayoutParams.height = height;
+		localLayoutParams.width = width;
+
+		setLayoutParams(localLayoutParams);
+		getHolder().setSizeFromLayout();
+		invalidate();
+		return true;
 	}
 
 	float getVideoAspectRatio() {

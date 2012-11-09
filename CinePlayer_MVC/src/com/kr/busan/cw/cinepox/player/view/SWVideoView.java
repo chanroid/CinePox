@@ -12,6 +12,7 @@ package com.kr.busan.cw.cinepox.player.view;
 
 import kr.co.chan.util.Util;
 import android.content.Context;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 
@@ -32,6 +33,38 @@ public class SWVideoView extends io.vov.vitamio.widget.VideoView {
 	public SWVideoView(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
+	}
+
+	public boolean setScale(float scale) {
+		// TODO Auto-generated method stub
+		try {
+			int width = (int) ((float) getVideoWidth() * scale);
+			int height = (int) ((float) getVideoHeight() * scale);
+			return setVideoSize(width, height);
+		} catch (IllegalStateException e) {
+			return false;
+		}
+
+	}
+
+	public boolean setVideoSize(int width, int height) {
+
+		if (Build.VERSION.SDK_INT < 11) {
+			int[] windowsize = Util.Display.getWindowSize(getContext());
+			int windowwidth = windowsize[0];
+			int windowheight = windowsize[1];
+			if (width > windowwidth || height > windowheight)
+				return false;
+		}
+
+		ViewGroup.LayoutParams localLayoutParams = getLayoutParams();
+		localLayoutParams.height = height;
+		localLayoutParams.width = width;
+
+		setLayoutParams(localLayoutParams);
+		getHolder().setSizeFromLayout();
+		invalidate();
+		return true;
 	}
 
 	public int getVideoLayout() {
