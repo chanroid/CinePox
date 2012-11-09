@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="계정 설정" >
+        <Preference
+            android:key="islogin"
+            android:summary="씨네폭스의 서비스를 이용하기 위해 로그인이 필요합니다. 웹브라우저에 계정정보가 저장되어 있는 경우 클릭하면 자동으로 로그인됩니다."
+            android:title="로그인" />
+
+        <CheckBoxPreference
+            android:key="autologin"
+            android:title="자동 로그인 설정" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="알림 설정" >
+        <Preference
+            android:key="noti"
+            android:summary="알림 메시지를 수신할 항목을 선택합니다."
+            android:title="최신소식 알림" />
+        <Preference
+            android:key="interval"
+            android:summary="알림 메시지를 수신할 시간 간격을 설정합니다. 짧게 설정하면 배터리 소모가 증가합니다."
+            android:title="알림 메시지 수신간격" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="cinepox">CINEPOX</string>
+    <string name="cineplayer">CINEPOX Player</string>
+    <string name="qrplay">CINEPOX QRPlay!</string>
+    <string name="login_success">login successed!</string>
+    <string name="logout_success">Logoutted.</string>
+    <string name="noti_logout">Are you really logout? auto login will be disabled.</string>
+    <string name="readytoresponse">wait to response..</string>
+    <string name="done">Done</string>
+    <string name="backtoexit">once more to press "Back key" will be shut down.</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="join">Join</string>
+    <string name="leave">Leave</string>
+    <string name="motion_disable">Motion detect disable</string>
+    <string name="motion_enable">Motion detect enable</string>
+    <string name="motion_sensitive">Motion Sensitive Setting</string>
+    <string name="noti_item">Notification item setting</string>
+    <string name="noti_interval">Notification interval setting</string>
+    <string name="receive_notfound">Received data is Not found.</string>
+    <string name="alert">Alert</string>
+    <string name="cancel">Cancel</string>
+    <string name="noti_locservice">Turn on Location services to be used this service. if you want to go to Setting, press Done.</string>
+    <string name="error_connect">Sorry, The current state of the network or the connection with the server is unstable and services are limited. Please try again in a few minutes.</string>
+    <string name="install_plugin">Install plugin</string>
+    <string name="installing_plugin">Installing plugin..</string>
+    <string name="scale_orign">Original</string>
+    <string name="scale_scale">Scale</string>
+    <string name="scale_zoom">Zoom</string>
+    <string name="scale_stretch">Stretch</string>
+    <string name="noti_readymotion">CinePox App opponent from a mobile phone and shake us two phones running the transfer will start.</string>
+    <string name="hw_codec">H/W (More Sharpness)</string>
+    <string name="sw_codec">S/W (More Fast)</string>
+    <string name="change_codec">Change codec</string>
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="playback_completed">Current playback is completed.</string>
+    <string name="sending_video">Delivering video..</string>
+    <string name="send_success">Delivery successed.</string>
+    <string name="send_failed">Delivery failed.</string>
+    <string name="download_cancel">Cancel Download</string>
+    <string name="noti_download_cancel">Are you sure you want to cancel the download? To cancel the delete button, or press the button to download after.</string>
+    <string name="delete">Delete</string>
+    <string name="continue_">Continue</string>
+    <string name="download_already_completed">Already completed the download file.</string>
+    <string name="download_preparing">Download connention Preparing..</string>
+    <string name="download_canceled">Canceled Download.</string>
+    <string name="download_error">An error occurred during download.</string>
+    <string name="download_completed">Download Completed.</string>
+    <string name="download_exist">Alerady exist the download file.</string>
+    <string name="download_progresstext">% Downloading..</string>
+    <string name="caption_size">Caption font size</string>
+    <string name="update">Update</string>
+    <string name="later">Later</string>
+    <string name="msg">Message</string>
+    <string name="notseemonth">blind this during one week.</string>
+    <string name="orignal">Orign</string>
+    <string name="change">Change</string>
+    <string name="sensitive_message">If the shaking does not seem to work well, if it works if you increase the sensitivity and motion features did not shake the lower sensitivity.</string>
+
+</resources>
