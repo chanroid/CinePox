@@ -5,6 +5,7 @@ import java.io.IOException;
 import kr.co.chan.util.Util;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -43,6 +44,8 @@ public class ADActivity extends Activity implements OnClickListener,
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		if (Util.Display.isTablet(this))
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		super.onCreate(savedInstanceState);
 		mTimer = new CountSync();
 		mRoot = (RelativeLayout) getLayoutInflater().inflate(

@@ -13,10 +13,13 @@
 package com.kr.busan.cw.cinepox.downloader;
 
 import com.busan.cw.clsp20120924.R;
+import com.kr.busan.cw.cinepox.player.model.PlayerModel.Const;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Bitmap.Config;
+import android.os.Build;
 import android.os.Bundle;
 
 /**
@@ -36,6 +39,8 @@ public class DownRestartActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		if (Build.VERSION.SDK_INT >= 11)
+			setTheme(android.R.style.Theme_Holo);
 		super.onCreate(savedInstanceState);
 
 		mId = getIntent().getIntExtra("num", -1);
@@ -47,6 +52,17 @@ public class DownRestartActivity extends Activity {
 		mng = DownManager.getInstance(this);
 		down = mng.get(mId);
 		if (down == null) {
+			finish();
+			return;
+		}
+
+		String action = getIntent().getStringExtra("action");
+		if ("cancel".equalsIgnoreCase(action)) {
+			mng.remove(down);
+			finish();
+			return;
+		} else if ("continue".equalsIgnoreCase(action)) {
+			mng.queue(down);
 			finish();
 			return;
 		}

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="#1e2027" >
 
     <LinearLayout
         android:id="@+id/ad_bottom"
@@ -53,7 +54,7 @@
             android:id="@+id/ad_imageview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
+            android:scaleType="centerInside"
             android:src="@drawable/bt_main_premium"
             android:visibility="invisible" />
     </FrameLayout>

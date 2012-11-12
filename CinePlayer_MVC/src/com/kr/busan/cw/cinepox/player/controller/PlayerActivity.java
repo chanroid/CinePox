@@ -681,6 +681,7 @@ public class PlayerActivity extends CCActivity implements
 			toggleScreenMode();
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onVisiblityChanged(int visiblity) {
 		if (Build.VERSION.SDK_INT >= 14) {
@@ -694,6 +695,14 @@ public class PlayerActivity extends CCActivity implements
 				else
 					getWindow().getDecorView().setSystemUiVisibility(
 							View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+			}
+		} else if (Build.VERSION.SDK_INT >= 11) {
+			if (visiblity == View.VISIBLE) {
+				getWindow().getDecorView().setSystemUiVisibility(
+						View.STATUS_BAR_VISIBLE);
+			} else {
+				getWindow().getDecorView().setSystemUiVisibility(
+						View.STATUS_BAR_HIDDEN);
 			}
 		}
 	}

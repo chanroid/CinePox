@@ -44,6 +44,7 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 	private Context mContext;
 
 	private OnProgressUpdateListener listen;
+	private PendingIntent mEmptyPendingIntent;
 	private NotificationManager mNotimanager;
 	private Notification mNoti;
 	private Handler h;
@@ -63,6 +64,8 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 		mTitle = title;
 		mNotimanager = (NotificationManager) mContext
 				.getSystemService(Context.NOTIFICATION_SERVICE);
+		mEmptyPendingIntent = PendingIntent.getActivity(mContext, 0,
+				new Intent(), PendingIntent.FLAG_UPDATE_CURRENT);
 	}
 
 	/**
@@ -181,7 +184,13 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 					mBuilder.setTicker(mContext
 							.getString(R.string.download_already_completed));
 					mBuilder.setContentIntent(i);
-					mNoti = mBuilder.getNotification();
+					mBuilder.setDeleteIntent(mEmptyPendingIntent);
+					if (Build.VERSION.SDK_INT >= 16) {
+						mBuilder.addAction(
+								android.R.drawable.ic_menu_slideshow, "열기", i);
+						mNoti = mBuilder.build();
+					} else
+						mNoti = mBuilder.getNotification();
 				} else {
 					NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
 							mContext);
@@ -194,6 +203,7 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 					mBuilder.setTicker(mContext
 							.getString(R.string.download_already_completed));
 					mBuilder.setContentIntent(i);
+					mBuilder.setDeleteIntent(mEmptyPendingIntent);
 					mNoti = mBuilder.getNotification();
 				}
 
@@ -209,10 +219,11 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 							.getString(R.string.download_preparing));
 					mBuilder.setTicker(mContext
 							.getString(R.string.download_preparing));
-					mBuilder.setContentIntent(PendingIntent.getActivity(
-							mContext, 0, new Intent(),
-							Intent.FLAG_ACTIVITY_NEW_TASK));
-					mNoti = mBuilder.getNotification();
+					mBuilder.setContentIntent(mEmptyPendingIntent);
+					if (Build.VERSION.SDK_INT >= 16)
+						mNoti = mBuilder.build();
+					else
+						mNoti = mBuilder.getNotification();
 				} else {
 					NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
 							mContext);
@@ -222,9 +233,7 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 							.getString(R.string.download_preparing));
 					mBuilder.setTicker(mContext
 							.getString(R.string.download_preparing));
-					mBuilder.setContentIntent(PendingIntent.getActivity(
-							mContext, 0, new Intent(),
-							Intent.FLAG_ACTIVITY_NEW_TASK));
+					mBuilder.setContentIntent(mEmptyPendingIntent);
 					mNoti = mBuilder.getNotification();
 				}
 
@@ -324,7 +333,10 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 			mBuilder.setContentIntent(pi);
 			mBuilder.setOngoing(true);
 			mBuilder.setSmallIcon(mIcon);
-			mNoti = mBuilder.getNotification();
+			if (Build.VERSION.SDK_INT >= 16)
+				mNoti = mBuilder.build();
+			else
+				mNoti = mBuilder.getNotification();
 		} else {
 			NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
 					mContext);
@@ -348,8 +360,8 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 			mBuilder.setContentTitle(mTitle);
 			mBuilder.setSmallIcon(mIcon);
 			mBuilder.setAutoCancel(true);
-			mBuilder.setContentIntent(PendingIntent.getActivity(mContext, 0,
-					new Intent(), PendingIntent.FLAG_UPDATE_CURRENT));
+			mBuilder.setContentIntent(mEmptyPendingIntent);
+			mBuilder.setDeleteIntent(mEmptyPendingIntent);
 			mBuilder.setContentText(mContext
 					.getString(R.string.download_canceled));
 			mBuilder.setTicker(mContext.getString(R.string.download_canceled));
@@ -362,8 +374,8 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 			mBuilder.setContentTitle(mTitle);
 			mBuilder.setSmallIcon(mIcon);
 			mBuilder.setAutoCancel(true);
-			mBuilder.setContentIntent(PendingIntent.getActivity(mContext, 0,
-					new Intent(), PendingIntent.FLAG_UPDATE_CURRENT));
+			mBuilder.setDeleteIntent(mEmptyPendingIntent);
+			mBuilder.setContentIntent(mEmptyPendingIntent);
 			mBuilder.setContentText(mContext
 					.getString(R.string.download_canceled));
 			mBuilder.setTicker(mContext.getString(R.string.download_canceled));
@@ -391,10 +403,33 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 			mBuilder.setSmallIcon(mIcon);
 			mBuilder.setAutoCancel(true);
 			mBuilder.setContentIntent(pi);
+			mBuilder.setDeleteIntent(mEmptyPendingIntent);
 			mBuilder.setContentText(mContext.getString(R.string.download_error)
 					+ e);
 			mBuilder.setTicker(mContext.getString(R.string.download_error) + e);
-			mNoti = mBuilder.getNotification();
+			if (Build.VERSION.SDK_INT >= 16) {
+				// 젤리빈 노티피케이션 관련 설정. 완벽하지 않으므로 나중에 다시 작업
+//				Intent restartIntent = new Intent(mContext,
+//						DownRestartActivity.class);
+//				restartIntent.putExtra("action", "continue");
+//				restartIntent.putExtra("num", mId);
+//				PendingIntent restartPI = PendingIntent.getActivity(mContext,
+//						0, restartIntent, Intent.FLAG_ACTIVITY_NEW_TASK);
+//				
+//				Intent cancelIn = new Intent(mContext,
+//						DownRestartActivity.class);
+//				cancelIn.putExtra("num", mId);
+//				cancelIn.putExtra("action", "cancel");
+//				PendingIntent cancelPI = PendingIntent.getActivity(mContext, 0,
+//						cancelIn, Intent.FLAG_ACTIVITY_NEW_TASK);
+//
+//				mBuilder.addAction(android.R.drawable.ic_menu_save, "재시도",
+//						restartPI);
+//				mBuilder.addAction(android.R.drawable.ic_menu_delete, "취소",
+//						cancelPI);
+				mNoti = mBuilder.build();
+			} else
+				mNoti = mBuilder.getNotification();
 		} else {
 			NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
 					mContext);
@@ -404,6 +439,7 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 			mBuilder.setSmallIcon(mIcon);
 			mBuilder.setAutoCancel(true);
 			mBuilder.setContentIntent(pi);
+			mBuilder.setDeleteIntent(mEmptyPendingIntent);
 			mBuilder.setContentText(mContext.getString(R.string.download_error)
 					+ e);
 			mBuilder.setTicker(mContext.getString(R.string.download_error) + e);
@@ -430,7 +466,13 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 			mBuilder.setTicker(mContext.getString(R.string.download_completed));
 			mBuilder.setAutoCancel(true);
 			mBuilder.setContentIntent(intent);
-			mNoti = mBuilder.getNotification();
+			mBuilder.setDeleteIntent(mEmptyPendingIntent);
+			if (Build.VERSION.SDK_INT >= 16) {
+				mBuilder.addAction(android.R.drawable.ic_menu_slideshow, "열기",
+						intent);
+				mNoti = mBuilder.build();
+			} else
+				mNoti = mBuilder.getNotification();
 		} else {
 			NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
 					mContext);
@@ -443,6 +485,7 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 			mBuilder.setTicker(mContext.getString(R.string.download_completed));
 			mBuilder.setAutoCancel(true);
 			mBuilder.setContentIntent(intent);
+			mBuilder.setDeleteIntent(mEmptyPendingIntent);
 			mNoti = mBuilder.getNotification();
 		}
 

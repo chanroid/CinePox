@@ -19,6 +19,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
+import android.content.pm.ActivityInfo;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.Criteria;
@@ -111,6 +112,8 @@ public class MainActivity extends FragmentActivity implements
 			setTheme(android.R.style.Theme_Holo_NoActionBar);
 		else
 			setTheme(android.R.style.Theme_NoTitleBar);
+		if (Util.Display.isTablet(this))
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		super.onCreate(savedInstanceState);
 		if (getConfig().isLogined())
 			Toast.makeText(this, R.string.login_success, Toast.LENGTH_SHORT)

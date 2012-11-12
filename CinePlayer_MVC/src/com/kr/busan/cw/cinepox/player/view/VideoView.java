@@ -526,14 +526,14 @@ public class VideoView extends CCView implements OnPreparedListener,
 
 		currentCodec = codec;
 
-		if (currentCodec == CODEC_HW)
-			swVideoView.pause();
-		else if (currentCodec == CODEC_SW) {
-			addSWVideo();
-			hwVideoView.pause();
-		}
-
 		try {
+			if (currentCodec == CODEC_HW)
+				swVideoView.pause();
+			else if (currentCodec == CODEC_SW) {
+				addSWVideo();
+				hwVideoView.pause();
+			}
+
 			swVideoView.setVisibility(currentCodec == CODEC_SW ? VISIBLE
 					: INVISIBLE);
 			hwVideoView.setVisibility(currentCodec == CODEC_HW ? VISIBLE
@@ -615,7 +615,6 @@ public class VideoView extends CCView implements OnPreparedListener,
 				return false;
 			}
 		} catch (IllegalStateException e) {
-			e.printStackTrace();
 			return false;
 		}
 	}

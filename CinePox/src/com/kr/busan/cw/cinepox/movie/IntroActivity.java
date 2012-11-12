@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -83,16 +84,17 @@ public class IntroActivity extends Activity {
 				// String version = dataObject.getString("ver");
 				// String player_config = dataObject.getString("player_config");
 				// getPlayerConfig().setPlayerConfigUrl(player_config);
-				String is_app_recommend = dataObject
-						.getString("is_app_recommend");
-				getConfig().setAppRecommend(
-						"Y".equalsIgnoreCase(is_app_recommend));
 				// String access_log_url =
 				// dataObject.getString("access_log_url");
 				String error_log_url = dataObject.getString("error_log_url");
 				String widget_url = dataObject.getString("widget_data_url");
 				getConfig().setWidgetUrl(widget_url);
 				getConfig().setErrorLogUrl(error_log_url);
+
+				String is_app_recommend = dataObject
+						.getString("is_app_recommend");
+				getConfig().setAppRecommend(
+						"Y".equalsIgnoreCase(is_app_recommend));
 				JSONArray bestList = dataObject.getJSONArray("bestList");
 				for (int i = 0; i < bestList.length(); i++)
 					parseCategory(i, bestList.getString(i));
@@ -135,6 +137,7 @@ public class IntroActivity extends Activity {
 
 		private boolean parseAction(JSONObject o) throws JSONException,
 				IOException {
+			l.i("parseAction");
 			// TODO Auto-generated method stub
 			mMsgNum = o.getString("code");
 			String what = o.getString("what");
@@ -262,11 +265,11 @@ public class IntroActivity extends Activity {
 				showError(result);
 				return;
 			}
-			if (!isBlock) {
+			if (!isBlock || Util.Display.isTablet(IntroActivity.this)) {
 				goMain();
 			} else {
+				goMain();
 				if (isShowAd) {
-					// goMain();
 					startActivityForResult(mAdIntent, 0);
 				} else if (mMainAlert != null) {
 					LinearLayout layout = (LinearLayout) getLayoutInflater()
@@ -313,16 +316,30 @@ public class IntroActivity extends Activity {
 	};
 
 	void goMain() {
-		Intent mainintent = new Intent(IntroActivity.this, MainActivity.class);
+		startService(new Intent(this, CinepoxService.class));
 		if (WidgetProvider.ACTION_QRPLAY.equalsIgnoreCase(getIntent()
-				.getAction()))
-			mainintent.setAction(WidgetProvider.ACTION_QRPLAY);
-		if (getIntent().getData() != null)
-			if (WidgetProvider.ACTION_QRPLAY.equalsIgnoreCase(getIntent()
-					.getData().getHost()))
-				mainintent.setAction(WidgetProvider.ACTION_QRPLAY);
-		startActivity(mainintent);
-		startService(new Intent(IntroActivity.this, CinepoxService.class));
+				.getAction())) {
+			Intent i = new Intent(this, QRPlayActivity.class);
+			startActivity(i);
+			finish();
+			return;
+		} else if (getIntent().getData() != null
+				&& WidgetProvider.ACTION_QRPLAY.equalsIgnoreCase(getIntent()
+						.getData().getHost())) {
+			Intent i = new Intent(this, QRPlayActivity.class);
+			startActivity(i);
+			finish();
+			return;
+		}
+
+		if (Util.Display.isTablet(this)) {
+			Intent webintent = new Intent(Intent.ACTION_VIEW,
+					Uri.parse(Config.WebDomain));
+			startActivity(webintent);
+		} else {
+			Intent mainintent = new Intent(this, MainActivity.class);
+			startActivity(mainintent);
+		}
 		finish();
 	}
 
@@ -383,8 +400,10 @@ public class IntroActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+		if (Util.Display.isTablet(this))
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		super.onCreate(savedInstanceState);
-		l.setEnabled(false);
+		// l.setEnabled(false);
 		setContentView(R.layout.intro);
 		mDataloader.execute();
 		setupShortcut();
