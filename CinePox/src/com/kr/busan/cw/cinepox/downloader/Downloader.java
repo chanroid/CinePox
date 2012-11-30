@@ -25,11 +25,11 @@ import android.support.v4.app.NotificationCompat;
 import com.busan.cw.clsp20120924.R;
 import com.kr.busan.cw.cinepox.movie.CinepoxService;
 import com.kr.busan.cw.cinepox.player.controller.PlayerActivity;
-import com.kr.busan.cw.cinepox.player.model.PlayerModel.Const;
 
 @SuppressLint({ "HandlerLeak", "NewApi" })
 @SuppressWarnings("deprecation")
-public class Downloader extends AsyncTask<String, Integer, Integer> {
+public class Downloader extends AsyncTask<String, Integer, Integer> implements
+		com.kr.busan.cw.cinepox.player.base.Constants {
 
 	private int mTimeout = 10000;
 	// private int mBufferSize = 1024;
@@ -300,8 +300,8 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 
 	public void sendError(Throwable t) {
 		Intent i = new Intent(CinepoxService.ACTION_SEND_ERRORLOG);
-		i.putExtra(Const.KEY_EXCEPTION, t);
-		i.putExtra(Const.KEY_MOVIE_URL, mUrl);
+		i.putExtra(KEY_EXCEPTION, t);
+		i.putExtra(KEY_MOVIE_URL, mUrl);
 		mContext.sendBroadcast(i);
 	}
 
@@ -348,7 +348,6 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 			mBuilder.setSmallIcon(mIcon);
 			mNoti = mBuilder.getNotification();
 		}
-
 		mNotimanager.notify(mId, mNoti);
 	}
 
@@ -408,25 +407,6 @@ public class Downloader extends AsyncTask<String, Integer, Integer> {
 					+ e);
 			mBuilder.setTicker(mContext.getString(R.string.download_error) + e);
 			if (Build.VERSION.SDK_INT >= 16) {
-				// 젤리빈 노티피케이션 관련 설정. 완벽하지 않으므로 나중에 다시 작업
-//				Intent restartIntent = new Intent(mContext,
-//						DownRestartActivity.class);
-//				restartIntent.putExtra("action", "continue");
-//				restartIntent.putExtra("num", mId);
-//				PendingIntent restartPI = PendingIntent.getActivity(mContext,
-//						0, restartIntent, Intent.FLAG_ACTIVITY_NEW_TASK);
-//				
-//				Intent cancelIn = new Intent(mContext,
-//						DownRestartActivity.class);
-//				cancelIn.putExtra("num", mId);
-//				cancelIn.putExtra("action", "cancel");
-//				PendingIntent cancelPI = PendingIntent.getActivity(mContext, 0,
-//						cancelIn, Intent.FLAG_ACTIVITY_NEW_TASK);
-//
-//				mBuilder.addAction(android.R.drawable.ic_menu_save, "재시도",
-//						restartPI);
-//				mBuilder.addAction(android.R.drawable.ic_menu_delete, "취소",
-//						cancelPI);
 				mNoti = mBuilder.build();
 			} else
 				mNoti = mBuilder.getNotification();

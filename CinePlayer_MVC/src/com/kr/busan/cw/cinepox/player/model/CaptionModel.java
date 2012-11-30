@@ -28,8 +28,7 @@ import kr.co.chan.util.Util;
 import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.HTMLElementName;
 import net.htmlparser.jericho.Source;
-
-import com.kr.busan.cw.cinepox.player.model.PlayerModel.Const;
+import android.content.Context;
 
 /**
  * <PRE>
@@ -43,16 +42,19 @@ import com.kr.busan.cw.cinepox.player.model.PlayerModel.Const;
  * </PRE>
  */
 
-public class CaptionModel {
+public class CaptionModel extends Model {
 
 	private static CaptionModel instance;
 
-	public static CaptionModel getInstance() {
+	public static CaptionModel getInstance(Context ctx) {
 		if (instance == null)
 			instance = new CaptionModel();
 		return instance;
 	}
 
+	public static void clearInstance() {
+		instance = null;
+	}
 
 	private Map<String, ArrayList<CaptionData>> mCaptionArray;
 	private ArrayList<String> mLangNames;
@@ -112,10 +114,10 @@ public class CaptionModel {
 			mLangKeys = new ArrayList<String>();
 
 			String ext = Util.File.getExtension(path);
-			if (ext.equalsIgnoreCase(Const.CAPTION_EXT_SMI)
-					|| ext.equalsIgnoreCase(Const.CAPTION_EXT_SRT))
+			if (ext.equalsIgnoreCase(CAPTION_EXT_SMI)
+					|| ext.equalsIgnoreCase(CAPTION_EXT_SRT))
 				parseSMICaption(in);
-			else if (ext.equalsIgnoreCase(Const.CAPTION_EXT_SRT))
+			else if (ext.equalsIgnoreCase(CAPTION_EXT_SRT))
 				parseSRTCaption(in);
 
 			if (mCaptionArray.size() == 0 || mLangKeys.size() == 0

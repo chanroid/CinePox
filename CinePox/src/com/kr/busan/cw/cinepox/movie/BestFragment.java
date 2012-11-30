@@ -1,9 +1,9 @@
 package com.kr.busan.cw.cinepox.movie;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.busan.cw.clsp20120924.R;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Color;
@@ -29,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.busan.cw.clsp20120924.R;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
@@ -59,24 +60,23 @@ public class BestFragment extends Fragment implements OnItemClickListener,
 		mRoot = (LinearLayout) getLayoutInflater(getArguments()).inflate(
 				R.layout.main_best, null);
 		mContainer = (LinearLayout) mRoot
-				.findViewById(com.kr.busan.cw.cinepox.R.id.layout_best_btncontainer);
+				.findViewById(R.id.layout_best_btncontainer);
 		// mProgress = (ProgressBar) mRoot.findViewById(
 		// com.kr.busan.cw.cinepox.R.id.layout_best_gridcontainer)
 		// .findViewById(com.kr.busan.cw.cinepox.R.id.progress_main_best);
 		mGridBase = (PullToRefreshGridView) mRoot.findViewById(
-				com.kr.busan.cw.cinepox.R.id.layout_best_gridcontainer)
-				.findViewById(com.kr.busan.cw.cinepox.R.id.grid_main_best);
+				R.id.layout_best_gridcontainer).findViewById(
+				R.id.grid_main_best);
 		// Util.Views.setClickListeners(mFooter, this);
 		mGridBase.setOnRefreshListener(this);
 		mGridBase.setMode(Mode.PULL_DOWN_TO_REFRESH);
 		mGridBase.setLoadingDrawable(getResources().getDrawable(
-				com.kr.busan.cw.cinepox.R.drawable.img_loading));
+				R.drawable.img_loading));
 		LinearLayout layout = new LinearLayout(getActivity());
 		layout.setGravity(Gravity.CENTER);
 		ImageView bar = new ImageView(getActivity());
-		bar.setImageDrawable(getResources().getDrawable(
-				com.kr.busan.cw.cinepox.R.drawable.img_loading));
-		final Interpolator interpolator = new LinearInterpolator();
+		bar.setImageDrawable(getResources().getDrawable(R.drawable.img_loading));
+		Interpolator interpolator = new LinearInterpolator();
 		RotateAnimation mRotateAnimation = new RotateAnimation(0, 360,
 				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
 				0.5f);
@@ -96,8 +96,6 @@ public class BestFragment extends Fragment implements OnItemClickListener,
 	public void onDestroy() {
 		if (mParser.getStatus() == AsyncTask.Status.RUNNING)
 			mParser.cancel(true);
-		if (mAdapter != null)
-			mAdapter.destroy();
 		super.onDestroy();
 	};
 
@@ -113,7 +111,7 @@ public class BestFragment extends Fragment implements OnItemClickListener,
 		// Button btn = null;
 		LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(-2, -1);
 		param.weight = 1.0f;
-		int resid = com.kr.busan.cw.cinepox.R.drawable.bg_tab_left;
+		int resid = R.drawable.bg_tab_left;
 		int color = Color.YELLOW;
 		for (String s : getConfig().getCategoryNames()) {
 			// s = s.substring(0, 8);
@@ -132,12 +130,12 @@ public class BestFragment extends Fragment implements OnItemClickListener,
 			btn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
 			btn.setClickable(true);
 			btn.setOnClickListener(this);
-			resid = com.kr.busan.cw.cinepox.R.drawable.bg_tab_1px;
+			resid = R.drawable.bg_tab_1px;
 			mContainer.addView(btn, param);
 			color = Color.WHITE;
 		}
 		if (btn != null)
-			btn.setBackgroundResource(com.kr.busan.cw.cinepox.R.drawable.bg_tab_right);
+			btn.setBackgroundResource(R.drawable.bg_tab_right);
 		refreshList();
 	}
 
@@ -167,7 +165,6 @@ public class BestFragment extends Fragment implements OnItemClickListener,
 			mDataArray.clear();
 		if (mAdapter != null) {
 			mAdapter.notifyDataSetChanged();
-			mAdapter.destroy();
 		}
 		getConfig().setCurrentCategory(
 				getConfig().getCategoryUrl(
@@ -187,11 +184,14 @@ public class BestFragment extends Fragment implements OnItemClickListener,
 		// TODO Auto-generated method stub
 		// mProgress.setVisibility(View.GONE);
 		mDataArray = parser.getResult();
-		if (mDataArray == null || mDataArray.size() <= 0)
+		if (mDataArray == null)
+			mDataArray = new ArrayList<Map<String,String>>();
+		if (mDataArray.size() <= 0)
 			refreshList();
 		else {
-			mAdapter = new BestAdapter(getActivity(), mDataArray,
-					com.kr.busan.cw.cinepox.R.layout.movie_item, null, null);
+			mAdapter = new BestAdapter(getActivity(),
+					mDataArray, R.layout.movie_item,
+					null, null);
 			mGridBase.onRefreshComplete();
 			mGrid.setAdapter(mAdapter);
 		}
@@ -220,7 +220,7 @@ public class BestFragment extends Fragment implements OnItemClickListener,
 			startActivity(new Intent(
 					Intent.ACTION_VIEW,
 					Uri.parse(String
-							.format(Config.WebDomain
+							.format(Domain.WEB_DOMAIN
 									+ "vod/detail.html?SET_DEVICE=android(APP)&movieProduct_seq=%s",
 									mDataArray.get(arg2).get(
 											Parser.KEY_MOVIE_NUM)))));

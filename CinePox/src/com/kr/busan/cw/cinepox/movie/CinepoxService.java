@@ -194,7 +194,7 @@ public class CinepoxService extends Service {
 				} else
 					jsonData = new JSONArray(
 							Util.Stream
-									.stringFromURL(Config.Domain
+									.stringFromURL(Domain.ACCESS_DOMAIN
 											+ "cinepoxAPP/getAdWidget?setting=response_type:json"));
 				l.i(jsonData.toString());
 			} catch (Exception e) {
@@ -208,7 +208,7 @@ public class CinepoxService extends Service {
 						JSONObject dataObject = jsonData.getJSONObject(i);
 						String title = dataObject.getString("title");
 						String desc = dataObject.getString("desc");
-						String url = Config.WebDomain
+						String url = Domain.WEB_DOMAIN
 								+ dataObject.getString("url");
 						data.title = title;
 						data.desc = desc;
@@ -237,7 +237,7 @@ public class CinepoxService extends Service {
 		public void run() {
 			// response가 있든 말든 걍 처리.
 			try {
-				String url = Config.Domain + "cinepoxAPP/setPaySms/";
+				String url = Domain.ACCESS_DOMAIN + "cinepoxAPP/setPaySms/";
 				ArrayList<NameValuePair> param = new ArrayList<NameValuePair>();
 				param.add(new BasicNameValuePair("sms_key", order));
 				param.add(new BasicNameValuePair("sms_num", commit));
@@ -338,7 +338,7 @@ public class CinepoxService extends Service {
 		protected JSONArray doInBackground(String... params) {
 			// TODO Auto-generated method stub
 			try {
-				String url = Config.Domain
+				String url = Domain.ACCESS_DOMAIN
 						+ "cinepoxAPP/getPush?setting=response_type:json";
 				return new JSONArray(Util.Stream.stringFromURL(url));
 			} catch (ClientProtocolException e) {
@@ -379,7 +379,7 @@ public class CinepoxService extends Service {
 	void notifyPush(JSONObject o) throws JSONException {
 		String title = o.getString("title");
 		String message = o.getString("message");
-		String url = Config.Domain + o.getString("url");
+		String url = Domain.ACCESS_DOMAIN + o.getString("url");
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
 				new Intent(Intent.ACTION_VIEW, Uri.parse(url)), 0);
 		Notification notif = new Notification(R.drawable.ic_notify,

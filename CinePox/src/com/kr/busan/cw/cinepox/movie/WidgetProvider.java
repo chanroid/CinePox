@@ -6,10 +6,8 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.widget.RemoteViews;
 
@@ -21,7 +19,7 @@ public class WidgetProvider extends AppWidgetProvider {
 	private long mInterval = 30000l;
 	private PendingIntent mIntentSender;
 	private AlarmManager mAlarmManager;
-
+  
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		// TODO Auto-generated method stub
@@ -70,13 +68,12 @@ public class WidgetProvider extends AppWidgetProvider {
 				.size() - 1)));
 		RemoteViews views = new RemoteViews(context.getPackageName(),
 				R.layout.widget_provider);
-		
+
 		Intent qrplayIntent = new Intent(context, IntroActivity.class);
 		qrplayIntent.setAction(ACTION_QRPLAY);
 		PendingIntent qrpi = PendingIntent.getActivity(context, 0,
 				qrplayIntent, 0);
 		views.setOnClickPendingIntent(R.id.btn_widget_qrplay, qrpi);
-
 		Intent searchIntent = new Intent(context, SearchActivity.class);
 		PendingIntent searchpi = PendingIntent.getActivity(context, 0,
 				searchIntent, 0);
@@ -107,16 +104,6 @@ public class WidgetProvider extends AppWidgetProvider {
 		// TODO Auto-generated method stub
 		for (int i : appWidgetIds)
 			updateAppWidget(context, appWidgetManager, i);
-	}
-
-	@Override
-	public void onEnabled(Context context) {
-		// TODO Auto-generated method stub
-		PackageManager pm = context.getPackageManager();
-		pm.setComponentEnabledSetting(new ComponentName(context,
-				"WidgetProvider"),
-				PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-				PackageManager.DONT_KILL_APP);
 	}
 
 }

@@ -18,7 +18,7 @@ public class DownCancelActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-
+		
 		mId = getIntent().getIntExtra("num", -1);
 		if (mId < 0) {
 			finish();

@@ -19,7 +19,7 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		if (!handleLoginIntent())
 			startActivity(new Intent(Intent.ACTION_VIEW,
-					Uri.parse(Config.Domain
+					Uri.parse(Domain.WEB_DOMAIN
 							+ "member/login.html?SET_DEVICE=android(APP)")));
 	}
 

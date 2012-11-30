@@ -5,10 +5,11 @@ import java.util.Calendar;
 import java.util.Formatter;
 import java.util.Locale;
 
-import com.kr.busan.cw.cinepox.player.structs.QualityData;
-
 import kr.co.chan.util.Util;
 import android.content.Context;
+
+import com.kr.busan.cw.cinepox.player.structs.QualityData;
+import com.kr.busan.cw.cinepox.player.view.VideoView;
 
 /**
  * <PRE>
@@ -20,7 +21,7 @@ import android.content.Context;
  * 6. 작성일   : 2012. 10. 15. 오후 1:51:18
  * </PRE>
  */
-public class VideoModel extends PlayerModel {
+public class VideoModel extends Model {
 
 	private static VideoModel instance;
 
@@ -30,23 +31,31 @@ public class VideoModel extends PlayerModel {
 		return instance;
 	}
 
+	public static void clearInstance() {
+		instance = null;
+	}
+
 	private Context mContext;
 	private Calendar mCalendar;
 
 	private ArrayList<QualityData> mQualityArray;
 
-
 	private VideoModel(Context ctx) {
 		mContext = ctx;
 		mCalendar = Calendar.getInstance();
 	}
-	
+
 	public ArrayList<QualityData> getQualityArray() {
 		return mQualityArray;
 	}
 
 	public void setQualityArray(ArrayList<QualityData> data) {
 		mQualityArray = data;
+	}
+
+	public boolean isLocalURI(VideoView v) {
+		return v.getVideoURI().toString().startsWith("content")
+				|| v.getVideoURI().toString().startsWith("file");
 	}
 
 	/**

@@ -25,7 +25,7 @@ public class BestParser extends AsyncTask<String, Integer, String> {
 
 	Activity mContext;
 	String mUrl;
-	List<Map<String, String>> mResult;
+	List<Map<String, String>> mResult = new ArrayList<Map<String, String>>();
 	ParserCallback callback;
 
 	public BestParser(Activity ctx, String url) {

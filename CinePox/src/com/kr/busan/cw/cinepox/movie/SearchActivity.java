@@ -5,7 +5,6 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import kr.co.chan.util.Classes.ClearableEditText;
-import kr.co.chan.util.Interfaces.Refreshable;
 
 import org.apache.http.protocol.HTTP;
 
@@ -35,15 +34,14 @@ import com.busan.cw.clsp20120924.R;
 import com.kr.busan.cw.cinepox.movie.SearchParser.ParserCallback;
 
 public class SearchActivity extends Activity implements OnClickListener,
-		OnKeyListener, TextWatcher, OnItemClickListener, ParserCallback,
-		Refreshable {
+		OnKeyListener, TextWatcher, OnItemClickListener, ParserCallback {
 
 	ImageButton mSearchBtn;
 	ImageButton mVoiceBtn;
 	ClearableEditText mSearchEdit;
 	ListView mListView;
 
-	static final String SEARCH_URL = Config.WebDomain
+	static final String SEARCH_URL = Domain.WEB_DOMAIN
 			+ "smart/smart_search.html?q=%s";
 
 	SearchAdapter mAdapter;
@@ -66,10 +64,11 @@ public class SearchActivity extends Activity implements OnClickListener,
 		mSearchEdit.textBox.setOnKeyListener(this);
 		mSearchEdit.textBox.setHint("검색어");
 		mSearchEdit.textBox.setTextColor(Color.BLACK);
-		mSearchEdit.textBox.setPrivateImeOptions("defaultInputmode=korea;");
 		mSearchEdit.textBox.setBackgroundResource(R.drawable.bg_form);
-		mSearchEdit.textBox.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
 		mSearchEdit.textBox.setSingleLine();
+		mSearchEdit.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI
+				| EditorInfo.IME_ACTION_SEARCH);
+		mSearchEdit.setPrivateImeOptions("defaultInputmode=korea;");
 		mSearchBtn.setOnClickListener(this);
 		mVoiceBtn.setOnClickListener(this);
 		refreshList();
@@ -209,7 +208,6 @@ public class SearchActivity extends Activity implements OnClickListener,
 		refresh(0, -1);
 	}
 
-	@Override
 	public void refresh(int what, int extra) {
 		// TODO Auto-generated method stub
 		mAdapter = new SearchAdapter(this, R.layout.search_item, mData);

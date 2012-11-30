@@ -7,7 +7,8 @@
     <FrameLayout
         android:id="@+id/video_container"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
 
         <com.kr.busan.cw.cinepox.player.view.HWVideoView
             android:id="@+id/surfaceView_video_view_hw"

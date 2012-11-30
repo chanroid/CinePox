@@ -12,8 +12,8 @@
  */
 package com.busan.cw.clsp20120924.controller;
 
+import android.os.Bundle;
 import controller.CCActivity;
-
 
 /**
  * <PRE>
@@ -26,5 +26,10 @@ import controller.CCActivity;
  * </PRE>
  */
 public class InstallTestActivity extends CCActivity {
-
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		finish();
+	}
 }

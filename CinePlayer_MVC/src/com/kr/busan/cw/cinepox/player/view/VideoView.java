@@ -380,8 +380,8 @@ public class VideoView extends CCView implements OnPreparedListener,
 		if (isPluginInstalled() && swVideoView == null) {
 			swVideoView = new SWVideoView(getContext());
 			swVideoView.setVisibility(View.INVISIBLE);
-			FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(-1,
-					-1);
+			FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(-2,
+					-2);
 			params.gravity = Gravity.CENTER;
 			videoContainer.addView(swVideoView, 0, params);
 			initSWVideo();
@@ -534,8 +534,9 @@ public class VideoView extends CCView implements OnPreparedListener,
 				hwVideoView.pause();
 			}
 
-			swVideoView.setVisibility(currentCodec == CODEC_SW ? VISIBLE
-					: INVISIBLE);
+			if (swVideoView != null)
+				swVideoView.setVisibility(currentCodec == CODEC_SW ? VISIBLE
+						: INVISIBLE);
 			hwVideoView.setVisibility(currentCodec == CODEC_HW ? VISIBLE
 					: INVISIBLE);
 			setVideoURI();

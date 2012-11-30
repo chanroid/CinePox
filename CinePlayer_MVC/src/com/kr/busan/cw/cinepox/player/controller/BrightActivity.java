@@ -12,13 +12,13 @@ import android.view.WindowManager;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
-import com.kr.busan.cw.cinepox.player.model.PlayerModel.Const;
+import com.kr.busan.cw.cinepox.player.base.Constants;
 import com.kr.busan.cw.cinepox.player.view.BrightControlView;
 
 import controller.CCActivity;
 
 @SuppressLint("HandlerLeak")
-public class BrightActivity extends CCActivity implements OnSeekBarChangeListener {
+public class BrightActivity extends CCActivity implements Constants, OnSeekBarChangeListener {
 
 	private BrightControlView mBrightView;
 	private WindowManager.LayoutParams lp;
@@ -33,7 +33,7 @@ public class BrightActivity extends CCActivity implements OnSeekBarChangeListene
 		setContentView(mBrightView);
 		lp = getWindow().getAttributes();
 		getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-		setBrightness(getIntent().getFloatExtra(Const.KEY_BRIGHT, 1.0f));
+		setBrightness(getIntent().getFloatExtra(KEY_BRIGHT, 1.0f));
 		sync();
 		mHandler.sendEmptyMessageDelayed(0, 2000);
 	}
@@ -41,8 +41,9 @@ public class BrightActivity extends CCActivity implements OnSeekBarChangeListene
 	@Override
 	public void finish() {
 		// TODO Auto-generated method stub
+		mBrightView = null;
 		Intent i = new Intent();
-		i.putExtra(Const.KEY_BRIGHT, lp.screenBrightness);
+		i.putExtra(KEY_BRIGHT, lp.screenBrightness);
 		setResult(RESULT_OK, i);
 		super.finish();
 	}

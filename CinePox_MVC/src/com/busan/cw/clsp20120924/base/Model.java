@@ -12,6 +12,9 @@
  */
 package com.busan.cw.clsp20120924.base;
 
+import model.CCModel;
+
+
 
 /**
  * <PRE>
@@ -23,6 +26,5 @@ package com.busan.cw.clsp20120924.base;
  * 6. 작성일   : 2012. 10. 31. 오후 5:45:57
  * </PRE>
  */
-public abstract class Model implements Constants {
-	
+public abstract class Model extends CCModel implements Constants {
 }

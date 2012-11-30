@@ -1,31 +1,15 @@
 package com.kr.busan.cw.cinepox.movie;
 
-import java.io.IOException;
-import java.net.URLDecoder;
-
 import kr.co.chan.util.ShakeListener.OnShakeListener;
-import kr.co.chan.util.Util;
 import kr.co.chan.util.l;
-
-import org.apache.http.protocol.HTTP;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
-import android.content.pm.ActivityInfo;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -65,9 +49,9 @@ public class MainActivity extends FragmentActivity implements
 	FragmentTransaction mFragmentTrans;
 	BestFragment mBestFragment;
 	// ShakeListener mShaker;
-	LocationManager mLocManager;
-	Location mLocation;
-	ProgressDialog mProgress;
+	// LocationManager mLocManager;
+	// Location mLocation;
+	// ProgressDialog mProgress;
 	// MenuItem mMotionMenu;
 	static final int REQ_QRPLAY = 0;
 
@@ -79,16 +63,15 @@ public class MainActivity extends FragmentActivity implements
 	boolean isBack;
 	boolean isShareing = false;
 
-	private BroadcastReceiver mWebReceiver = new BroadcastReceiver() {
-
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			// TODO Auto-generated method stub
-			String action = intent.getAction();
-			if ("login".equalsIgnoreCase(action))
-				refreshPref();
-		}
-	};
+	// private BroadcastReceiver mWebReceiver = new BroadcastReceiver() {
+	//
+	// @Override
+	// public void onReceive(Context context, Intent intent) {
+	// String action = intent.getAction();
+	// if ("login".equalsIgnoreCase(action))
+	// refreshPref();
+	// }
+	// };
 
 	private Handler mTimehandler = new Handler() {
 		@Override
@@ -112,16 +95,18 @@ public class MainActivity extends FragmentActivity implements
 			setTheme(android.R.style.Theme_Holo_NoActionBar);
 		else
 			setTheme(android.R.style.Theme_NoTitleBar);
-		if (Util.Display.isTablet(this))
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		super.onCreate(savedInstanceState);
-		if (getConfig().isLogined())
-			Toast.makeText(this, R.string.login_success, Toast.LENGTH_SHORT)
-					.show();
-		IntentFilter filter = new IntentFilter("login");
-		filter.addAction("qrplay");
-		filter.addAction("play");
-		registerReceiver(mWebReceiver, filter);
+
+		// 로그인 관련기능 제거
+		// if (getConfig().isLogined())
+		// Toast.makeText(this, R.string.login_success, Toast.LENGTH_SHORT)
+		// .show();
+		// IntentFilter filter = new IntentFilter("login");
+		// filter.addAction("qrplay");
+		// filter.addAction("play");
+		// registerReceiver(mWebReceiver, filter);
+
+		// 모션 공유 관련기능 차후 구현
 		// mShaker = new ShakeListener(this);
 		// mShaker.setOnShakeListener(this);
 		// if (getConfig().isUseMotion()) {
@@ -129,20 +114,25 @@ public class MainActivity extends FragmentActivity implements
 		// } else {
 		// mShaker.pause();
 		// }
-		mLocManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-		Criteria criteria = new Criteria();
-		String provider = mLocManager.getBestProvider(criteria, true);
-		if (provider == null) {
-			provider = LocationManager.NETWORK_PROVIDER;
-		}
-		mLocation = mLocManager.getLastKnownLocation(provider);
-		mLocManager.requestLocationUpdates(provider, 10000, 100, this);
+		// mLocManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+		// Criteria criteria = new Criteria();
+		// String provider = mLocManager.getBestProvider(criteria, true);
+		// if (provider == null) {
+		// provider = LocationManager.NETWORK_PROVIDER;
+		// }
+		// mLocation = mLocManager.getLastKnownLocation(provider);
+		// mLocManager.requestLocationUpdates(provider, 10000, 100, this);
+
 		setContentView(R.layout.main);
 		allocView();
 		getConfig().setRunning(true);
-		mProgress = new ProgressDialog(this);
-		mProgress.setMessage(getString(R.string.readytoresponse));
-		mProgress.setCancelable(false);
+
+		// 모션기능 실행시 대기중 다이얼로그
+		// mProgress = new ProgressDialog(this);
+		// mProgress.setMessage(getString(R.string.readytoresponse));
+		// mProgress.setCancelable(false);
+
+		// qrplay 인텐트로 실행시 처리
 		if (getIntent() != null && getIntent().getData() != null) {
 			if (WidgetProvider.ACTION_QRPLAY.equalsIgnoreCase(getIntent()
 					.getAction())
@@ -179,7 +169,7 @@ public class MainActivity extends FragmentActivity implements
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		getConfig().setRunning(false);
-		unregisterReceiver(mWebReceiver);
+		// unregisterReceiver(mWebReceiver);
 		super.onDestroy();
 	}
 
@@ -216,10 +206,11 @@ public class MainActivity extends FragmentActivity implements
 		// mShaker.resume();
 		mBestFragment = new BestFragment();
 		mFragmentTrans = getSupportFragmentManager().beginTransaction();
-		mFragmentTrans.replace(R.id.main_fragment_container, mBestFragment);
 		try {
+			mFragmentTrans.replace(R.id.main_fragment_container, mBestFragment);
 			mFragmentTrans.commit();
 		} catch (Exception e) {
+			
 		}
 	}
 
@@ -256,91 +247,80 @@ public class MainActivity extends FragmentActivity implements
 		return super.onCreateOptionsMenu(menu);
 	}
 
+	// 모션관련 기능 차후구현
 	private void motionShare() {
 		// TODO Auto-generated method stub
-		if (!getConfig().isUseMotion())
-			return;
-		if (isShareing) {
-			l.i("isShareing false");
-			return;
-		} else {
-			l.i("isShareing true");
-		}
-		if (!Util.Loc.chkLocService(this)) {
-			l.i("location Service disabled");
-			mProgress.dismiss();
-			showLocSettingDialog();
-			return;
-		}
-		l.i("share receive");
-		new UrlShareReceiveThread(mLocation).execute();
+		// if (!getConfig().isUseMotion())
+		// return;
+		// if (isShareing)
+		// return;
+		// if (!Util.Loc.chkLocService(this)) {
+		// mProgress.dismiss();
+		// showLocSettingDialog();
+		// return;
+		// }
+		// new UrlShareReceiveThread(mLocation).execute();
 	}
 
+	// 모션관련기능 차후구현
 	class UrlShareReceiveThread extends ShareThread {
-
+		//
 		public UrlShareReceiveThread(Location loc) {
 			super(loc);
-			// TODO Auto-generated constructor stub
 		}
 
-		@Override
-		protected void onPreExecute() {
-			// TODO Auto-generated method stub
-			isShareing = true;
-			mProgress.show();
-		}
+		// @Override
+		// protected void onPreExecute() {
+		// isShareing = true;
+		// mProgress.show();
+		// }
 
 		@Override
 		protected String doInBackground(String... params) {
-			// TODO Auto-generated method stub
-			l.i("receive start");
-			try {
-				String shake_key = generateShakeKey();
-				long startTime = System.currentTimeMillis();
-				long currentTime = 0l;
-				boolean result = false;
-				while (currentTime - 5000 < startTime) {
-					try {
-						JSONObject js = getJson(String.format(RESPONSE_URL,
-								shake_key));
-						String resultText = js.getString("result");
-						String is_response = js.getString("is_request");
-						result = "Y".equalsIgnoreCase(is_response)
-								&& "Y".equalsIgnoreCase(resultText);
-						if (result)
-							return URLDecoder.decode(js.getString("url"),
-									HTTP.UTF_8);
-						Thread.sleep(500);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					currentTime = System.currentTimeMillis();
-				}
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (JSONException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			// l.i("receive start");
+			// try {
+			// String shake_key = generateShakeKey();
+			// long startTime = System.currentTimeMillis();
+			// long currentTime = 0l;
+			// boolean result = false;
+			// while (currentTime - 5000 < startTime) {
+			// try {
+			// JSONObject js = getJson(String.format(RESPONSE_URL,
+			// shake_key));
+			// String resultText = js.getString("result");
+			// String is_response = js.getString("is_request");
+			// result = "Y".equalsIgnoreCase(is_response)
+			// && "Y".equalsIgnoreCase(resultText);
+			// if (result)
+			// return URLDecoder.decode(js.getString("url"),
+			// HTTP.UTF_8);
+			// Thread.sleep(500);
+			// } catch (Exception e) {
+			// e.printStackTrace();
+			// }
+			// currentTime = System.currentTimeMillis();
+			// }
+			// } catch (IOException e1) {
+			// e1.printStackTrace();
+			// } catch (JSONException e1) {
+			// e1.printStackTrace();
+			// }
 			return null;
 		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			// TODO Auto-generated method stub
-			isShareing = false;
-			mProgress.dismiss();
-			if (result != null) {
-				Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(result));
-				i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				startActivity(i);
-			} else {
-				Toast.makeText(MainActivity.this, R.string.receive_notfound,
-						Toast.LENGTH_SHORT).show();
-			}
-		}
+		//
+		// @Override
+		// protected void onPostExecute(String result) {
+		// isShareing = false;
+		// mProgress.dismiss();
+		// if (result != null) {
+		// Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(result));
+		// i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		// startActivity(i);
+		// } else {
+		// Toast.makeText(MainActivity.this, R.string.receive_notfound,
+		// Toast.LENGTH_SHORT).show();
+		// }
+		// }
 	}
 
 	// private void showSensitiveDialog() {
@@ -386,7 +366,7 @@ public class MainActivity extends FragmentActivity implements
 	// mSensitiveDialog.show();
 	// }
 
-	private void showLocSettingDialog() {
+	void showLocSettingDialog() {
 		// TODO Auto-generated method stub
 		AlertDialog.Builder mDialog = new AlertDialog.Builder(this);
 		mDialog.setMessage(getString(R.string.noti_locservice));
@@ -501,13 +481,13 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	void goMovie() {
-		Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(Config.WebDomain
+		Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(Domain.WEB_DOMAIN
 				+ "vod/movie/movieList.html" + "?SET_DEVICE=android(APP)"));
 		startActivity(i);
 	}
 
 	void goVideo() {
-		Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(Config.WebDomain
+		Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(Domain.WEB_DOMAIN
 				+ "vod/tv/tvList.html" + "?SET_DEVICE=android(APP)"));
 		startActivity(i);
 	}
@@ -518,7 +498,7 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	void goMyPage() {
-		Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(Config.WebDomain
+		Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(Domain.WEB_DOMAIN
 				+ "mypage/wish_list.html" + "?SET_DEVICE=android(APP)"));
 		startActivity(i);
 	}
@@ -595,7 +575,7 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	public void onLocationChanged(Location location) {
 		// TODO Auto-generated method stub
-		mLocation = location;
+		// mLocation = location;
 	}
 
 	@Override

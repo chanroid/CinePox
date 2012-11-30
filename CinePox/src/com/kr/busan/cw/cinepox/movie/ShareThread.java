@@ -14,12 +14,12 @@ import android.os.AsyncTask;
 
 public abstract class ShareThread extends AsyncTask<String, Integer, String> {
 
-	protected String DELETE_URL = Config.Domain + "player/shakeDelete?shake_key=%s";
-	protected String REQUEST_URL = Config.Domain
+	protected String DELETE_URL = Domain.ACCESS_DOMAIN + "player/shakeDelete?shake_key=%s";
+	protected String REQUEST_URL = Domain.ACCESS_DOMAIN
 			+ "player/shakeRequest?setting=response_type:json&shake_key=%s&url=%s";
-	protected String RESPONSE_URL = Config.Domain
+	protected String RESPONSE_URL = Domain.ACCESS_DOMAIN
 			+ "player/shakeResponse?setting=response_type:json&shake_key=%s";
-	protected String GET_KEY_URL = Config.Domain
+	protected String GET_KEY_URL = Domain.ACCESS_DOMAIN
 			+ "player/shakeGetKey?setting=response_type:json&shake_key=%s";
 
 	private Location mLocation;

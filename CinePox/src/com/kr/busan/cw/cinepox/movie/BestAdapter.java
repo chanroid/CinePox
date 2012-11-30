@@ -1,26 +1,23 @@
 package com.kr.busan.cw.cinepox.movie;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import kr.co.chan.util.Util;
-import kr.co.chan.util.Interfaces.Destroyable;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.SimpleAdapter;
 
-import com.fedorvlasov.lazylist.ImageLoader;
 import com.busan.cw.clsp20120924.R;
+import com.fedorvlasov.lazylist.ImageLoader;
 
-public class BestAdapter extends SimpleAdapter implements Destroyable {
+public class BestAdapter extends SimpleAdapter {
 
-	private Map<Integer, Bitmap> bmArray = new HashMap<Integer, Bitmap>();
 	private List<Map<String, String>> mDataArray;
 	private Context mContext;
 	private ImageLoader mImageLoader;
@@ -63,6 +60,7 @@ public class BestAdapter extends SimpleAdapter implements Destroyable {
 		}
 
 		ImageView iv = (ImageView) view.findViewById(R.id.iv_movieitem_thumb);
+		iv.setScaleType(ScaleType.FIT_XY);
 		iv.setVisibility(View.INVISIBLE);
 		iv.setLayoutParams(ivparam);
 
@@ -76,16 +74,6 @@ public class BestAdapter extends SimpleAdapter implements Destroyable {
 					iv);
 
 		return view;
-	}
-
-	@Override
-	public synchronized void destroy() {
-		try {
-			for (int i = 0; i < bmArray.size(); i++)
-				bmArray.get(i).recycle();
-			bmArray.clear();
-		} catch (Exception e) {
-		}
 	}
 
 }

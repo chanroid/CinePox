@@ -80,15 +80,22 @@ public class VideoControllerView extends CCView implements
 	};
 
 	private ScaleGestureDetector mMultiTouchDetector;
-	private SimpleOnScaleGestureListener mMultiTouchListener = new SimpleOnScaleGestureListener() {
-		private float scaleFactor = 0.7f;
+	private SimpleOnScaleGestureListener mMultiTouchListener;
+
+	class MultiTouchListener extends SimpleOnScaleGestureListener {
+		private float scaleFactor = 1.0f;
+		
+		public MultiTouchListener(float defaultscale) {
+			if (defaultscale > 0.5f)
+				scaleFactor = defaultscale;
+		}
 
 		@Override
 		public boolean onScale(ScaleGestureDetector detector) {
 			action = 2;
 			controllerHandler.removeMessages(HANDLE_WHAT_CONTROLLER_AUTO_HIDE);
 			scaleFactor *= detector.getScaleFactor();
-			scaleFactor = Math.max(0.3f, Math.min(scaleFactor, 5.0f));
+			scaleFactor = Math.max(1.0f, Math.min(scaleFactor, 5.0f));
 			if (callback != null)
 				callback.onZoom(scaleFactor);
 			return true;
@@ -98,10 +105,11 @@ public class VideoControllerView extends CCView implements
 	public VideoControllerView(Context context) {
 		super(context);
 		setOnSystemUiVisibilityChangeListener();
-		mMultiTouchDetector = new ScaleGestureDetector(context,
+		mMultiTouchListener = new MultiTouchListener(1.0f);
+		mMultiTouchDetector = new ScaleGestureDetector(getContext(),
 				mMultiTouchListener);
 	}
-
+	
 	public boolean isTracking() {
 		return isTracking;
 	}

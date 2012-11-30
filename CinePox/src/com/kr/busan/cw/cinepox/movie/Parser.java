@@ -13,8 +13,6 @@ import org.json.JSONObject;
 
 public class Parser {
 
-	public static final String Domain = "http://mtest4.cinepox.com/";
-
 	public static final int REQ_GET_CONTENTS = 0;
 	public static final int REQ_AD_VIEW_CHECK = 1;
 	public static final int REQ_GET_AD_LIST = 2;
@@ -28,7 +26,7 @@ public class Parser {
 	public static final int REQ_GET_TEXT_AD_LIST = 10;
 	public static final int REQ_TEXT_AD_CLICK_CHECK = 11;
 
-	public static final String URL_GET_CONTENTS = Domain
+	public static final String URL_GET_CONTENTS = Domain.ACCESS_DOMAIN
 			+ "player/getContents/";
 
 	public static final String KEY_MOVIE_NUM = "productInfo_seq";

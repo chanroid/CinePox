@@ -1,47 +1,12 @@
 package com.kr.busan.cw.cinepox.player.model;
 
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.ACCESS_DOMAIN;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.CAPTION_EXT_SMI;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.CAPTION_EXT_SRT;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.DEVICE;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_3G_MESSAGE;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_3G_MESSAGE_LENGTH;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_BUG_INSERT_URL;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_DEVICE_TYPE;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_EXCEPTION;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_KEY;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_LANG;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_MEMBER_NUM;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_MOVIE_LIST;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_MOVIE_NUM;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_MOVIE_URL;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_MSG;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_NAME;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_ORDER_CODE;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_PLAY_TIME;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_PLAY_TIME_URL;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_PROTOCOL_TYPE;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_QUALITY;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_RESULT;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_SETTING;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_SET_TIME;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_SET_URL;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_SHAKE_KEY;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_START_TIME;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_TYPE;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.KEY_URL;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.RESPONSE_JSON;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.RESULT_ERROR;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.RESULT_MOVIE;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.RESULT_SUCCESS;
-import static com.kr.busan.cw.cinepox.player.model.PlayerModel.Const.SHAKE_REQUEST_URL;
-
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import kr.co.chan.util.Util;
 import kr.co.chan.util.l;
+import model.CCSetting;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -59,9 +24,10 @@ import android.os.Build;
 import android.os.Debug;
 import android.widget.Toast;
 
+import com.kr.busan.cw.cinepox.player.base.Domain;
 import com.kr.busan.cw.cinepox.player.structs.QualityData;
 
-public class PlayerConfigModel extends PlayerModel {
+public class PlayerConfigModel extends Model {
 
 	private static PlayerConfigModel instance;
 
@@ -69,6 +35,10 @@ public class PlayerConfigModel extends PlayerModel {
 		if (instance == null)
 			instance = new PlayerConfigModel(ctx);
 		return instance;
+	}
+
+	public static void clearInstance() {
+		instance = null;
 	}
 
 	private long continuePos = 0l;
@@ -90,18 +60,19 @@ public class PlayerConfigModel extends PlayerModel {
 
 	private String mBugReportUrl;
 	private String mPlaytimeUrl;
-//	private String mTextBannerUrl;
-//	private String mADUrl;
-//	private String mBookmarkListUrl;
-//	private String mBookmarkInsertUrl;
-//	private String mBookmarkDeleteUrl;
-//	private String mLogReportUrl;
+
+	// private String mTextBannerUrl;
+	// private String mADUrl;
+	// private String mBookmarkListUrl;
+	// private String mBookmarkInsertUrl;
+	// private String mBookmarkDeleteUrl;
+	// private String mLogReportUrl;
 
 	private PlayerConfigModel(Context ctx) {
 		mContext = ctx;
-		mCaptionModel = CaptionModel.getInstance();
+		mCaptionModel = CaptionModel.getInstance(ctx);
 		mVideoModel = VideoModel.getInstance(ctx);
-		mPref = ctx.getSharedPreferences(Const.KEY_SETTING, 0);
+		mPref = ctx.getSharedPreferences(KEY_SETTING, 0);
 		mEdit = mPref.edit();
 	}
 
@@ -145,11 +116,11 @@ public class PlayerConfigModel extends PlayerModel {
 	}
 
 	public void setDefaultQuality(String ctype) {
-		mEdit.putString(Const.KEY_QUALITY, ctype).commit();
+		mEdit.putString(KEY_QUALITY, ctype).commit();
 	}
 
 	public String getDefaultQuality() {
-		return mPref.getString(Const.KEY_QUALITY, "C600");
+		return mPref.getString(KEY_QUALITY, "C600");
 	}
 
 	public boolean isContinue() {
@@ -163,6 +134,14 @@ public class PlayerConfigModel extends PlayerModel {
 	public void setContinuePosition(long pos) {
 		l.i("setContinuePos : " + pos);
 		continuePos = pos;
+	}
+
+	public void setRestartPostion(String url, long pos) {
+		mEdit.putLong(url, pos).commit();
+	}
+
+	public long getRestartPosition(String url) {
+		return mPref.getLong(url, 0l);
 	}
 
 	public boolean isSetURI() {
@@ -246,7 +225,7 @@ public class PlayerConfigModel extends PlayerModel {
 			throws IllegalStateException, IOException {
 		ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair(KEY_SHAKE_KEY, key));
-		Util.Stream.inStreamFromURLbyPOST(Const.SHAKE_DELETE_URL, params);
+		Util.Stream.inStreamFromURLbyPOST(SHAKE_DELETE_URL, params);
 	}
 
 	public synchronized String generateShareKey(Location loc)
@@ -257,8 +236,8 @@ public class PlayerConfigModel extends PlayerModel {
 		String sendKey = Util.MD5(lng + lat);
 		ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair(KEY_SHAKE_KEY, sendKey));
-		JSONObject js = Util.Stream.jsonFromURLbyPOST(Const.SHAKE_GET_KEY_URL,
-				params);
+		JSONObject js = Util.Stream
+				.jsonFromURLbyPOST(SHAKE_GET_KEY_URL, params);
 		return js.getString("shake_key");
 	}
 
@@ -325,7 +304,7 @@ public class PlayerConfigModel extends PlayerModel {
 	}
 
 	public synchronized JSONObject loadUpdate() {
-		String url = ACCESS_DOMAIN + "player/mobUpdateCheck";
+		String url = Domain.ACCESS_DOMAIN + "player/mobUpdateCheck";
 		ArrayList<NameValuePair> param = new ArrayList<NameValuePair>();
 		param.add(new BasicNameValuePair(KEY_SETTING, RESPONSE_JSON));
 		param.add(new BasicNameValuePair(KEY_DEVICE_TYPE, DEVICE));
@@ -337,7 +316,7 @@ public class PlayerConfigModel extends PlayerModel {
 		}
 	}
 
-	public String loadConfig(Intent params) {
+	public synchronized String loadConfig(Intent params) {
 		Uri path = params.getData();
 
 		if (path == null)
@@ -359,6 +338,10 @@ public class PlayerConfigModel extends PlayerModel {
 				String set_url = path.getQueryParameter(KEY_SET_URL);
 				String set_time = path.getQueryParameter(KEY_SET_TIME);
 				mOrderCode = path.getQueryParameter(KEY_ORDER_CODE);
+				String domain = path.getQueryParameter("domain");
+				if (domain != null && CCSetting.isTestMode)
+					Domain.ACCESS_DOMAIN = String.format(
+							"http://%s/", domain);
 
 				if (params.getLongExtra(KEY_SET_TIME, 0) > 0)
 					continuePos = params.getLongExtra(KEY_SET_TIME, 0) * 1000;
@@ -373,17 +356,14 @@ public class PlayerConfigModel extends PlayerModel {
 				if (movie_num != null || member_seq != null) {
 					mMovieNum = movie_num;
 					mMemNum = member_seq;
-					String config_url = ACCESS_DOMAIN + "player/getContents/";
+					String config_url = Domain.ACCESS_DOMAIN
+							+ "player/getContents/";
 					ArrayList<NameValuePair> param = new ArrayList<NameValuePair>();
 					param.add(new BasicNameValuePair(KEY_MOVIE_NUM, movie_num));
 					param.add(new BasicNameValuePair(KEY_MEMBER_NUM, member_seq));
 					param.add(new BasicNameValuePair(KEY_SETTING, RESPONSE_JSON));
-					if (Build.VERSION.SDK_INT > 8)
-						param.add(new BasicNameValuePair(KEY_PROTOCOL_TYPE,
-								"http"));
-					else
-						param.add(new BasicNameValuePair(KEY_PROTOCOL_TYPE,
-								"rtsp"));
+					param.add(new BasicNameValuePair(KEY_PROTOCOL_TYPE,
+							Build.VERSION.SDK_INT > 8 ? "http" : "rtsp"));
 					param.add(new BasicNameValuePair(KEY_DEVICE_TYPE, DEVICE));
 					param.add(new BasicNameValuePair(KEY_ORDER_CODE, mOrderCode));
 					JSONObject config = Util.Stream.jsonFromURLbyPOST(
@@ -447,16 +427,16 @@ public class PlayerConfigModel extends PlayerModel {
 						m3GMessage = urlArray.getString(KEY_3G_MESSAGE);
 						m3GMessageLength = urlArray
 								.getInt(KEY_3G_MESSAGE_LENGTH);
-//						mBookmarkListUrl = urlArray
-//								.getString(KEY_GET_BOOKMARK_LIST);
-//						mBookmarkInsertUrl = urlArray
-//								.getString(KEY_BOOKMARK_INSERT_URL);
-//						mTextBannerUrl = urlArray
-//								.getString(KEY_GET_TEXT_BANNER_URL);
-//						mADUrl = urlArray.getString(KEY_GET_AD_URL);
-//						mBookmarkDeleteUrl = urlArray
-//								.getString(KEY_BOOKMARK_DELETE_URL);
-//						mLogReportUrl = urlArray.getString(KEY_LOG_URL);
+						// mBookmarkListUrl = urlArray
+						// .getString(KEY_GET_BOOKMARK_LIST);
+						// mBookmarkInsertUrl = urlArray
+						// .getString(KEY_BOOKMARK_INSERT_URL);
+						// mTextBannerUrl = urlArray
+						// .getString(KEY_GET_TEXT_BANNER_URL);
+						// mADUrl = urlArray.getString(KEY_GET_AD_URL);
+						// mBookmarkDeleteUrl = urlArray
+						// .getString(KEY_BOOKMARK_DELETE_URL);
+						// mLogReportUrl = urlArray.getString(KEY_LOG_URL);
 						return RESULT_SUCCESS;
 					} catch (JSONException e) {
 						e.printStackTrace();

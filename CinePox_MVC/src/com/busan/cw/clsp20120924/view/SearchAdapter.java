@@ -17,7 +17,9 @@ import java.util.List;
 import view.CCAdapter;
 import android.content.Context;
 import android.view.View;
+import android.widget.TextView;
 
+import com.busan.cw.clsp20120924.R;
 import com.busan.cw.clsp20120924.structs.SearchItemData;
 
 /**
@@ -41,7 +43,9 @@ public class SearchAdapter extends CCAdapter<SearchItemData> {
 	@Override
 	public View initItem(SearchItemData data, View convertView) {
 		// TODO Auto-generated method stub
-		return null;
+		TextView tv = (TextView) convertView.findViewById(R.id.text1);
+		tv.setText(data.fullName);
+		return convertView;
 	}
 
 }

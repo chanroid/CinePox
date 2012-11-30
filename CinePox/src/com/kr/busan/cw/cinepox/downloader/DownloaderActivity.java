@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 import com.kr.busan.cw.cinepox.movie.CinepoxService;
 import com.kr.busan.cw.cinepox.movie.Config;
+import com.kr.busan.cw.cinepox.movie.Domain;
 
 public class DownloaderActivity extends Activity {
 	@Override
@@ -28,7 +29,7 @@ public class DownloaderActivity extends Activity {
 					HTTP.UTF_8);
 			String mem_num = uri.getQueryParameter("member_seq");
 			String setting = "response_type:json";
-			String url = Config.Domain
+			String url = Domain.ACCESS_DOMAIN
 					+ "download/appDownloadUrl/?order_code=%s&productInfo_seq=%s&ctype=%s&member_seq=%s&setting=%s&SET_DEVICE=android(APP)";
 			url = String.format(url, order_code, product_num, ctype, mem_num,
 					setting);

@@ -23,13 +23,13 @@ public static com.kr.busan.cw.cinepox.aidl.ICinepoxService asInterface(android.o
 if ((obj==null)) {
 return null;
 }
-android.os.IInterface iin = (android.os.IInterface)obj.queryLocalInterface(DESCRIPTOR);
+android.os.IInterface iin = obj.queryLocalInterface(DESCRIPTOR);
 if (((iin!=null)&&(iin instanceof com.kr.busan.cw.cinepox.aidl.ICinepoxService))) {
 return ((com.kr.busan.cw.cinepox.aidl.ICinepoxService)iin);
 }
 return new com.kr.busan.cw.cinepox.aidl.ICinepoxService.Stub.Proxy(obj);
 }
-public android.os.IBinder asBinder()
+@Override public android.os.IBinder asBinder()
 {
 return this;
 }
@@ -81,7 +81,7 @@ Proxy(android.os.IBinder remote)
 {
 mRemote = remote;
 }
-public android.os.IBinder asBinder()
+@Override public android.os.IBinder asBinder()
 {
 return mRemote;
 }
@@ -89,7 +89,7 @@ public java.lang.String getInterfaceDescriptor()
 {
 return DESCRIPTOR;
 }
-public void doService(int what, java.lang.String data) throws android.os.RemoteException
+@Override public void doService(int what, java.lang.String data) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -105,7 +105,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void registerCallback(com.kr.busan.cw.cinepox.aidl.ICinepoxServiceCallback cb) throws android.os.RemoteException
+@Override public void registerCallback(com.kr.busan.cw.cinepox.aidl.ICinepoxServiceCallback cb) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -120,7 +120,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void unregisterCallback(com.kr.busan.cw.cinepox.aidl.ICinepoxServiceCallback cb) throws android.os.RemoteException
+@Override public void unregisterCallback(com.kr.busan.cw.cinepox.aidl.ICinepoxServiceCallback cb) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();

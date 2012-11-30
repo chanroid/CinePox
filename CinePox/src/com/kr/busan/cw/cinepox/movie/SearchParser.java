@@ -19,7 +19,7 @@ import android.os.AsyncTask;
 
 public class SearchParser extends AsyncTask<String, Integer, String> {
 
-	public static final String AUTOCOMPLETE_URL = Config.Domain
+	public static final String AUTOCOMPLETE_URL = Domain.ACCESS_DOMAIN
 			+ "smartSearch/momentSearch/";
 
 	ArrayList<String> result = new ArrayList<String>();

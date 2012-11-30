@@ -26,6 +26,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
@@ -40,9 +41,9 @@ import com.busan.cw.clsp20120924.R;
 
 public class IntroActivity extends Activity {
 
-	static final String CONFIG_URL = Config.Domain
+	static final String CONFIG_URL = Domain.ACCESS_DOMAIN
 			+ "cinepoxAPP/getStartConfig/?app_version=%s&setting=response_type:json&SET_DEVICE=android(APP)";
-	static final String AUTOLOGIN_URL = Config.Domain
+	static final String AUTOLOGIN_URL = Domain.ACCESS_DOMAIN
 			+ "member/login/?id=%s&password=%s&setting=response_type:text&SET_DEVICE=android(APP)";
 	boolean isBlock = false;
 	boolean isShowAd = false;
@@ -66,7 +67,7 @@ public class IntroActivity extends Activity {
 				if (!dir.exists())
 					dir.mkdirs();
 
-				String url = Config.Domain + "cinepoxAPP/getStartConfig/";
+				String url = Domain.ACCESS_DOMAIN + "cinepoxAPP/getStartConfig/";
 				ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
 				params.add(new BasicNameValuePair(
 						"app_version",
@@ -95,9 +96,12 @@ public class IntroActivity extends Activity {
 						.getString("is_app_recommend");
 				getConfig().setAppRecommend(
 						"Y".equalsIgnoreCase(is_app_recommend));
-				JSONArray bestList = dataObject.getJSONArray("bestList");
-				for (int i = 0; i < bestList.length(); i++)
-					parseCategory(i, bestList.getString(i));
+
+				if (!Util.Display.isTablet(IntroActivity.this)) {
+					JSONArray bestList = dataObject.getJSONArray("bestList");
+					for (int i = 0; i < bestList.length(); i++)
+						parseCategory(i, bestList.getString(i));
+				}
 
 				JSONObject banner = dataObject.getJSONObject("top_banner");
 				String banner_img = banner.getString("top_banner_img");
@@ -137,7 +141,6 @@ public class IntroActivity extends Activity {
 
 		private boolean parseAction(JSONObject o) throws JSONException,
 				IOException {
-			l.i("parseAction");
 			// TODO Auto-generated method stub
 			mMsgNum = o.getString("code");
 			String what = o.getString("what");
@@ -275,7 +278,7 @@ public class IntroActivity extends Activity {
 					LinearLayout layout = (LinearLayout) getLayoutInflater()
 							.inflate(R.layout.main_popup, null);
 					mCheckBox = (CheckBox) layout
-							.findViewById(com.kr.busan.cw.cinepox.R.id.checkBox_main_popup);
+							.findViewById(R.id.checkBox_main_popup);
 					mCheckBox
 							.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 								@Override
@@ -300,16 +303,10 @@ public class IntroActivity extends Activity {
 							layout.addView(mMsgTv, 0);
 							mMainAlert.setView(layout);
 							mMainAlert.show();
-						} else {
-							goMain();
-							return;
 						}
 					} else {
 						mMainAlert.show();
 					}
-				} else {
-					goMain();
-					return;
 				}
 			}
 		};
@@ -334,7 +331,7 @@ public class IntroActivity extends Activity {
 
 		if (Util.Display.isTablet(this)) {
 			Intent webintent = new Intent(Intent.ACTION_VIEW,
-					Uri.parse(Config.WebDomain));
+					Uri.parse(Domain.WEB_DOMAIN));
 			startActivity(webintent);
 		} else {
 			Intent mainintent = new Intent(this, MainActivity.class);
@@ -400,8 +397,12 @@ public class IntroActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		if (Util.Display.isTablet(this))
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		if (Util.Display.isTablet(this)) {
+			if (Build.VERSION.SDK_INT >= 9)
+				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+			else
+				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		}
 		super.onCreate(savedInstanceState);
 		// l.setEnabled(false);
 		setContentView(R.layout.intro);
