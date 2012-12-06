@@ -27,4 +27,5 @@ import model.CCModel;
  * </PRE>
  */
 public abstract class Model extends CCModel implements Constants {
+	
 }

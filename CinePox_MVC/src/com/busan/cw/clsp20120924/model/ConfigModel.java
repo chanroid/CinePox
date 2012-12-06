@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import kr.co.chan.util.Util;
 import kr.co.chan.util.l;
@@ -28,7 +30,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.telephony.SmsMessage;
 
 import com.busan.cw.clsp20120924.base.Domain;
 import com.busan.cw.clsp20120924.base.Model;
@@ -55,6 +60,7 @@ public class ConfigModel extends Model {
 	private ArrayList<CategoryItemData> mCategoryDataArray = new ArrayList<CategoryItemData>();
 	private MainBannerData mMainBanner;
 	private ConfigActionData mActionData;
+	private MovieDataModel mDataModel;
 	
 	private Context mContext;
 	private String mWidgetUpdateUrl;
@@ -71,10 +77,37 @@ public class ConfigModel extends Model {
 		return instance;
 	}
 
+	class CodeSendSync extends Thread {
+
+		String order;
+		String commit;
+
+		public CodeSendSync(String order, String commit) {
+			super();
+			this.order = order;
+			this.commit = commit;
+		}
+
+		public void run() {
+			// response가 있든 말든 걍 처리.
+			try {
+				String url = Domain.ACCESS_DOMAIN + "cinepoxAPP/setPaySms/";
+				ArrayList<NameValuePair> param = new ArrayList<NameValuePair>();
+				param.add(new BasicNameValuePair("sms_key", order));
+				param.add(new BasicNameValuePair("sms_num", commit));
+				Util.Stream.inStreamFromURLbyPOST(url, param);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	private ConfigModel(Context ctx) {
 		mContext = ctx;
 		mPref = mContext.getSharedPreferences("config", 0);
 		mEdit = mPref.edit();
+		mDataModel = MovieDataModel.getInstance(mContext);
 	}
 
 	public ArrayList<WidgetUpdateData> getWidgetData() {
@@ -101,10 +134,38 @@ public class ConfigModel extends Model {
 	public ArrayList<CategoryItemData> getCategoryData() {
 		return mCategoryDataArray;
 	}
+	
+	public void sendErrorLog(Intent intent) {
+		
+	}
+	
+	public void sendSMSCode(String key, Intent intent) {
+		Bundle bundle = intent.getExtras();
+		Object[] pdus = (Object[]) bundle.get("pdus");
+		SmsMessage[] msgs = new SmsMessage[pdus.length];
+		for (int i = 0; i < msgs.length; i++) {
+			msgs[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
+			String message = msgs[i].getMessageBody();
+			if (message.contains("danalpay") || message.contains("다날")
+					|| message.contains("cinepox")) {
+				Pattern pattern = Pattern.compile("[0-9]{4,8}");
+				Matcher matcher = pattern.matcher(message);
+				if (matcher.find()) {
+					String code = matcher.group();
+					new CodeSendSync(key, code).start();
+				}
+				return;
+			}
+		}
+	}
+	
+	public void loadWidgetData() {
+		
+	}
 
 	public String loadConfig() {
 		try {
-			String url = Domain.WEB_DOMAIN + CONFIG_PATH;
+			String url = Domain.ACCESS_DOMAIN + CONFIG_PATH;
 			ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("app_version", mContext
 					.getPackageManager().getPackageInfo(
@@ -131,6 +192,7 @@ public class ConfigModel extends Model {
 			isAppRecommend = "Y".equalsIgnoreCase(is_app_recommend);
 
 			if (!Util.Display.isTablet(mContext)) {
+				mCategoryDataArray = new ArrayList<CategoryItemData>();
 				JSONArray bestList = dataObject.getJSONArray("bestList");
 				for (int i = 0; i < bestList.length(); i++)
 					parseCategory(bestList.getString(i));
@@ -176,7 +238,10 @@ public class ConfigModel extends Model {
 		// TODO Auto-generated method stub
 		JSONObject o = Util.Stream.jsonFromURL(categoryurl);
 		String title = o.getString(KEY_TITLE);
-		mCategoryDataArray.add(new CategoryItemData(title, categoryurl));
+		CategoryItemData data = new CategoryItemData(title, categoryurl);
+		mCategoryDataArray.add(data);
+		if (mDataModel.getCurrentCategory() == null)
+			mDataModel.setCurrentCategory(data);
 	}
 
 	private boolean parseAction(JSONObject o) throws JSONException {
@@ -213,8 +278,8 @@ public class ConfigModel extends Model {
 		int remain = today - orign;
 		l.i("num : " + today + " + " + orign);
 		if (remain < 8)
-			return false;
-		return true;
+			return true;
+		return false;
 	}
 
 	public void addReadMessage(String num) {
@@ -224,4 +289,7 @@ public class ConfigModel extends Model {
 						Calendar.DAY_OF_YEAR)).commit();
 	}
 
+	public void removeReadMessage(String num) {
+		mEdit.putInt(num, 0).commit();
+	}
 }

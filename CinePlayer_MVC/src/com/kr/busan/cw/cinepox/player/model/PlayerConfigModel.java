@@ -137,10 +137,14 @@ public class PlayerConfigModel extends Model {
 	}
 
 	public void setRestartPostion(String url, long pos) {
+		if (url == null)
+			return;
 		mEdit.putLong(url, pos).commit();
 	}
 
 	public long getRestartPosition(String url) {
+		if (url == null)
+			return 0l;
 		return mPref.getLong(url, 0l);
 	}
 
@@ -169,6 +173,8 @@ public class PlayerConfigModel extends Model {
 	}
 
 	public boolean isCinepoxURI(Uri uri) {
+		if (uri == null)
+			return false;
 		return "cinepox".equalsIgnoreCase(uri.getScheme());
 	}
 
@@ -177,10 +183,17 @@ public class PlayerConfigModel extends Model {
 	}
 
 	public boolean isContentURI(Uri uri) {
+		if (uri == null)
+			return false;
 		return "content".equalsIgnoreCase(uri.getScheme());
 	}
 
 	public synchronized boolean sendShareInfo(Location loc, String sendurl) {
+		if (loc == null)
+			return false;
+		if (sendurl == null)
+			return false;
+
 		try {
 			String shake_key = generateShareKey(loc);
 			long startTime = System.currentTimeMillis();
@@ -230,6 +243,8 @@ public class PlayerConfigModel extends Model {
 
 	public synchronized String generateShareKey(Location loc)
 			throws ClientProtocolException, JSONException, IOException {
+		if (loc == null)
+			return null;
 		DecimalFormat format = new DecimalFormat(".#");
 		String lng = format.format(loc.getLongitude());
 		String lat = format.format(loc.getLatitude());
@@ -244,6 +259,8 @@ public class PlayerConfigModel extends Model {
 	public synchronized void sendErrorLog(Intent intent)
 			throws IllegalStateException, IOException {
 		// 서버작업 후 작성할것
+		if (intent == null)
+			return;
 		StringBuffer sb = new StringBuffer();
 		sb.append("APP Ver : " + Util.App.getVersionNum(mContext) + "\n");
 		sb.append("Time : " + Util.Time.getCurrentDateTimeString() + "\n");
@@ -298,6 +315,8 @@ public class PlayerConfigModel extends Model {
 
 	public synchronized void sendPlayTime(Intent intent)
 			throws IllegalStateException, IOException {
+		if (intent == null)
+			return;
 		long starttime = intent.getLongExtra(KEY_START_TIME, 0l);
 		long playtime = intent.getLongExtra(KEY_PLAY_TIME, 0l);
 		sendPlayTime(starttime, playtime);
@@ -317,6 +336,8 @@ public class PlayerConfigModel extends Model {
 	}
 
 	public synchronized String loadConfig(Intent params) {
+		if (params == null)
+			return null;
 		Uri path = params.getData();
 
 		if (path == null)
@@ -339,9 +360,10 @@ public class PlayerConfigModel extends Model {
 				String set_time = path.getQueryParameter(KEY_SET_TIME);
 				mOrderCode = path.getQueryParameter(KEY_ORDER_CODE);
 				String domain = path.getQueryParameter("domain");
-				if (domain != null && CCSetting.isTestMode)
-					Domain.ACCESS_DOMAIN = String.format(
-							"http://%s/", domain);
+				if (domain != null && CCSetting.isTestMode) {
+					Domain.ACCESS_DOMAIN = String.format("http://%s/", domain);
+					l.i("ACCESS_DOMAIN : " + Domain.ACCESS_DOMAIN);
+				}
 
 				if (params.getLongExtra(KEY_SET_TIME, 0) > 0)
 					continuePos = params.getLongExtra(KEY_SET_TIME, 0) * 1000;

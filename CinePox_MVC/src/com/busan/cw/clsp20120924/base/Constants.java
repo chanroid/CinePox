@@ -25,14 +25,14 @@ package com.busan.cw.clsp20120924.base;
 public interface Constants {
 	public static final String ACTION_QRPLAY = "QRPLAY";
 	
-	public static final String CONFIG_PATH = "/cinepoxAPP/getStartConfig/";
-	public static final String SEARCH_PATH = "/smartSearch/momentSearch/";
+	public static final String CONFIG_PATH = "cinepoxAPP/getStartConfig/";
+	public static final String SEARCH_PATH = "smartSearch/momentSearch/";
 	
 	public static final String RESPONSE_JSON = "response_type:json";
 	public static final String RESPONSE_XML = "response_type:xml";
 
 	public static final String DEVICE_ANDROID_APP = "android(APP)";
-	
+
 	public static final String KEY_AD_NUM = "ad_seq";
 	public static final String KEY_BOOKMARK_DATE = "regdate";
 	public static final String KEY_BOOKMARK_DELETE_URL = "bookmark_delete_url";
@@ -58,7 +58,7 @@ public interface Constants {
 	public static final String KEY_MEMBER_NUM = "member_seq";
 	public static final String KEY_MEMO = "memo";
 	public static final String KEY_MOVIE_LIST = "movie_list";
-	public static final String KEY_MOVIE_NUM = "productInfo_seq";
+	public static final String KEY_MOVIE_NUM = "movieProduct_seq";
 	public static final String KEY_MSG = "msg";
 	public static final String KEY_NAME = "name";
 	public static final String KEY_NEXT_TIME = "next_time";

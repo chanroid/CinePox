@@ -1,7 +1,6 @@
 package com.busan.cw.clsp20120924.controller;
 
 import kr.co.chan.util.Util;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,7 +17,9 @@ import com.busan.cw.clsp20120924.base.Domain;
 import com.busan.cw.clsp20120924.model.ConfigModel;
 import com.busan.cw.clsp20120924.structs.ConfigActionData;
 
-public class IntroActivity extends Activity implements Constants {
+import controller.CCActivity;
+
+public class IntroActivity extends CCActivity implements Constants {
 
 	private ConfigModel mConfigModel;
 
@@ -36,10 +37,18 @@ public class IntroActivity extends Activity implements Constants {
 				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		}
 		super.onCreate(savedInstanceState);
-		// l.setEnabled(false);
+		mConfigModel = (ConfigModel) loadModel(ConfigModel.class);
 		setContentView(R.layout.intro);
+		// 뷰와 상호작용 할 필요가 없으므로 선언만 하고 땡.
 		new ConfigLoader().execute();
 		setupShortcut();
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		goMain();
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	private void setupShortcut() {
@@ -67,8 +76,11 @@ public class IntroActivity extends Activity implements Constants {
 			// TODO Auto-generated method stub
 			if (result != null) {
 				// error
+				finish();
 			} else {
-				if (mConfigModel.getActionData() != null)
+				if (mConfigModel.getActionData() != null
+						&& !mConfigModel.isReadMessage(mConfigModel
+								.getActionData().num))
 					startAction(mConfigModel.getActionData());
 				else
 					goMain();
@@ -116,7 +128,7 @@ public class IntroActivity extends Activity implements Constants {
 			adIntent.putExtra(KEY_IMG_URL, data.image);
 			adIntent.putExtra(KEY_WEB_URL, data.url);
 		}
-		startActivity(adIntent);
+		startActivityForResult(adIntent, 0);
 	}
 
 	private void showMessage(final ConfigActionData data) {
@@ -137,6 +149,21 @@ public class IntroActivity extends Activity implements Constants {
 						goMain();
 					}
 				});
+		messageAlert.setNeutralButton("다시보지않기",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						dialog.dismiss();
+						if (data.url != null
+								&& !"confirm".equalsIgnoreCase(data.type)) {
+							startActivity(new Intent(Intent.ACTION_VIEW, Uri
+									.parse(data.url)));
+						}
+						goMain();
+						mConfigModel.addReadMessage(data.num);
+					}
+				});
 		if ("confirm".equalsIgnoreCase(data.type)) {
 			messageAlert.setNegativeButton(R.string.cancel,
 					new DialogInterface.OnClickListener() {
@@ -154,10 +181,7 @@ public class IntroActivity extends Activity implements Constants {
 	private void startAction(ConfigActionData data) {
 		if (Util.Display.isTablet(this)) {
 			goMain();
-			return;
-		}
-
-		if (data.action.equals("update")) {
+		} else if (data.action.equals("update")) {
 			showUpdate(data);
 		} else if (data.action.equals("ad")) {
 			showAd(data);
@@ -165,6 +189,7 @@ public class IntroActivity extends Activity implements Constants {
 			showMessage(data);
 		} else {
 			// 정의되지 않은 액션
+			goMain();
 		}
 	}
 

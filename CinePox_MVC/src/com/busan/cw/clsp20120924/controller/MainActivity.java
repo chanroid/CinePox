@@ -12,8 +12,15 @@
  */
 package com.busan.cw.clsp20120924.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
+import org.apache.http.client.ClientProtocolException;
+import org.json.JSONException;
+
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,6 +31,7 @@ import com.busan.cw.clsp20120924.base.Domain;
 import com.busan.cw.clsp20120924.interfaces.MainViewCallback;
 import com.busan.cw.clsp20120924.model.ConfigModel;
 import com.busan.cw.clsp20120924.model.MovieDataModel;
+import com.busan.cw.clsp20120924.structs.BestItemData;
 import com.busan.cw.clsp20120924.structs.CategoryItemData;
 import com.busan.cw.clsp20120924.view.MainView;
 
@@ -45,6 +53,40 @@ public class MainActivity extends CCActivity implements Constants,
 	private MainView mMainView;
 	private ConfigModel mConfigModel;
 	private MovieDataModel mDataModel;
+	private MovieListLoader mDataLoader;
+
+	private class MovieListLoader extends
+			AsyncTask<CategoryItemData, Integer, ArrayList<BestItemData>> {
+
+		@Override
+		protected ArrayList<BestItemData> doInBackground(
+				CategoryItemData... arg0) {
+			// TODO Auto-generated method stub
+			try {
+				mDataModel.loadMovieList(arg0[0]);
+				return mDataModel.getMovieList();
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(ArrayList<BestItemData> result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			if (result != null)
+				mMainView.setMovieList(result);
+			mMainView.onRefreshComplete();
+		}
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +97,9 @@ public class MainActivity extends CCActivity implements Constants,
 		mDataModel = (MovieDataModel) loadModel(MovieDataModel.class);
 		mMainView.setCallback(this);
 		mMainView.setBanner(mConfigModel.getMainBannerData());
+		mMainView.setCategory(mConfigModel.getCategoryData());
 		setContentView(mMainView);
+		refreshList(mDataModel.getCurrentCategory());
 	}
 
 	void goQRPlay() {
@@ -124,8 +168,15 @@ public class MainActivity extends CCActivity implements Constants,
 	/**
 	 * 현재 선택된 카테고리의 리스트 새로고침
 	 */
+	private void refreshList(CategoryItemData data) {
+		mMainView.setMovieList(new ArrayList<BestItemData>());
+		mDataLoader = new MovieListLoader();
+		mDataLoader.execute(data);
+	}
+	
 	private void refreshList() {
-
+		mDataLoader = new MovieListLoader();
+		mDataLoader.execute(mDataModel.getCurrentCategory());
 	}
 
 	/**
@@ -145,9 +196,9 @@ public class MainActivity extends CCActivity implements Constants,
 		// TODO Auto-generated method stub
 		try {
 			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(mDataModel
-					.getBestList().get(arg2).targetURL)));
+					.getMovieList().get(arg2).targetURL)));
 		} catch (Exception e) {
-			refreshList();
+			onRefresh();
 		}
 	}
 
@@ -157,7 +208,8 @@ public class MainActivity extends CCActivity implements Constants,
 	@Override
 	public void onCategoryChanged(CategoryItemData name) {
 		// TODO Auto-generated method stub
-
+		mDataModel.setCurrentCategory(name);
+		refreshList(name);
 	}
 
 }

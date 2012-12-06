@@ -21,6 +21,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
 import android.graphics.PixelFormat;
 import android.location.Criteria;
 import android.location.Location;
@@ -247,8 +248,7 @@ public class PlayerActivity extends CCActivity implements Constants,
 							dialog.dismiss();
 							try {
 								startActivity(new Intent(Intent.ACTION_VIEW,
-										Uri.parse(result
-												.getString(KEY_URL))));
+										Uri.parse(result.getString(KEY_URL))));
 							} catch (JSONException e) {
 								sendErrorLog(e);
 								e.printStackTrace();
@@ -298,8 +298,7 @@ public class PlayerActivity extends CCActivity implements Constants,
 				return;
 			}
 
-			mVideoController
-					.setCinePoxMode(result.equals(RESULT_SUCCESS));
+			mVideoController.setCinePoxMode(result.equals(RESULT_SUCCESS));
 
 			if (Build.VERSION.SDK_INT < 9)
 				Toast.makeText(
@@ -336,10 +335,13 @@ public class PlayerActivity extends CCActivity implements Constants,
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		if (Build.VERSION.SDK_INT < 11)
+		if (Build.VERSION.SDK_INT < 11) {
 			setTheme(android.R.style.Theme_Black_NoTitleBar_Fullscreen);
-		else
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		} else {
 			setTheme(android.R.style.Theme_Holo_NoActionBar_Fullscreen);
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+		}
 
 		super.onCreate(savedInstanceState);
 		startService(new Intent(this, PlayerService.class));
@@ -748,6 +750,8 @@ public class PlayerActivity extends CCActivity implements Constants,
 
 	@Override
 	public void onScrollX(long distance) {
+		if (mVideoView == null || mVideoController == null)
+			return;
 		pause();
 		long time = mVideoView.getCurrentPosition() + distance > 0l ? mVideoView
 				.getCurrentPosition() + distance
@@ -763,6 +767,8 @@ public class PlayerActivity extends CCActivity implements Constants,
 
 	@Override
 	public void onScrollY(long distance) {
+		if (mVideoView == null)
+			return;
 		Util.Phone.setVolume(this, AudioManager.STREAM_MUSIC, (int) distance,
 				AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
 		distance = Util.Phone.getVolume(this, AudioManager.STREAM_MUSIC);

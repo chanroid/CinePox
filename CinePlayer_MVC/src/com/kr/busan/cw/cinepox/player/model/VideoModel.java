@@ -54,6 +54,8 @@ public class VideoModel extends Model {
 	}
 
 	public boolean isLocalURI(VideoView v) {
+		if (v == null)
+			return false;
 		return v.getVideoURI().toString().startsWith("content")
 				|| v.getVideoURI().toString().startsWith("file");
 	}

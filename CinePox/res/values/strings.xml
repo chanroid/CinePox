@@ -14,6 +14,7 @@
     <string name="logout">Logout</string>
     <string name="join">Join</string>
     <string name="leave">Leave</string>
+    <string name="next">Next</string>
     <string name="motion_disable">Motion detect disable</string>
     <string name="motion_enable">Motion detect enable</string>
     <string name="motion_sensitive">Motion Sensitive Setting</string>
@@ -21,6 +22,7 @@
     <string name="noti_interval">Notification interval setting</string>
     <string name="receive_notfound">Received data is Not found.</string>
     <string name="alert">Alert</string>
+    <string name="download_restart">다운로드를 계속 하시겠습니까?</string>
     <string name="cancel">Cancel</string>
     <string name="noti_locservice">Turn on Location services to be used this service. if you want to go to Setting, press Done.</string>
     <string name="error_connect">Sorry, The current state of the network or the connection with the server is unstable and services are limited. Please try again in a few minutes.</string>

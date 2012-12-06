@@ -14,11 +14,14 @@ package com.busan.cw.clsp20120924.controller;
 
 import java.io.File;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
@@ -26,6 +29,7 @@ import android.support.v4.app.NotificationCompat;
 
 import com.busan.cw.clsp20120924.R;
 import com.busan.cw.clsp20120924.base.Constants;
+import com.busan.cw.clsp20120924.model.ConfigModel;
 import com.busan.cw.clsp20120924.model.DownloadModel;
 import com.busan.cw.clsp20120924.model.Downloader;
 import com.kr.busan.cw.cinepox.player.controller.PlayerActivity;
@@ -46,29 +50,114 @@ public class CinePoxService extends CCService implements Constants, Downloader.C
 
 	private NotificationManager mNotiManager;
 	private PendingIntent mEmptyPendingIntent;
+	private PendingIntent mDataIntentSender;
 	private DownloadModel mDownloadModel;
+	private ConfigModel mConfigModel;
+	private AlarmManager mAlarmManager;
+
+	public static final int WHAT_CHANGED_ALARM = 2011;
+	public static final int WHAT_CHANGED_INTERVAL = 2012;
 	
-	private void handleStart(Intent intent) {
-		mNotiManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+	public static final int WIDGET_DATA_INTERVAL = 86400000;
+	
+	public static final String ACTION_RESTART_SERVICE = "com.busan.cw.clsp20120924.service.restart";
+	public static final String ACTION_START_DOWNLOAD = "com.busan.cw.clsp20120924.service.download";
+	public static final String ACTION_SEND_PAYCODE = "com.busan.cw.clsp20120924.service.paycode";
+	public static final String ACTION_SEND_ERRORLOG = "com.busan.cw.clsp20120924.service.errorlog";
+	public static final String ACTION_LOAD_WIDGET_DATA = "com.busan.cw.clsp20120924.service.widgetdata";
+	
+	private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// TODO Auto-generated method stub
+			if (ACTION_RESTART_SERVICE.equalsIgnoreCase(intent
+					.getAction())) {
+				context.startService(new Intent(context, CinePoxService.class));
+			} else if (ACTION_START_DOWNLOAD.equalsIgnoreCase(intent
+					.getAction())) {
+				mDownloadModel.addDownload(intent.getStringExtra("url"));
+			} else if (ACTION_SEND_PAYCODE.equalsIgnoreCase(intent.getAction())) {
+				registerCodeReceiver(intent.getStringExtra("sms_key"));
+			} else if (ACTION_SEND_ERRORLOG
+					.equalsIgnoreCase(intent.getAction())) {
+				mConfigModel.sendErrorLog(intent);
+			} else if (ACTION_LOAD_WIDGET_DATA.equalsIgnoreCase(intent
+					.getAction())) {
+				unregisterWidgetDataAlarm();
+				mConfigModel.loadWidgetData();
+				registerWidgetDataAlarm();
+			}
+		}
+	};
+
+	class CodeReceiver extends BroadcastReceiver {
+		
+		private String mSMSKey;
+		
+		public CodeReceiver(String key) {
+			mSMSKey = key;
+		}
+		
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// TODO Auto-generated method stub
+			if ("android.provider.Telephony.SMS_RECEIVED"
+					.equalsIgnoreCase(intent.getAction())) {
+				mConfigModel.sendSMSCode(mSMSKey, intent);
+				unregisterReceiver(this);
+			}
+		}
+	}
+
+	void registerCodeReceiver(String key) {
+		registerReceiver(new CodeReceiver(key), new IntentFilter(
+				"android.provider.Telephony.SMS_RECEIVED"));
+	}
+
+	void registerWidgetDataAlarm() {
+		Intent i = new Intent(ACTION_LOAD_WIDGET_DATA);
+		mDataIntentSender = PendingIntent.getBroadcast(this, 0, i, 0);
+		mAlarmManager.set(AlarmManager.RTC, System.currentTimeMillis()
+				+ WIDGET_DATA_INTERVAL, mDataIntentSender);
+	}
+
+	void unregisterWidgetDataAlarm() {
+		if (mAlarmManager != null && mDataIntentSender != null) {
+			mDataIntentSender.cancel();
+			mAlarmManager.cancel(mDataIntentSender);
+		}
+	}
+
+	void registerRestrartAlarm() {
+		Intent i = new Intent(ACTION_RESTART_SERVICE);
+		PendingIntent mIntentSender = PendingIntent.getBroadcast(this, 0, i, 0);
+		mAlarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + 5000,
+				mIntentSender);
+	}
+
+	@Override
+	public void handleStart(Intent intent) {
+		mNotiManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		mEmptyPendingIntent = PendingIntent.getActivity(this, 0,
 				new Intent(), PendingIntent.FLAG_UPDATE_CURRENT);
 		mDownloadModel = (DownloadModel) loadModel(DownloadModel.class);
 		mDownloadModel.setDownloadCallback(this);
+		mConfigModel = (ConfigModel) loadModel(ConfigModel.class);
+		mAlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(ACTION_RESTART_SERVICE);
+		filter.addAction(ACTION_START_DOWNLOAD);
+		filter.addAction(ACTION_SEND_ERRORLOG);
+		filter.addAction(ACTION_SEND_PAYCODE);
+		filter.addAction(ACTION_LOAD_WIDGET_DATA);
+		registerReceiver(mReceiver, filter);
 	}
 	
 	@Override
-	@Deprecated
-	public void onStart(Intent intent, int startId) {
+	public void onDestroy() {
 		// TODO Auto-generated method stub
-		super.onStart(intent, startId);
-		handleStart(intent);
-	}
-	
-	@Override
-	public int onStartCommand(Intent intent, int flags, int startId) {
-		// TODO Auto-generated method stub
-		handleStart(intent);
-		return START_STICKY_COMPATIBILITY;
+		unregisterReceiver(mReceiver);
+		super.onDestroy();
 	}
 	
 	/* (non-Javadoc)

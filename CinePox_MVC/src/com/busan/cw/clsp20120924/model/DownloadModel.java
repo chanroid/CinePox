@@ -55,6 +55,10 @@ public class DownloadModel extends Model {
 	public void setDownloadCallback(Downloader.Callback callback) {
 		mDownloadCallback = callback;
 	}
+	
+	public void addDownload(String parseUrl) {
+		
+	}
 
 	public boolean add(String url, String title) {
 		Downloader.Builder builder = new Downloader.Builder();

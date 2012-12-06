@@ -49,6 +49,7 @@ public class MovieDataModel extends Model {
 
 	private ArrayList<BestItemData> mBestDataList;
 	private ArrayList<SearchItemData> mSearchList;
+	private CategoryItemData mCurrentCategory;
 
 	public static MovieDataModel getInstance(Context ctx) {
 		if (instance == null)
@@ -93,25 +94,34 @@ public class MovieDataModel extends Model {
 		return mSearchList;
 	}
 
-	public synchronized void loadBestList(CategoryItemData data)
+	public synchronized void loadMovieList(CategoryItemData data)
 			throws ClientProtocolException, IOException, JSONException {
 		mBestDataList = new ArrayList<BestItemData>();
 		JSONObject o = Util.Stream.jsonFromURL(data.url);
 		JSONArray list = o.getJSONArray(KEY_LIST);
 		for (int i = 0; i < list.length(); i++) {
 			BestItemData item = new BestItemData();
-			JSONObject ai = o.getJSONObject("postimage");
+			JSONObject movieInfo = list.getJSONObject(i);
+			JSONObject postimage = movieInfo.getJSONObject("postimage");
 			item.targetURL = Domain.WEB_DOMAIN
 					+ "vod/detail.html?SET_DEVICE=android(APP)&movieProduct_seq="
-					+ o.getString(KEY_MOVIE_NUM);
-			item.isAdult = "Y".equals(ai.getString(KEY_ISADULT));
-			item.imageURL = ai.getString(KEY_THUMB_URL);
+					+ movieInfo.getString(KEY_MOVIE_NUM);
+			item.isAdult = "Y".equals(postimage.getString(KEY_ISADULT));
+			item.imageURL = postimage.getString(KEY_THUMB_URL);
 			// item.title = o.getString(KEY_TITLE);
 			mBestDataList.add(item);
 		}
 	}
 
-	public ArrayList<BestItemData> getBestList() {
+	public ArrayList<BestItemData> getMovieList() {
 		return mBestDataList;
+	}
+	
+	public void setCurrentCategory(CategoryItemData data) {
+		mCurrentCategory = data;
+	}
+	
+	public CategoryItemData getCurrentCategory() {
+		return mCurrentCategory;
 	}
 }
