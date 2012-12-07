@@ -48,7 +48,7 @@
             android:name=".movie.CinepoxService"
             android:label="@string/cinepox" />
         <service
-            android:name=".player.controller.PlayerService"
+            android:name="com.kr.busan.cw.cinepox.player.controller.PlayerService"
             android:label="PlayerService" />
         <service android:name=".gcm.GCMService" />
 

@@ -67,7 +67,8 @@ public class IntroActivity extends Activity {
 				if (!dir.exists())
 					dir.mkdirs();
 
-				String url = Domain.ACCESS_DOMAIN + "cinepoxAPP/getStartConfig/";
+				String url = Domain.ACCESS_DOMAIN
+						+ "cinepoxAPP/getStartConfig/";
 				ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
 				params.add(new BasicNameValuePair(
 						"app_version",
@@ -404,7 +405,7 @@ public class IntroActivity extends Activity {
 				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		}
 		super.onCreate(savedInstanceState);
-		// l.setEnabled(false);
+		l.setEnabled(false);
 		setContentView(R.layout.intro);
 		mDataloader.execute();
 		setupShortcut();

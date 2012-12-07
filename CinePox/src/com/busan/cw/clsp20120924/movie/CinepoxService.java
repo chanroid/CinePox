@@ -63,7 +63,6 @@ public class CinepoxService extends Service {
 	// private ShakeListener mShaker;
 	// private SensorManager sensorManager;
 	// private Sensor accelerormeterSensor;
-
 	private PlayerConfigModel mConfigModel;
 
 	public static final int WHAT_CHANGED_ALARM = 2011;

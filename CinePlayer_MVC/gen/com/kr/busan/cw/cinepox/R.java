@@ -297,7 +297,6 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static int update=0x7f07003f;
     }
     public static final class style {
-        public static int AppTheme=0x7f080001;
         public static int EpoNgsProgressStyle=0x7f080000;
     }
     public static final class styleable {

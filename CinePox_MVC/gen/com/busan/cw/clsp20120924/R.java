@@ -636,7 +636,6 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int zxing_url=0x7f0a0076;
     }
     public static final class style {
-        public static final int AppTheme=0x7f0b0001;
         public static final int EpoNgsProgressStyle=0x7f0b0000;
     }
     public static final class xml {

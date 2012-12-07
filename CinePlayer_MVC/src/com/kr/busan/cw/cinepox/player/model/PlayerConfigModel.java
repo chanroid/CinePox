@@ -345,6 +345,7 @@ public class PlayerConfigModel extends Model {
 
 		if (!isCinepoxURI(path)) {
 			if (isContentURI(path)) {
+				// 에러나는 부분
 				String filePath = Util.File.getMediaPathfromUri(mContext, path);
 				if (!mCaptionModel.loadCaption(Util.File.changeExtension(
 						filePath, CAPTION_EXT_SMI)))

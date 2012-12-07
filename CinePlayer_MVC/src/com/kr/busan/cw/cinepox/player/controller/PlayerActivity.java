@@ -6,6 +6,7 @@ import java.util.Formatter;
 import java.util.Locale;
 
 import kr.co.chan.util.ShakeListener;
+import kr.co.chan.util.l;
 import kr.co.chan.util.ShakeListener.OnShakeListener;
 import kr.co.chan.util.Util;
 
@@ -83,9 +84,10 @@ public class PlayerActivity extends CCActivity implements Constants,
 	PlayerConfigModel mConfigModel;
 
 	LocationManager mLocManager;
-	Location mLocation;
 	AudioManager mAudioManager;
 	WindowManager mWindowManager;
+
+	Location mLocation;
 	WindowManager.LayoutParams mWindowParams;
 
 	UpdateThread updateThread;
@@ -160,6 +162,8 @@ public class PlayerActivity extends CCActivity implements Constants,
 		public void run() {
 			while (true) {
 				try {
+					if (mVideoView == null || mVideoController == null)
+						continue;
 					if (mVideoView.isPlaying() && !mVideoView.isSeeking()
 							&& !mVideoController.isTracking()) {
 						runOnUiThread(updateRunnable);
@@ -382,22 +386,27 @@ public class PlayerActivity extends CCActivity implements Constants,
 			setContentView(mVideoView);
 			updateTime();
 			updateBatt();
+			addControllerView();
 
 			updateLoader.execute();
 		}
+	}
+	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		removeControllerView();
 		unregisterReceiver(updateReceiver);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		addControllerView();
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(Intent.ACTION_TIME_TICK);
 		filter.addAction(Intent.ACTION_BATTERY_CHANGED);
@@ -407,8 +416,10 @@ public class PlayerActivity extends CCActivity implements Constants,
 	@Override
 	public void onBackPressed() {
 		if (isBack) {
-			if (mVideoView.getCurrentPosition() > 0l)
+			if (mVideoView.getCurrentPosition() > 0l) {
+				l.i("sendPlayTime");
 				sendPlayTime();
+			}
 			finish();
 		} else {
 			isBack = true;
@@ -508,6 +519,7 @@ public class PlayerActivity extends CCActivity implements Constants,
 		if (mVideoController != null)
 			try {
 				mWindowManager.removeView(mVideoController);
+				mVideoController = null;
 			} catch (IllegalArgumentException e) {
 			}
 	}
@@ -660,13 +672,17 @@ public class PlayerActivity extends CCActivity implements Constants,
 	}
 
 	private void start() {
-		mVideoController.setPlayBtnState(true);
-		mVideoView.start();
+		if (mVideoController != null && mVideoView != null) {
+			mVideoController.setPlayBtnState(true);
+			mVideoView.start();
+		}
 	}
 
 	private void pause() {
-		mVideoController.setPlayBtnState(false);
-		mVideoView.pause();
+		if (mVideoController != null && mVideoView != null) {
+			mVideoController.setPlayBtnState(false);
+			mVideoView.pause();
+		}
 	}
 
 	/**
@@ -848,17 +864,16 @@ public class PlayerActivity extends CCActivity implements Constants,
 		// TODO Auto-generated method stub
 		updateThread.interrupt();
 		mVideoView.setCodec(-1);
+		removeControllerView();
 		mVideoView = null;
 		mVideoController = null;
-		VideoModel.clearInstance();
-		PlayerConfigModel.clearInstance();
-		CaptionModel.clearInstance();
 		super.finish();
 	}
 
 	@Override
 	public void onSeekComplete(VideoView view) {
-		mVideoController.setPlayData(view.getPlayData());
+		if (view != null && mVideoController != null)
+			mVideoController.setPlayData(view.getPlayData());
 		start();
 	}
 

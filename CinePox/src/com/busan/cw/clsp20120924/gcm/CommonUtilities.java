@@ -48,16 +48,23 @@ public final class CommonUtilities {
 	public static void generateNotification(Context context, GCMMessageData data) {
 		String message = data.message;
 		String url = data.url;
+		int lightColor = 0xffff0000;
+		long[] vibrate = new long[] { 0, 200, 300, 200 };
 
 		NotificationManager mNotiManager = (NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);
-		PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
-				new Intent(Intent.ACTION_VIEW, Uri.parse(url)), 0);
+		PendingIntent contentIntent;
+		if (data.url == null || "".equals(data.url))
+			contentIntent = PendingIntent.getActivity(context, 0, new Intent(),
+					0);
+		else
+			contentIntent = PendingIntent.getActivity(context, 0, new Intent(
+					Intent.ACTION_VIEW, Uri.parse(url)), 0);
 
 		if (Build.VERSION.SDK_INT >= 14) {
 			Notification.Builder mBuilder = new Notification.Builder(context);
-			mBuilder.setVibrate(new long[] { 0, 200, 300, 200 });
-			mBuilder.setLights(0xffff0000, 500, 500);
+			mBuilder.setVibrate(vibrate);
+			mBuilder.setLights(lightColor, 500, 500);
 			mBuilder.setContentTitle(data.title);
 			mBuilder.setSmallIcon(com.busan.cw.clsp20120924.R.drawable.ic_launcher);
 			mBuilder.setAutoCancel(true);
@@ -71,8 +78,8 @@ public final class CommonUtilities {
 		} else {
 			NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
 					context);
-			mBuilder.setVibrate(new long[] { 0, 200, 300, 200 });
-			mBuilder.setLights(0xffff0000, 500, 500);
+			mBuilder.setVibrate(vibrate);
+			mBuilder.setLights(lightColor, 500, 500);
 			mBuilder.setContentTitle(data.title);
 			mBuilder.setSmallIcon(com.busan.cw.clsp20120924.R.drawable.ic_launcher);
 			mBuilder.setAutoCancel(true);
