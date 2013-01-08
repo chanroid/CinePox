@@ -44,7 +44,7 @@
     <string name="send_failed">Delivery failed.</string>
     <string name="download_cancel">Cancel Download</string>
     <string name="noti_download_cancel">Are you sure you want to cancel the download? To cancel the delete button, or press the button to download after.</string>
-    <string name="delete">Delete</string>
+    <string name="stop">Delete</string>
     <string name="continue_">Continue</string>
     <string name="download_already_completed">Already completed the download file.</string>
     <string name="download_preparing">Download connention Preparing..</string>
@@ -53,6 +53,7 @@
     <string name="download_completed">Download Completed.</string>
     <string name="download_exist">Alerady exist the download file.</string>
     <string name="download_progresstext">% Downloading..</string>
+    <string name="download_notenouchsize">디스크 용량이 부족합니다. 파일 삭제 후 재시도 해 주세요.</string>
     <string name="caption_size">Caption font size</string>
     <string name="update">Update</string>
     <string name="later">Later</string>

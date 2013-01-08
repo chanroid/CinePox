@@ -1,7 +1,5 @@
 package com.busan.cw.clsp20120924.downloader;
 
-import java.io.File;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -11,7 +9,7 @@ import com.busan.cw.clsp20120924.R;
 
 public class DownCancelActivity extends Activity {
 
-	DownManager mng;
+	DownManager2 mng;
 	int mId;
 
 	@Override
@@ -25,26 +23,27 @@ public class DownCancelActivity extends Activity {
 			return;
 		}
 
-		mng = DownManager.getInstance(this);
-		Downloader down = mng.get(mId);
+		mng = DownManager2.getInstance(this);
+		Downloader2 down = mng.getQueue(mId);
 		if (down == null) {
 			finish();
 			return;
 		}
 		
-		String title = down.getTitle();
+		String title = down.getData().title;
 		if (title != null)
 			title = "[" + title + "]\n";
 		else {
 			finish();
 			return;
 		}
+		
 		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 		dialog.setTitle(R.string.download_cancel);
 		dialog.setCancelable(false);
 		dialog.setMessage(title + getString(R.string.noti_download_cancel));
-		dialog.setPositiveButton(R.string.cancel, cancelListener);
-		dialog.setNeutralButton(R.string.delete, deleteListener);
+		dialog.setPositiveButton(R.string.stop, deleteListener);
+		dialog.setNeutralButton(R.string.cancel, cancelListener);
 		dialog.setNegativeButton(R.string.continue_, continueListener);
 		dialog.show();
 	}
@@ -55,7 +54,7 @@ public class DownCancelActivity extends Activity {
 		public void onClick(DialogInterface dialog, int which) {
 			// TODO Auto-generated method stub
 			dialog.dismiss();
-			mng.remove(mId);
+			mng.cancel(mId, false);
 			finish();
 		}
 	};
@@ -65,9 +64,8 @@ public class DownCancelActivity extends Activity {
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
 			// TODO Auto-generated method stub
-			cancelListener.onClick(dialog, which);
-			if (mng.get(mId) != null)
-				new File(mng.get(mId).getPath()).delete();
+			dialog.dismiss();
+			mng.cancel(mId, true);
 			finish();
 		}
 	};

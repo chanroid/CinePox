@@ -9,11 +9,11 @@ package kr.co.chan.util;
 public final class R {
 	public static final class id {
 		public static final int status_text = 0x7f09002e;
-		public static final int progress = 0x7f09007a;
-		public static final int secondaryProgress = 0x7f090079;
+		public static final int progress = 0x7f09007b;
+		public static final int secondaryProgress = 0x7f09007a;
 		public static final int editText1 = 0x7f09002a;
 		public static final int status_progress = 0x7f09002f;
-		public static final int background = 0x7f090078;
+		public static final int background = 0x7f090079;
 		public static final int status_icon = 0x7f09002c;
 		public static final int button1 = 0x7f09002b;
 		public static final int relativeLayout1 = 0x7f09002d;
@@ -27,7 +27,7 @@ public final class R {
 	public static final class layout {
 		public static final int claearable_edittext = 0x7f030004;
 		public static final int download_progress = 0x7f030005;
-		public static final int main = 0x7f03000b;
+		public static final int main = 0x7f03000c;
 	}
 	public static final class styleable {
 		public static final int SeekBar_android_thumb = 0;

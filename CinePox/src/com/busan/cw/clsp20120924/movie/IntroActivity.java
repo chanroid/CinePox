@@ -22,6 +22,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -69,10 +70,15 @@ public class IntroActivity extends Activity {
 
 				String url = Domain.ACCESS_DOMAIN
 						+ "cinepoxAPP/getStartConfig/";
+				String version = "2.14";
+				try {
+					version = getPackageManager().getPackageInfo(getPackageName(),
+							PackageManager.GET_META_DATA).versionName;
+				} catch (Exception e) {
+
+				}
 				ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
-				params.add(new BasicNameValuePair(
-						"app_version",
-						getPackageManager().getPackageInfo(getPackageName(), 0).versionName));
+				params.add(new BasicNameValuePair("app_version", version));
 				params.add(new BasicNameValuePair("setting",
 						"response_type:json"));
 				params.add(new BasicNameValuePair("SET_DEVICE", "android(APP)"));
@@ -272,7 +278,6 @@ public class IntroActivity extends Activity {
 			if (!isBlock || Util.Display.isTablet(IntroActivity.this)) {
 				goMain();
 			} else {
-				goMain();
 				if (isShowAd) {
 					startActivityForResult(mAdIntent, 0);
 				} else if (mMainAlert != null) {
@@ -364,7 +369,7 @@ public class IntroActivity extends Activity {
 	// }
 
 	void setupShortcut() {
-		if (getConfig().isFirstRun()) {
+		if (getConfig().isFirstRun() && Build.VERSION.SDK_INT < 14) {
 			Intent intent = new Intent(
 					"com.android.launcher.action.INSTALL_SHORTCUT");
 			intent.putExtra(Intent.EXTRA_SHORTCUT_NAME,
@@ -405,8 +410,13 @@ public class IntroActivity extends Activity {
 				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		}
 		super.onCreate(savedInstanceState);
-		l.setEnabled(false);
+//		l.setEnabled(false);
 		setContentView(R.layout.intro);
+		if (!Util.Display.isTablet(this))
+			findViewById(R.id.introbg).setBackgroundResource(R.drawable.intro);
+		else
+			findViewById(R.id.introbg).setBackgroundResource(
+					R.drawable.intro_large);
 		mDataloader.execute();
 		setupShortcut();
 	}

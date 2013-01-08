@@ -1,18 +1,22 @@
 package com.kr.busan.cw.cinepox.player.controller;
 
+import iface.OnShakeListener;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Formatter;
 import java.util.Locale;
 
-import kr.co.chan.util.ShakeListener;
-import kr.co.chan.util.l;
-import kr.co.chan.util.ShakeListener.OnShakeListener;
-import kr.co.chan.util.Util;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import utils.DisplayUtils;
+import utils.ManifestUtils;
+import utils.MathUtils;
+import utils.NetworkUtils;
+import utils.PhoneUtils;
+import utils.StringUtils;
+import utils.ViewUtils;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -47,12 +51,14 @@ import com.kr.busan.cw.cinepox.player.iface.VideoCallback;
 import com.kr.busan.cw.cinepox.player.iface.VideoControllerCallback;
 import com.kr.busan.cw.cinepox.player.model.CaptionModel;
 import com.kr.busan.cw.cinepox.player.model.PlayerConfigModel;
+import com.kr.busan.cw.cinepox.player.model.ShareModel;
 import com.kr.busan.cw.cinepox.player.model.VideoModel;
 import com.kr.busan.cw.cinepox.player.structs.QualityData;
 import com.kr.busan.cw.cinepox.player.view.VideoControllerView;
 import com.kr.busan.cw.cinepox.player.view.VideoView;
 
 import controller.CCActivity;
+import extend.ShakeListener;
 
 /**
  * <PRE>
@@ -82,6 +88,7 @@ public class PlayerActivity extends CCActivity implements Constants,
 	VideoModel mPlayerModel;
 	CaptionModel mCaptionModel;
 	PlayerConfigModel mConfigModel;
+	ShareModel mShareModel;
 
 	LocationManager mLocManager;
 	AudioManager mAudioManager;
@@ -128,12 +135,7 @@ public class PlayerActivity extends CCActivity implements Constants,
 			mQuality = which;
 			mVideoController.setBufferProgress(0);
 			mConfigModel.setContinuePosition(mVideoView.getCurrentPosition());
-			mConfigModel.setDefaultQuality(mPlayerModel.getQualityArray().get(
-					mQuality).TYPE);
-			mVideoController.setQualityText(mPlayerModel.getQualityArray().get(
-					which).NAME);
-			mVideoView.setVideoURI(Uri.parse(mPlayerModel.getQualityArray()
-					.get(which).URL));
+			qualityChange(mPlayerModel.getQualityArray().get(mQuality));
 		}
 	};
 
@@ -147,6 +149,8 @@ public class PlayerActivity extends CCActivity implements Constants,
 	private class UpdateReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {
+			if (mVideoController == null)
+				return;
 			if (Intent.ACTION_BATTERY_CHANGED.equalsIgnoreCase(intent
 					.getAction())) {
 				updateBatt();
@@ -164,6 +168,8 @@ public class PlayerActivity extends CCActivity implements Constants,
 				try {
 					if (mVideoView == null || mVideoController == null)
 						continue;
+					if (updateRunnable == null)
+						return;
 					if (mVideoView.isPlaying() && !mVideoView.isSeeking()
 							&& !mVideoController.isTracking()) {
 						runOnUiThread(updateRunnable);
@@ -179,6 +185,8 @@ public class PlayerActivity extends CCActivity implements Constants,
 	private class UpdateRunnable implements Runnable {
 		@Override
 		public void run() {
+			if (mVideoView == null || mVideoController == null)
+				return;
 			updateController();
 			// 2차개발분. 기능구현은 완료
 			updateCaption();
@@ -194,7 +202,7 @@ public class PlayerActivity extends CCActivity implements Constants,
 
 		@Override
 		protected Boolean doInBackground(Void... params) {
-			return mConfigModel.sendShareInfo(mLocation, mConfigModel
+			return mShareModel.sendShareInfo(mLocation, mConfigModel
 					.getCinepoxURI().toString());
 		}
 
@@ -237,7 +245,7 @@ public class PlayerActivity extends CCActivity implements Constants,
 
 			try {
 				updateVer = Float.valueOf(result.getString(KEY_VERSION));
-				currentVer = Util.App.getVersionNum(PlayerActivity.this);
+				currentVer = ManifestUtils.getVersionName(PlayerActivity.this);
 			} catch (NumberFormatException e1) {
 				e1.printStackTrace();
 			} catch (JSONException e1) {
@@ -261,7 +269,7 @@ public class PlayerActivity extends CCActivity implements Constants,
 						}
 					};
 
-					Util.Views.showAlert(PlayerActivity.this, "업데이트 발견",
+					ViewUtils.showAlert(PlayerActivity.this, "업데이트 발견",
 							result.getString(KEY_MSG), "업데이트",
 							updateClickListener, false);
 					return;
@@ -297,8 +305,14 @@ public class PlayerActivity extends CCActivity implements Constants,
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
+			if (mVideoView == null || mVideoController == null) {
+				finish();
+				return;
+			}
+			
 			if (result == null) {
 				mVideoView.hideLoading();
+				finish();
 				return;
 			}
 
@@ -309,7 +323,7 @@ public class PlayerActivity extends CCActivity implements Constants,
 						PlayerActivity.this,
 						"운영체제를 안드로이드 2.3버전 이상으로 업그레이드 하시면 초고화질의 동영상을 더욱 원활하게 시청하실 수 있습니다.",
 						Toast.LENGTH_LONG).show();
-			else if (Util.Connection.getType(PlayerActivity.this) != ConnectivityManager.TYPE_WIFI
+			else if (NetworkUtils.getNetworkType(PlayerActivity.this) != ConnectivityManager.TYPE_WIFI
 					&& !"".equals(mConfigModel.get3GMessage()))
 				Toast.makeText(PlayerActivity.this,
 						mConfigModel.get3GMessage(),
@@ -358,6 +372,7 @@ public class PlayerActivity extends CCActivity implements Constants,
 			mPlayerModel = (VideoModel) loadModel(VideoModel.class);
 			mConfigModel = (PlayerConfigModel) loadModel(PlayerConfigModel.class);
 			mCaptionModel = (CaptionModel) loadModel(CaptionModel.class);
+			mShareModel = (ShareModel) loadModel(ShareModel.class);
 
 			updateRunnable = new UpdateRunnable();
 			updateThread = new UpdateThread();
@@ -391,22 +406,18 @@ public class PlayerActivity extends CCActivity implements Constants,
 			updateLoader.execute();
 		}
 	}
-	
-	@Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
+		pause();
 		unregisterReceiver(updateReceiver);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+		start();
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(Intent.ACTION_TIME_TICK);
 		filter.addAction(Intent.ACTION_BATTERY_CHANGED);
@@ -416,10 +427,8 @@ public class PlayerActivity extends CCActivity implements Constants,
 	@Override
 	public void onBackPressed() {
 		if (isBack) {
-			if (mVideoView.getCurrentPosition() > 0l) {
-				l.i("sendPlayTime");
+			if (mVideoView.getCurrentPosition() > 0l)
 				sendPlayTime();
-			}
 			finish();
 		} else {
 			isBack = true;
@@ -449,7 +458,7 @@ public class PlayerActivity extends CCActivity implements Constants,
 				finish();
 				break;
 			case REQUEST_MODIFY_BRIGHTNESS:
-				Util.Display.setBrightness(this,
+				DisplayUtils.setBrightness(this,
 						data.getFloatExtra(KEY_BRIGHT, 1.0f));
 				break;
 			}
@@ -457,7 +466,7 @@ public class PlayerActivity extends CCActivity implements Constants,
 	}
 
 	private void prepareVideo() {
-		Util.Display.setBrightness(this, 1.0f);
+		DisplayUtils.setBrightness(this, 1.0f);
 		mQuality = mConfigModel.getInitialQuality();
 		if (mQuality != -1) {
 			String name = mPlayerModel.getQualityArray().get(mQuality).NAME;
@@ -474,6 +483,12 @@ public class PlayerActivity extends CCActivity implements Constants,
 		}
 	}
 
+	private void qualityChange(QualityData data) {
+		mConfigModel.setDefaultQuality(data.TYPE);
+		mVideoController.setQualityText(data.NAME);
+		mVideoView.setVideoURI(Uri.parse(data.URL));
+	}
+
 	private void updateTime() {
 		int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 		int min = Calendar.getInstance().get(Calendar.MINUTE);
@@ -486,14 +501,20 @@ public class PlayerActivity extends CCActivity implements Constants,
 	}
 
 	private void updateBatt() {
-		mVideoController.setBatteryText(Util.Phone.getBattStat(this) + "%");
+		if (mVideoController == null)
+			return;
+		mVideoController.setBatteryText(PhoneUtils.getBatteryLevel(this) + "%");
 	}
 
 	private void updateController() {
+		if (mVideoController == null)
+			return;
 		mVideoController.setPlayData(mVideoView.getPlayData());
 	}
 
 	private void updateCaption() {
+		if (mVideoView == null || mCaptionModel == null)
+			return;
 		if (mCaptionModel.isEnabled())
 			mVideoView.setCaptionText(mCaptionModel.getCaption(mVideoView
 					.getCurrentPosition()));
@@ -526,7 +547,7 @@ public class PlayerActivity extends CCActivity implements Constants,
 
 	private void showError(String message) {
 		removeControllerView();
-		Util.Views.showAlert(this, getString(R.string.alert), message,
+		ViewUtils.showAlert(this, getString(R.string.alert), message,
 				getString(R.string.done),
 				new DialogInterface.OnClickListener() {
 					@Override
@@ -568,7 +589,7 @@ public class PlayerActivity extends CCActivity implements Constants,
 
 	private void showBrightControl() {
 		Intent i = new Intent(this, BrightActivity.class);
-		i.putExtra(KEY_BRIGHT, Util.Display.getBrightness(this));
+		i.putExtra(KEY_BRIGHT, DisplayUtils.getBrightness(this));
 		startActivityForResult(i, REQUEST_MODIFY_BRIGHTNESS);
 	}
 
@@ -599,7 +620,7 @@ public class PlayerActivity extends CCActivity implements Constants,
 		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 		dialog.setTitle("이어보기");
 		dialog.setMessage("이전에 "
-				+ Util.Time.stringForTime(mConfigModel
+				+ StringUtils.stringForTime(mConfigModel
 						.getRestartPosition(mVideoView.getVideoURI().toString()))
 				+ " 까지 시청하셨습니다. 이어서 보시겠습니까?");
 		dialog.setPositiveButton(R.string.done,
@@ -693,7 +714,7 @@ public class PlayerActivity extends CCActivity implements Constants,
 	public void onProgressChanged(SeekBar seekBar, int progress,
 			boolean fromUser) {
 		if (fromUser) {
-			mVideoView.setCenterText(Util.Time.stringForTime(mVideoView
+			mVideoView.setCenterText(StringUtils.stringForTime(mVideoView
 					.getDuration() / 100 * progress));
 		}
 	}
@@ -739,7 +760,7 @@ public class PlayerActivity extends CCActivity implements Constants,
 				getWindow().getDecorView().setSystemUiVisibility(
 						View.SYSTEM_UI_FLAG_VISIBLE);
 			} else {
-				if (Util.Display.isTablet(this))
+				if (DisplayUtils.isTablet(this))
 					getWindow().getDecorView().setSystemUiVisibility(
 							View.SYSTEM_UI_FLAG_LOW_PROFILE);
 				else
@@ -776,8 +797,8 @@ public class PlayerActivity extends CCActivity implements Constants,
 			time = mVideoView.getDuration();
 		else if (time < 0l)
 			time = 0l;
-		mVideoView.setCenterText(Util.Time.stringForTime(time));
-		mVideoController.setProgress(Util.Math.getPercent(time,
+		mVideoView.setCenterText(StringUtils.stringForTime(time));
+		mVideoController.setProgress(MathUtils.getPercent(time,
 				mVideoView.getDuration()));
 	}
 
@@ -785,9 +806,9 @@ public class PlayerActivity extends CCActivity implements Constants,
 	public void onScrollY(long distance) {
 		if (mVideoView == null)
 			return;
-		Util.Phone.setVolume(this, AudioManager.STREAM_MUSIC, (int) distance,
+		PhoneUtils.setVolume(this, AudioManager.STREAM_MUSIC, (int) distance,
 				AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
-		distance = Util.Phone.getVolume(this, AudioManager.STREAM_MUSIC);
+		distance = PhoneUtils.getVolume(this, AudioManager.STREAM_MUSIC);
 		mVideoView.setVolume((int) distance);
 	}
 
@@ -806,14 +827,13 @@ public class PlayerActivity extends CCActivity implements Constants,
 	public void onPrepared(VideoView view) {
 		if (!updateThread.isAlive())
 			updateThread.start();
-		if (!mPlayerModel.isLocalURI(mVideoView))
-			mVideoView.seekTo(mConfigModel.getContinuePosition());
+		if (!mPlayerModel.isLocalURI(view))
+			view.seekTo(mConfigModel.getContinuePosition());
 		else {
-			if (mConfigModel.getRestartPosition(mVideoView.getVideoURI()
-					.toString()) > 0l)
+			if (mConfigModel.getRestartPosition(view.getVideoURI().toString()) > 0l)
 				showContinueDialog();
 		}
-		mVideoController.setPlayData(mVideoView.getPlayData());
+		mVideoController.setPlayData(view.getPlayData());
 		start();
 	}
 
@@ -846,11 +866,11 @@ public class PlayerActivity extends CCActivity implements Constants,
 				finish();
 				break;
 			}
-			if (mVideoView.getCurrentPosition() > 0l)
+			if (view.getCurrentPosition() > 0l)
 				sendPlayTime();
 			break;
 		case 100:
-			mVideoView.setVideoURI();
+			view.setVideoURI();
 			break;
 		case 200:
 			sendErrorLog("[" + getIntent().getDataString()
@@ -865,8 +885,6 @@ public class PlayerActivity extends CCActivity implements Constants,
 		updateThread.interrupt();
 		mVideoView.setCodec(-1);
 		removeControllerView();
-		mVideoView = null;
-		mVideoController = null;
 		super.finish();
 	}
 

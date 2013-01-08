@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.Formatter;
 import java.util.Locale;
 
-import kr.co.chan.util.Util;
+import utils.PhoneUtils;
 import android.content.Context;
 
 import com.kr.busan.cw.cinepox.player.structs.QualityData;
@@ -63,23 +63,6 @@ public class VideoModel extends Model {
 	/**
 	 * 
 	 * <PRE>
-	 * 1. MethodName : sendShownTime
-	 * 2. ClassName  : VideoModel
-	 * 3. Comment   : 현재 재생정보를 서버로 전송
-	 * 				재생중인 영화, 총 재생시간, 재생중인 구간
-	 * 4. 작성자    : 박찬우
-	 * 5. 작성일    : 2012. 10. 15. 오후 3:59:22
-	 * </PRE>
-	 * 
-	 * @return void
-	 */
-	public void sendShownTime() {
-
-	}
-
-	/**
-	 * 
-	 * <PRE>
 	 * 1. MethodName : getTimeText
 	 * 2. ClassName  : VideoModel
 	 * 3. Comment   : 현재 시간을 00:00 형태의 String으로 리턴
@@ -112,7 +95,7 @@ public class VideoModel extends Model {
 	 * @return String
 	 */
 	public String getBattText() {
-		return Util.Phone.getBattStat(mContext) + "%";
+		return PhoneUtils.getBatteryLevel(mContext) + "%";
 	}
 
 }

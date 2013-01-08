@@ -12,7 +12,7 @@
  */
 package com.kr.busan.cw.cinepox.player.view;
 
-import kr.co.chan.util.Util;
+import utils.PhoneUtils;
 import view.CCView;
 import android.content.Context;
 import android.media.AudioManager;
@@ -44,7 +44,7 @@ public class VolumeControllView extends CCView {
 	@Override
 	public void allocViews() {
 		volumeSeekbar = (SeekBar) findViewById(R.id.seekBar_volume);
-		volumeSeekbar.setMax(Util.Phone.getMaxVolume(getContext(),
+		volumeSeekbar.setMax(PhoneUtils.getMaxVolume(getContext(),
 				AudioManager.STREAM_MUSIC));
 		muteButton = (ImageView) findViewById(R.id.imageView1);
 	}

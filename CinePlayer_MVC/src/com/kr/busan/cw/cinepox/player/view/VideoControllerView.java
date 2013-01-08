@@ -1,7 +1,11 @@
 package com.kr.busan.cw.cinepox.player.view;
 
-import kr.co.chan.util.Util;
+import utils.MathUtils;
+import utils.PhoneUtils;
+import utils.StringUtils;
+
 import view.CCView;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.AudioManager;
@@ -292,9 +296,9 @@ public class VideoControllerView extends CCView implements
 	}
 
 	public void setPlayData(PlayData data) {
-		setProgress(Util.Math.getPercent(data.CURRENT, data.DURATION));
-		currentText.setText(Util.Time.stringForTime(data.CURRENT));
-		durationText.setText(Util.Time.stringForTime(data.DURATION));
+		setProgress(MathUtils.getPercent(data.CURRENT, data.DURATION));
+		currentText.setText(StringUtils.stringForTime(data.CURRENT));
+		durationText.setText(StringUtils.stringForTime(data.DURATION));
 	}
 
 	/**
@@ -402,7 +406,7 @@ public class VideoControllerView extends CCView implements
 			}
 			return true;
 		case MotionEvent.ACTION_DOWN:
-			currentVol = Util.Phone.getVolume(getContext(),
+			currentVol = PhoneUtils.getVolume(getContext(),
 					AudioManager.STREAM_MUSIC);
 			pointX = event.getX();
 			pointY = event.getY();

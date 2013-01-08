@@ -24,10 +24,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import kr.co.chan.util.Util;
 import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.HTMLElementName;
 import net.htmlparser.jericho.Source;
+import utils.FileUtils;
 import android.content.Context;
 
 /**
@@ -113,7 +113,7 @@ public class CaptionModel extends Model {
 			mLangNames = new ArrayList<String>();
 			mLangKeys = new ArrayList<String>();
 
-			String ext = Util.File.getExtension(path);
+			String ext = FileUtils.getExtension(path);
 			if (ext.equalsIgnoreCase(CAPTION_EXT_SMI)
 					|| ext.equalsIgnoreCase(CAPTION_EXT_SRT))
 				parseSMICaption(in);

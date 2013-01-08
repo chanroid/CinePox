@@ -1,6 +1,6 @@
 package com.kr.busan.cw.cinepox.player.controller;
 
-import kr.co.chan.util.Util;
+import utils.DisplayUtils;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
@@ -55,7 +55,7 @@ public class BrightActivity extends CCActivity implements Constants, OnSeekBarCh
 
 	private void setBrightness(float bright) {
 		if (bright >= 0.0f && bright <= 1.0f)
-			Util.Display.setBrightness(this, bright);
+			DisplayUtils.setBrightness(this, bright);
 	}
 
 	private Handler mHandler = new Handler() {

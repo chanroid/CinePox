@@ -1,24 +1,26 @@
 package com.kr.busan.cw.cinepox.player.model;
 
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import kr.co.chan.util.Util;
-import kr.co.chan.util.l;
 import model.CCSetting;
 
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import utils.FileUtils;
+import utils.JSONUtils;
+import utils.LogUtils;
+import utils.LogUtils.l;
+import utils.ManifestUtils;
+import utils.StreamUtils;
+import utils.TimeUtils;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Debug;
@@ -54,24 +56,22 @@ public class PlayerConfigModel extends Model {
 	private String mOrderCode;
 	private CaptionModel mCaptionModel;
 	private VideoModel mVideoModel;
+	private ADModel mADModel;
+	private BookmarkModel mBookmarkModel;
 
 	private String m3GMessage = "WI-FI 환경에서 감상하시는 것을 권장합니다.";
 	private int m3GMessageLength = Toast.LENGTH_LONG;
 
-	private String mBugReportUrl;
 	private String mPlaytimeUrl;
-
-	// private String mTextBannerUrl;
-	// private String mADUrl;
-	// private String mBookmarkListUrl;
-	// private String mBookmarkInsertUrl;
-	// private String mBookmarkDeleteUrl;
-	// private String mLogReportUrl;
+	private String mBugReportUrl;
+//	private String mLogReportUrl;
 
 	private PlayerConfigModel(Context ctx) {
 		mContext = ctx;
 		mCaptionModel = CaptionModel.getInstance(ctx);
 		mVideoModel = VideoModel.getInstance(ctx);
+		mADModel = ADModel.getInstance(ctx);
+		mBookmarkModel = BookmarkModel.getInstance(ctx);
 		mPref = ctx.getSharedPreferences(KEY_SETTING, 0);
 		mEdit = mPref.edit();
 	}
@@ -188,82 +188,14 @@ public class PlayerConfigModel extends Model {
 		return "content".equalsIgnoreCase(uri.getScheme());
 	}
 
-	public synchronized boolean sendShareInfo(Location loc, String sendurl) {
-		if (loc == null)
-			return false;
-		if (sendurl == null)
-			return false;
-
-		try {
-			String shake_key = generateShareKey(loc);
-			long startTime = System.currentTimeMillis();
-			long currentTime = 0l;
-			boolean result = false;
-			ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair(KEY_SHAKE_KEY, shake_key));
-			params.add(new BasicNameValuePair(KEY_URL, sendurl));
-			while (currentTime - 5000 < startTime) {
-				try {
-					JSONObject js = Util.Stream.jsonFromURLbyPOST(
-							SHAKE_REQUEST_URL, params);
-					String resultText = js.getString("result");
-					String is_response = js.getString("is_response");
-					result = "Y".equalsIgnoreCase(is_response)
-							&& "Y".equalsIgnoreCase(resultText);
-					if (result)
-						break;
-					Thread.sleep(500);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				currentTime = System.currentTimeMillis();
-			}
-
-			if (result) {
-				removeShareRequest(shake_key);
-				return true;
-			}
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (JSONException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		return false;
-	}
-
-	public synchronized void removeShareRequest(String key)
-			throws IllegalStateException, IOException {
-		ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair(KEY_SHAKE_KEY, key));
-		Util.Stream.inStreamFromURLbyPOST(SHAKE_DELETE_URL, params);
-	}
-
-	public synchronized String generateShareKey(Location loc)
-			throws ClientProtocolException, JSONException, IOException {
-		if (loc == null)
-			return null;
-		DecimalFormat format = new DecimalFormat(".#");
-		String lng = format.format(loc.getLongitude());
-		String lat = format.format(loc.getLatitude());
-		String sendKey = Util.MD5(lng + lat);
-		ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair(KEY_SHAKE_KEY, sendKey));
-		JSONObject js = Util.Stream
-				.jsonFromURLbyPOST(SHAKE_GET_KEY_URL, params);
-		return js.getString("shake_key");
-	}
-
 	public synchronized void sendErrorLog(Intent intent)
 			throws IllegalStateException, IOException {
 		// 서버작업 후 작성할것
 		if (intent == null)
 			return;
 		StringBuffer sb = new StringBuffer();
-		sb.append("APP Ver : " + Util.App.getVersionNum(mContext) + "\n");
-		sb.append("Time : " + Util.Time.getCurrentDateTimeString() + "\n");
+		sb.append("APP Ver : " + ManifestUtils.getVersionName(mContext) + "\n");
+		sb.append("Time : " + TimeUtils.getCurrentDateTimeString() + "\n");
 		sb.append("Model Name : " + Build.MODEL + "\n");
 		sb.append("Android Ver. : " + Build.VERSION.RELEASE + "\n");
 		sb.append("SDK Ver. : " + Build.VERSION.SDK_INT + "\n");
@@ -285,7 +217,7 @@ public class PlayerConfigModel extends Model {
 			sb.append("Exception type : " + exception.getClass().getName()
 					+ "\n");
 			sb.append("================= Stack trace =================");
-			sb.append(Util.Stream.stringFromThrowable(exception));
+			sb.append(LogUtils.getStackTrace(exception));
 		} else {
 			String message = intent.getStringExtra(KEY_MSG);
 			if (message != null) {
@@ -298,7 +230,7 @@ public class PlayerConfigModel extends Model {
 		ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair(KEY_TYPE, KEY_EXCEPTION));
 		params.add(new BasicNameValuePair(KEY_MSG, sb.toString()));
-		Util.Stream.inStreamFromURLbyPOST(mBugReportUrl, params);
+		StreamUtils.inStreamFromURL(mBugReportUrl, params);
 
 	}
 
@@ -310,7 +242,7 @@ public class PlayerConfigModel extends Model {
 		params.add(new BasicNameValuePair(KEY_PLAY_TIME, (play_time / 1000)
 				+ ""));
 		params.add(new BasicNameValuePair(KEY_ORDER_CODE, mOrderCode));
-		Util.Stream.inStreamFromURLbyPOST(mPlaytimeUrl, params);
+		StreamUtils.inStreamFromURL(mPlaytimeUrl, params);
 	}
 
 	public synchronized void sendPlayTime(Intent intent)
@@ -328,7 +260,7 @@ public class PlayerConfigModel extends Model {
 		param.add(new BasicNameValuePair(KEY_SETTING, RESPONSE_JSON));
 		param.add(new BasicNameValuePair(KEY_DEVICE_TYPE, DEVICE));
 		try {
-			return Util.Stream.jsonFromURLbyPOST(url, param);
+			return JSONUtils.jsonFromURL(url, param);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -346,10 +278,12 @@ public class PlayerConfigModel extends Model {
 		if (!isCinepoxURI(path)) {
 			if (isContentURI(path)) {
 				// 에러나는 부분
-				String filePath = Util.File.getMediaPathfromUri(mContext, path);
-				if (!mCaptionModel.loadCaption(Util.File.changeExtension(
+				if (mContext == null || path == null)
+					return RESULT_ERROR;
+				String filePath = FileUtils.getMediaPathfromUri(mContext, path);
+				if (!mCaptionModel.loadCaption(FileUtils.changeExtension(
 						filePath, CAPTION_EXT_SMI)))
-					mCaptionModel.loadCaption(Util.File.changeExtension(
+					mCaptionModel.loadCaption(FileUtils.changeExtension(
 							filePath, CAPTION_EXT_SRT));
 			}
 			mSetURI = path;
@@ -389,8 +323,8 @@ public class PlayerConfigModel extends Model {
 							Build.VERSION.SDK_INT > 8 ? "http" : "rtsp"));
 					param.add(new BasicNameValuePair(KEY_DEVICE_TYPE, DEVICE));
 					param.add(new BasicNameValuePair(KEY_ORDER_CODE, mOrderCode));
-					JSONObject config = Util.Stream.jsonFromURLbyPOST(
-							config_url, param);
+					JSONObject config = JSONUtils
+							.jsonFromURL(config_url, param);
 					l.i(config.toString());
 					try {
 						if ("N".equalsIgnoreCase(config.getString(KEY_RESULT)))
@@ -450,16 +384,18 @@ public class PlayerConfigModel extends Model {
 						m3GMessage = urlArray.getString(KEY_3G_MESSAGE);
 						m3GMessageLength = urlArray
 								.getInt(KEY_3G_MESSAGE_LENGTH);
-						// mBookmarkListUrl = urlArray
-						// .getString(KEY_GET_BOOKMARK_LIST);
-						// mBookmarkInsertUrl = urlArray
-						// .getString(KEY_BOOKMARK_INSERT_URL);
-						// mTextBannerUrl = urlArray
-						// .getString(KEY_GET_TEXT_BANNER_URL);
-						// mADUrl = urlArray.getString(KEY_GET_AD_URL);
-						// mBookmarkDeleteUrl = urlArray
-						// .getString(KEY_BOOKMARK_DELETE_URL);
-						// mLogReportUrl = urlArray.getString(KEY_LOG_URL);
+//						mLogReportUrl = urlArray.getString(KEY_LOG_URL);
+						mBookmarkModel.setDeleteUrl(urlArray
+								.getString(KEY_BOOKMARK_DELETE_URL));
+						mBookmarkModel.setListUrl(urlArray
+								.getString(KEY_GET_BOOKMARK_LIST));
+						mBookmarkModel.setInsertUrl(urlArray
+								.getString(KEY_BOOKMARK_INSERT_URL));
+						mADModel.setADBannerUrl(urlArray
+								.getString(KEY_GET_AD_URL));
+						mADModel.setTextBannerUrl(urlArray
+								.getString(KEY_GET_TEXT_BANNER_URL));
+						mADModel.loadAdInfo();
 						return RESULT_SUCCESS;
 					} catch (JSONException e) {
 						e.printStackTrace();

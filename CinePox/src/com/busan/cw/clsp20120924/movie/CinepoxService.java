@@ -1,6 +1,5 @@
 package com.busan.cw.clsp20120924.movie;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,7 +8,6 @@ import kr.co.chan.util.Util;
 import kr.co.chan.util.l;
 
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,18 +15,15 @@ import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
@@ -38,7 +33,8 @@ import android.widget.Toast;
 import com.busan.cw.clsp20120924.R;
 import com.busan.cw.clsp20120924.aidl.ICinepoxService;
 import com.busan.cw.clsp20120924.aidl.ICinepoxServiceCallback;
-import com.busan.cw.clsp20120924.downloader.DownManager;
+import com.busan.cw.clsp20120924.downloader.DownManager2;
+import com.busan.cw.clsp20120924.downloader.DownloadData;
 import com.busan.cw.clsp20120924.gcm.CommonUtilities;
 import com.busan.cw.clsp20120924.gcm.ServerUtilities;
 import com.busan.cw.clsp20120924.movie.WidgetProvider.UpdateData;
@@ -54,15 +50,7 @@ public class CinepoxService extends Service {
 	private AlarmManager mAlarmManager;
 	private Config mConfig;
 
-	private DownManager mDownManager;
-	// private BluetoothChatService mBTChat;
-
-	// private LocationManager mLocManager;
-	// private Location mLocation;
-
-	// private ShakeListener mShaker;
-	// private SensorManager sensorManager;
-	// private Sensor accelerormeterSensor;
+	private DownManager2 mDownManager;
 	private PlayerConfigModel mConfigModel;
 
 	public static final int WHAT_CHANGED_ALARM = 2011;
@@ -76,9 +64,7 @@ public class CinepoxService extends Service {
 	public static final String ACTION_SEND_ERRORLOG = "com.kr.busan.cw.cinepox.service.errorlog";
 	public static final String ACTION_LOAD_WIDGET_DATA = "com.kr.busan.cw.cinepox.service.widgetdata";
 
-	public final String GCM_SENDER_ID = "614996383425";
 	public String SMS_KEY = "";
-	private int mNotiId;
 	private int mDataInterval = 86400000;
 
 	private BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -112,7 +98,6 @@ public class CinepoxService extends Service {
 				final String regId = GCMRegistrar
 						.getRegistrationId(CinepoxService.this);
 				if (regId.equals("")) {
-					// Automatically registers application on startup.
 					GCMRegistrar.register(CinepoxService.this,
 							CommonUtilities.SENDER_ID);
 				} else {
@@ -278,7 +263,6 @@ public class CinepoxService extends Service {
 		public void run() {
 			// response가 있든 말든 걍 처리.
 			try {
-				l.i("sendshowtime : " + url);
 				Util.Stream.inStreamFromURL(url);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -311,7 +295,7 @@ public class CinepoxService extends Service {
 				for (int i = 0; i < list.length(); i++) {
 					JSONObject o = list.getJSONObject(i);
 					String url = o.getString("url");
-					String name = o.getString("save_name");
+					String name = Util.File.clearName(o.getString("save_name"));
 					addDownloadQueue(url, name);
 				}
 			} catch (JSONException e) {
@@ -330,14 +314,20 @@ public class CinepoxService extends Service {
 	}
 
 	protected void addDownloadQueue(String url, String filename) {
-		int result = mDownManager.queue(url, DownManager.DOWNLOAD_PATH + "/"
-				+ filename, R.drawable.ic_launcher, filename);
-		if (result == -1)
-			Toast.makeText(this, R.string.download_exist, Toast.LENGTH_SHORT)
-					.show();
-		else if (result == -2)
+		DownloadData data = new DownloadData();
+		data.filePath = Environment
+				.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+				+ "/" + filename;
+		data.fileUrl = url;
+		data.title = filename;
+		try {
+			mDownManager.queue(data);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 			Toast.makeText(this, R.string.download_error, Toast.LENGTH_SHORT)
 					.show();
+		}
 	}
 
 	protected void addDownload(String stringExtra) {
@@ -349,71 +339,9 @@ public class CinepoxService extends Service {
 		// new PushSync().execute();
 	}
 
-	class PushSync extends AsyncTask<String, Integer, JSONArray> {
-
-		@Override
-		protected JSONArray doInBackground(String... params) {
-			// TODO Auto-generated method stub
-			try {
-				String url = Domain.ACCESS_DOMAIN
-						+ "cinepoxAPP/getPush?setting=response_type:json";
-				return new JSONArray(Util.Stream.stringFromURL(url));
-			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(JSONArray result) {
-			// TODO Auto-generated method stub
-			super.onPostExecute(result);
-			if (result != null) {
-				for (int i = 0; i < result.length(); i++) {
-					try {
-						JSONObject jsonData = result.getJSONObject(i);
-						if (!getConfig().isReadPush(jsonData.getString("num"))) {
-							notifyPush(jsonData);
-							getConfig().addReadPush(jsonData.getString("num"));
-						}
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-	}
-
-	@SuppressWarnings("deprecation")
-	void notifyPush(JSONObject o) throws JSONException {
-		String title = o.getString("title");
-		String message = o.getString("message");
-		String url = Domain.ACCESS_DOMAIN + o.getString("url");
-		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-				new Intent(Intent.ACTION_VIEW, Uri.parse(url)), 0);
-		Notification notif = new Notification(R.drawable.ic_notify,
-				"새로운 영화가 업데이트 되었습니다!", System.currentTimeMillis());
-		notif.flags |= Notification.FLAG_AUTO_CANCEL;
-		notif.flags |= Notification.FLAG_SHOW_LIGHTS;
-		notif.ledARGB = Color.BLUE;
-		notif.ledOnMS = 1000;
-		notif.ledOffMS = 2000;
-		notif.setLatestEventInfo(this, title, message, contentIntent);
-		NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-		nm.notify((mNotiId += 1), notif);
-	}
-
 	void initService() {
 		mConfigModel = PlayerConfigModel.getInstance(this);
-		mDownManager = DownManager.getInstance(this);
+		mDownManager = DownManager2.getInstance(this);
 		mConfig = Config.getInstance(this);
 		mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 		IntentFilter filter = new IntentFilter();
@@ -426,24 +354,6 @@ public class CinepoxService extends Service {
 		filter.addAction(ACTION_REGISTER_GCM);
 		registerReceiver(mReceiver, filter);
 		new LoadWidgetDataSync().start();
-		// mBTChat = BluetoothChatService.getService(this, mHandler);
-		// mBTChat.start();
-		// mLocManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-		// Criteria criteria = new Criteria();
-		// String provider = mLocManager.getBestProvider(criteria, true);
-		// if (provider == null) {
-		// provider = LocationManager.NETWORK_PROVIDER;
-		// }
-		// mLocation = mLocManager.getLastKnownLocation(provider);
-		// mLocManager.requestLocationUpdates(provider, 10000, 100, this);
-		// mShaker = new ShakeListener(this);
-		// mShaker.setOnShakeListener(this);
-		// sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-		// accelerormeterSensor = sensorManager
-		// .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		// if (accelerormeterSensor != null)
-		// sensorManager.registerListener(this, accelerormeterSensor,
-		// SensorManager.SENSOR_DELAY_FASTEST);
 	}
 
 	@Override
@@ -466,36 +376,6 @@ public class CinepoxService extends Service {
 		refresh();
 		registerWidgetDataAlarm();
 		registerAlarm();
-		// GCMRegistrar.checkDevice(this);
-		// GCMRegistrar.checkManifest(this);
-		// registerReceiver(mHandleMessageReceiver,
-		// new IntentFilter(CommonUtilities.DISPLAY_MESSAGE_ACTION));
-		// final String regId = GCMRegistrar.getRegistrationId(this);
-		// if (regId.equals("")) {
-		// GCMRegistrar.register(this, CommonUtilities.SENDER_ID);
-		// } else {
-		// if (GCMRegistrar.isRegisteredOnServer(this)) {
-		//
-		// } else {
-		// final Context context = this;
-		// new Thread() {
-		//
-		// @Override
-		// public void run() {
-		// boolean registered =
-		// ServerUtilities.register(context, regId);
-		// if (!registered) {
-		// GCMRegistrar.unregister(context);
-		// }
-		// }
-		//
-		// }.start();
-		// }
-		// }
-	}
-
-	State getState() {
-		return (State) getApplication();
 	}
 
 	Config getConfig() {
@@ -577,12 +457,7 @@ public class CinepoxService extends Service {
 		cancelAllDownload();
 		unregisterReceiver(mReceiver);
 		unregisterAlarm();
-		// unregisterReceiver(mHandleMessageReceiver);
-		// GCMRegistrar.onDestroy(this);
 		registerRestrartAlarm();
-		// if (sensorManager != null)
-		// sensorManager.unregisterListener(this);
-		// mBTChat.stop();
 		super.onDestroy();
 	};
 

@@ -30,8 +30,8 @@ import com.busan.cw.clsp20120924.R;
  * </PRE>
  */
 public class DownRestartActivity extends Activity {
-	DownManager mng;
-	Downloader down;
+	DownManager2 mng;
+	Downloader2 down;
 	int mId;
 
 	@Override
@@ -44,25 +44,14 @@ public class DownRestartActivity extends Activity {
 			return;
 		}
 
-		mng = DownManager.getInstance(this);
-		down = mng.get(mId);
+		mng = DownManager2.getInstance(this);
+		down = mng.getQueue(mId);
 		if (down == null) {
 			finish();
 			return;
 		}
 
-		String action = getIntent().getStringExtra("action");
-		if ("cancel".equalsIgnoreCase(action)) {
-			mng.remove(down);
-			finish();
-			return;
-		} else if ("continue".equalsIgnoreCase(action)) {
-			mng.queue(down);
-			finish();
-			return;
-		}
-
-		String title = down.getTitle();
+		String title = down.getData().title;
 		if (title != null)
 			title = "[" + title + "]\n";
 		else {
@@ -85,7 +74,7 @@ public class DownRestartActivity extends Activity {
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
 			dialog.dismiss();
-			mng.remove(down);
+			mng.cancel(mId, false);
 			finish();
 		}
 	};
@@ -95,7 +84,12 @@ public class DownRestartActivity extends Activity {
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
 			dialog.dismiss();
-			mng.queue(down);
+			try {
+				mng.queue(down.getData());
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			finish();
 		}
 	};

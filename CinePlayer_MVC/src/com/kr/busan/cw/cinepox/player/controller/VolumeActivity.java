@@ -1,6 +1,6 @@
 package com.kr.busan.cw.cinepox.player.controller;
 
-import kr.co.chan.util.Util;
+import utils.PhoneUtils;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -74,8 +74,8 @@ public class VolumeActivity extends CCActivity implements
 	private void sync() {
 		mVolumeView.setVolume(mAudioManager
 				.getStreamVolume(AudioManager.STREAM_MUSIC));
-		if (Util.Phone.getVolume(this, AudioManager.STREAM_MUSIC) != 0)
-			lastvar = Util.Phone.getVolume(this, AudioManager.STREAM_MUSIC);
+		if (PhoneUtils.getVolume(this, AudioManager.STREAM_MUSIC) != 0)
+			lastvar = PhoneUtils.getVolume(this, AudioManager.STREAM_MUSIC);
 	}
 
 	@Override
@@ -153,7 +153,7 @@ public class VolumeActivity extends CCActivity implements
 		// TODO Auto-generated method stub
 		mHandler.removeMessages(0);
 		if (v.getId() == R.id.imageView1) {
-			switch (Util.Phone.getVolume(this, AudioManager.STREAM_MUSIC)) {
+			switch (PhoneUtils.getVolume(this, AudioManager.STREAM_MUSIC)) {
 			case 0:
 				unmute();
 				break;

@@ -177,8 +177,10 @@ public class SearchActivity extends Activity implements OnClickListener,
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
-		mSearchEdit.textBox.setText(mParser.query.get(arg2));
-		search();
+		if (mParser.query.size() > arg2) {
+			mSearchEdit.textBox.setText(mParser.query.get(arg2));
+			search();
+		}
 	}
 
 	@Override

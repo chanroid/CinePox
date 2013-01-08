@@ -1,6 +1,6 @@
 package com.kr.busan.cw.cinepox.player.view;
 
-import kr.co.chan.util.Util;
+import utils.DisplayUtils;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnBufferingUpdateListener;
@@ -48,9 +48,9 @@ public class HWVideoView extends VideoView implements OnPreparedListener {
 	// @Override
 	// protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 	// widthMeasureSpec = getDefaultSize(
-	// Util.Display.getWindowSize(getContext())[0], widthMeasureSpec);
+	// DisplayUtils.getWindowSize(getContext())[0], widthMeasureSpec);
 	// heightMeasureSpec = getDefaultSize(
-	// Util.Display.getWindowSize(getContext())[1], heightMeasureSpec);
+	// DisplayUtils.getWindowSize(getContext())[1], heightMeasureSpec);
 	// setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
 	// }
 
@@ -80,8 +80,8 @@ public class HWVideoView extends VideoView implements OnPreparedListener {
 		try {
 
 			int width = 0, height = 0;
-			width = Util.Display.getWindowSize(getContext())[0];
-			height = Util.Display.getWindowSize(getContext())[1];
+			width = DisplayUtils.getWindowSize(getContext())[0];
+			height = DisplayUtils.getWindowSize(getContext())[1];
 
 			switch (layout) {
 			case io.vov.vitamio.widget.VideoView.VIDEO_LAYOUT_ORIGIN:
@@ -89,17 +89,17 @@ public class HWVideoView extends VideoView implements OnPreparedListener {
 				height = mMediaPlayer.getVideoHeight();
 				break;
 			case io.vov.vitamio.widget.VideoView.VIDEO_LAYOUT_ZOOM:
-				width = Util.Display.getWindowSize(getContext())[0];
-				height = Util.Display.getWindowSize(getContext())[1];
+				width = DisplayUtils.getWindowSize(getContext())[0];
+				height = DisplayUtils.getWindowSize(getContext())[1];
 				break;
 			case io.vov.vitamio.widget.VideoView.VIDEO_LAYOUT_SCALE:
-				height = Util.Display.getWindowSize(getContext())[1];
+				height = DisplayUtils.getWindowSize(getContext())[1];
 				width = (height / mMediaPlayer.getVideoHeight())
 						* mMediaPlayer.getVideoWidth();
 				break;
 			case io.vov.vitamio.widget.VideoView.VIDEO_LAYOUT_STRETCH:
-				width = Util.Display.getWindowSize(getContext())[0];
-				height = Util.Display.getWindowSize(getContext())[1];
+				width = DisplayUtils.getWindowSize(getContext())[0];
+				height = DisplayUtils.getWindowSize(getContext())[1];
 				break;
 			default:
 				return;
@@ -129,7 +129,7 @@ public class HWVideoView extends VideoView implements OnPreparedListener {
 	public boolean setVideoSize(int width, int height) {
 
 		if (Build.VERSION.SDK_INT < 11) {
-			int[] windowsize = Util.Display.getWindowSize(getContext());
+			int[] windowsize = DisplayUtils.getWindowSize(getContext());
 			int windowwidth = windowsize[0];
 			int windowheight = windowsize[1];
 			if (width > windowwidth || height > windowheight)

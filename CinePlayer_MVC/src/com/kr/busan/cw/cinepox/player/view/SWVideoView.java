@@ -10,7 +10,7 @@
 
 package com.kr.busan.cw.cinepox.player.view;
 
-import kr.co.chan.util.Util;
+import utils.DisplayUtils;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -50,7 +50,7 @@ public class SWVideoView extends io.vov.vitamio.widget.VideoView {
 	public boolean setVideoSize(int width, int height) {
 
 		if (Build.VERSION.SDK_INT < 11) {
-			int[] windowsize = Util.Display.getWindowSize(getContext());
+			int[] windowsize = DisplayUtils.getWindowSize(getContext());
 			int windowwidth = windowsize[0];
 			int windowheight = windowsize[1];
 			if (width > windowwidth || height > windowheight)
@@ -85,8 +85,8 @@ public class SWVideoView extends io.vov.vitamio.widget.VideoView {
 		switch (layout) {
 		case VIDEO_LAYOUT_ZOOM:
 			ViewGroup.LayoutParams localLayoutParams = getLayoutParams();
-			localLayoutParams.width = Util.Display.getWindowSize(getContext())[0];
-			localLayoutParams.height = Util.Display.getWindowSize(getContext())[1];
+			localLayoutParams.width = DisplayUtils.getWindowSize(getContext())[0];
+			localLayoutParams.height = DisplayUtils.getWindowSize(getContext())[1];
 			setLayoutParams(localLayoutParams);
 			getHolder().setFixedSize(localLayoutParams.width,
 					localLayoutParams.height);

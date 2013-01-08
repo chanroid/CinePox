@@ -8,26 +8,26 @@ package kr.co.chan.util;
 
 public final class R {
 	public static final class id {
-		public static final int status_text = 0x7f09002e;
-		public static final int progress = 0x7f09007a;
-		public static final int secondaryProgress = 0x7f090079;
-		public static final int editText1 = 0x7f09002a;
-		public static final int status_progress = 0x7f09002f;
-		public static final int background = 0x7f090078;
-		public static final int status_icon = 0x7f09002c;
-		public static final int button1 = 0x7f09002b;
-		public static final int relativeLayout1 = 0x7f09002d;
+		public static final int status_text = 0x7f0b002e;
+		public static final int progress = 0x7f0b007c;
+		public static final int secondaryProgress = 0x7f0b007b;
+		public static final int editText1 = 0x7f0b002a;
+		public static final int status_progress = 0x7f0b002f;
+		public static final int background = 0x7f0b007a;
+		public static final int status_icon = 0x7f0b002c;
+		public static final int button1 = 0x7f0b002b;
+		public static final int relativeLayout1 = 0x7f0b002d;
 	}
 	public static final class style {
-		public static final int EpoNgsProgressStyle = 0x7f0c0000;
+		public static final int EpoNgsProgressStyle = 0x7f080000;
 	}
 	public static final class string {
-		public static final int app_name = 0x7f0a0077;
+		public static final int app_name = 0x7f070000;
 	}
 	public static final class layout {
 		public static final int claearable_edittext = 0x7f030004;
 		public static final int download_progress = 0x7f030005;
-		public static final int main = 0x7f03000b;
+		public static final int main = 0x7f03000c;
 	}
 	public static final class styleable {
 		public static final int SeekBar_android_thumb = 0;

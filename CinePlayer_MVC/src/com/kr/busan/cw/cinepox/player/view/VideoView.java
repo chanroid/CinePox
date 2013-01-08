@@ -3,9 +3,8 @@ package com.kr.busan.cw.cinepox.player.view;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.MediaPlayer.OnCompletionListener;
 import io.vov.vitamio.VitamioInstaller;
-import kr.co.chan.util.Util;
-import kr.co.chan.util.VerticalProgressBar;
-import kr.co.chan.util.Classes.AnimatedImageView;
+import utils.MarketUtils;
+import utils.PhoneUtils;
 import view.CCView;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -30,6 +29,9 @@ import android.widget.TextView;
 import com.kr.busan.cw.cinepox.R;
 import com.kr.busan.cw.cinepox.player.iface.VideoCallback;
 import com.kr.busan.cw.cinepox.player.structs.PlayData;
+
+import extend.AnimatedImageView;
+import extend.VerticalProgressBar;
 
 /**
  * <PRE>
@@ -337,7 +339,7 @@ public class VideoView extends CCView implements OnPreparedListener,
 	 * </PRE>
 	 */
 	private void initVolumeView() {
-		volumeProgress.setMax(Util.Phone.getMaxVolume(getContext(),
+		volumeProgress.setMax(PhoneUtils.getMaxVolume(getContext(),
 				AudioManager.STREAM_MUSIC));
 	}
 
@@ -489,7 +491,7 @@ public class VideoView extends CCView implements OnPreparedListener,
 							} else {
 								pkgname = VitamioInstaller.VITAMIO_PACKAGE_ARMV7_VFPV3;
 							}
-							Util.App.goMarket(getContext(), pkgname);
+							MarketUtils.goMarket(getContext(), pkgname);
 						}
 					});
 			pluginDialog = builder.create();
@@ -615,7 +617,7 @@ public class VideoView extends CCView implements OnPreparedListener,
 			} else {
 				return false;
 			}
-		} catch (IllegalStateException e) {
+		} catch (Exception e) {
 			return false;
 		}
 	}

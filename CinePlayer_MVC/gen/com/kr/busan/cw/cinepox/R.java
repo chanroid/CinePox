@@ -13,62 +13,8 @@ public final class R {
         public static int navi_top_down_ani=0x7f040001;
         public static int navi_top_up_ani=0x7f040002;
         public static int navi_up_ani=0x7f040003;
-        public static int slide_in_from_bottom=0x7f040004;
-        public static int slide_in_from_top=0x7f040005;
-        public static int slide_out_to_bottom=0x7f040006;
-        public static int slide_out_to_top=0x7f040007;
     }
     public static final class attr {
-        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-         */
-        public static int ptrAdapterViewBackground=0x7f010000;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static int ptrDrawable=0x7f010006;
-        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-         */
-        public static int ptrHeaderBackground=0x7f010001;
-        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-         */
-        public static int ptrHeaderSubTextColor=0x7f010003;
-        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-         */
-        public static int ptrHeaderTextColor=0x7f010002;
-        /** <p>Must be one or more (separated by '|') of the following constant values.</p>
-<table>
-<colgroup align="left" />
-<colgroup align="left" />
-<colgroup align="left" />
-<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
-<tr><td><code>pullDownFromTop</code></td><td>0x1</td><td></td></tr>
-<tr><td><code>pullUpFromBottom</code></td><td>0x2</td><td></td></tr>
-<tr><td><code>both</code></td><td>0x3</td><td></td></tr>
-</table>
-         */
-        public static int ptrMode=0x7f010004;
-        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-<p>May be a boolean value, either "<code>true</code>" or "<code>false</code>".
-         */
-        public static int ptrShowIndicator=0x7f010005;
-    }
-    public static final class dimen {
-        public static int indicator_corner_radius=0x7f060001;
-        public static int indicator_internal_padding=0x7f060002;
-        public static int indicator_right_padding=0x7f060000;
     }
     public static final class drawable {
         public static int a1=0x7f020000;
@@ -105,435 +51,143 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static int a7=0x7f02001f;
         public static int a8=0x7f020020;
         public static int a9=0x7f020021;
-        public static int arrow=0x7f020022;
-        public static int arrow_down=0x7f020023;
-        public static int arrow_up=0x7f020024;
-        public static int bg_hd=0x7f020025;
-        public static int bg_seekbar_back=0x7f020026;
-        public static int bg_seekbar_progress=0x7f020027;
-        public static int bg_seekbar_secprogress=0x7f020028;
-        public static int bg_sound=0x7f020029;
-        public static int bg_sound_blue=0x7f02002a;
-        public static int bg_sound_gray=0x7f02002b;
-        public static int bg_top=0x7f02002c;
-        public static int bt_bright=0x7f02002d;
-        public static int bt_play=0x7f02002e;
-        public static int bt_setting=0x7f02002f;
-        public static int bt_size=0x7f020030;
-        public static int bt_sound=0x7f020031;
-        public static int bt_stop=0x7f020032;
-        public static int bt_text=0x7f020033;
-        public static int bt_widget_qr=0x7f020034;
-        public static int bt_widget_qr_on=0x7f020035;
-        public static int btn_seekbar_thumb=0x7f020036;
-        public static int btn_widget_qrplay=0x7f020037;
-        public static int change=0x7f020038;
-        public static int custom_progress=0x7f020039;
-        public static int default_ptr_drawable=0x7f02003a;
-        public static int ic_action_search=0x7f02003b;
-        public static int ic_clear=0x7f02003c;
-        public static int ic_clear_selected=0x7f02003d;
-        public static int ic_clear_unselected=0x7f02003e;
-        public static int ic_launcher=0x7f02003f;
-        public static int icon=0x7f020040;
-        public static int img_battery=0x7f020041;
-        public static int img_bright=0x7f020042;
-        public static int img_line=0x7f020043;
-        public static int img_shaking=0x7f020044;
-        public static int img_sound=0x7f020045;
-        public static int indicator_bg_bottom=0x7f020046;
-        public static int indicator_bg_top=0x7f020047;
-        public static int myprogress=0x7f020048;
-        public static int player_loading=0x7f020049;
-        public static int pref_item_selector=0x7f02004a;
-        public static int pref_item_selector_press=0x7f02004b;
-        public static int pref_item_selector_unpress=0x7f02004c;
-        public static int progress_horizon=0x7f02004d;
-        public static int seek_thumb=0x7f02004e;
-        public static int seek_thumb2=0x7f02004f;
-        public static int seek_thumb_normal=0x7f020050;
-        public static int seek_thumb_normal_wide=0x7f020051;
-        public static int seek_thumb_pressed=0x7f020052;
-        public static int seek_thumb_pressed_wide=0x7f020053;
-        public static int seek_thumb_selected=0x7f020054;
-        public static int seek_thumb_selected_wide=0x7f020055;
-        public static int seek_thumb_wide=0x7f020056;
-        public static int stub=0x7f020057;
-        public static int text_cursor_holo_light=0x7f020058;
-        public static int time_bar_btn=0x7f020059;
+        public static int bg_hd=0x7f020022;
+        public static int bg_seekbar_back=0x7f020023;
+        public static int bg_seekbar_progress=0x7f020024;
+        public static int bg_seekbar_secprogress=0x7f020025;
+        public static int bg_sound=0x7f020026;
+        public static int bg_sound_blue=0x7f020027;
+        public static int bg_sound_gray=0x7f020028;
+        public static int bg_top=0x7f020029;
+        public static int bt_bright=0x7f02002a;
+        public static int bt_play=0x7f02002b;
+        public static int bt_setting=0x7f02002c;
+        public static int bt_size=0x7f02002d;
+        public static int bt_sound=0x7f02002e;
+        public static int bt_stop=0x7f02002f;
+        public static int bt_text=0x7f020030;
+        public static int bt_widget_qr=0x7f020031;
+        public static int bt_widget_qr_on=0x7f020032;
+        public static int btn_seekbar_thumb=0x7f020033;
+        public static int btn_widget_qrplay=0x7f020034;
+        public static int custom_progress=0x7f020035;
+        public static int ic_action_search=0x7f020036;
+        public static int ic_clear=0x7f020037;
+        public static int ic_clear_selected=0x7f020038;
+        public static int ic_clear_unselected=0x7f020039;
+        public static int ic_launcher=0x7f02003a;
+        public static int img_battery=0x7f02003b;
+        public static int img_bright=0x7f02003c;
+        public static int img_line=0x7f02003d;
+        public static int img_shaking=0x7f02003e;
+        public static int img_sound=0x7f02003f;
+        public static int player_loading=0x7f020040;
+        public static int text_cursor_holo_light=0x7f020041;
     }
     public static final class id {
-        public static int background=0x7f05002b;
-        public static int both=0x7f050002;
-        public static int btn_video_bright=0x7f05001e;
-        public static int btn_video_caption=0x7f05001b;
-        public static int btn_video_changecodec=0x7f05001c;
-        public static int btn_video_changequality=0x7f05001a;
-        public static int btn_video_fullscreen=0x7f050014;
-        public static int btn_video_playpause=0x7f050010;
-        public static int btn_video_shake=0x7f050019;
-        public static int btn_video_volumn=0x7f05001d;
-        public static int button1=0x7f050008;
-        public static int editText1=0x7f050007;
-        public static int gridview=0x7f050003;
-        public static int image=0x7f05000d;
-        public static int imageView1=0x7f050016;
-        public static int imageView2=0x7f050005;
-        public static int layout_player_volumecontrol=0x7f050022;
-        public static int progress=0x7f05002d;
-        public static int progressBar_video_loading=0x7f050021;
-        public static int pullDownFromTop=0x7f050000;
-        public static int pullUpFromBottom=0x7f050001;
-        public static int pull_to_refresh_image=0x7f050029;
-        public static int pull_to_refresh_sub_text=0x7f050028;
-        public static int pull_to_refresh_text=0x7f050027;
-        public static int relativeLayout1=0x7f05000a;
-        public static int secondaryProgress=0x7f05002c;
-        public static int seekBar_brightness=0x7f050006;
-        public static int seekBar_video_controller=0x7f050012;
-        public static int seekBar_volume=0x7f05002a;
-        public static int seekbar_player_volume=0x7f050023;
-        public static int status_icon=0x7f050009;
-        public static int status_progress=0x7f05000c;
-        public static int status_text=0x7f05000b;
-        public static int surfaceView_video_view_hw=0x7f050020;
-        public static int text=0x7f05000e;
-        public static int textView_player_volume=0x7f050024;
-        public static int textView_video_battstat=0x7f050017;
-        public static int textView_video_caption=0x7f050025;
-        public static int textView_video_center=0x7f050026;
-        public static int textView_video_currenttime=0x7f050011;
-        public static int textView_video_duration=0x7f050013;
-        public static int textView_video_time=0x7f050018;
-        public static int video_container=0x7f05001f;
-        public static int video_controller_bottom=0x7f05000f;
-        public static int video_controller_top=0x7f050015;
-        public static int webview=0x7f050004;
+        public static int adView=0x7f060005;
+        public static int btn_video_bright=0x7f060015;
+        public static int btn_video_caption=0x7f060012;
+        public static int btn_video_changecodec=0x7f060013;
+        public static int btn_video_changequality=0x7f060011;
+        public static int btn_video_fullscreen=0x7f06000b;
+        public static int btn_video_playpause=0x7f060007;
+        public static int btn_video_shake=0x7f060010;
+        public static int btn_video_volumn=0x7f060014;
+        public static int button1=0x7f060003;
+        public static int editText1=0x7f060002;
+        public static int imageView1=0x7f06000d;
+        public static int imageView2=0x7f060000;
+        public static int layout_player_volumecontrol=0x7f060019;
+        public static int progressBar1=0x7f060004;
+        public static int progressBar_video_loading=0x7f060018;
+        public static int seekBar_brightness=0x7f060001;
+        public static int seekBar_video_controller=0x7f060009;
+        public static int seekBar_volume=0x7f06001e;
+        public static int seekbar_player_volume=0x7f06001a;
+        public static int surfaceView_video_view_hw=0x7f060017;
+        public static int textView_player_volume=0x7f06001b;
+        public static int textView_video_battstat=0x7f06000e;
+        public static int textView_video_caption=0x7f06001c;
+        public static int textView_video_center=0x7f06001d;
+        public static int textView_video_currenttime=0x7f060008;
+        public static int textView_video_duration=0x7f06000a;
+        public static int textView_video_time=0x7f06000f;
+        public static int video_container=0x7f060016;
+        public static int video_controller_bottom=0x7f060006;
+        public static int video_controller_top=0x7f06000c;
     }
     public static final class layout {
         public static int bright=0x7f030000;
         public static int claearable_edittext=0x7f030001;
-        public static int download_progress=0x7f030002;
-        public static int item=0x7f030003;
-        public static int main=0x7f030004;
-        public static int mediacontroller=0x7f030005;
-        public static int player_main=0x7f030006;
-        public static int pull_to_refresh_header=0x7f030007;
-        public static int volumn=0x7f030008;
+        public static int imageadview=0x7f030002;
+        public static int mediacontroller=0x7f030003;
+        public static int player_main=0x7f030004;
+        public static int volumn=0x7f030005;
     }
     public static final class string {
-        public static int alert=0x7f07001b;
-        public static int app_name=0x7f070007;
-        public static int backtoexit=0x7f070010;
-        public static int cancel=0x7f07001c;
-        public static int caption_size=0x7f07003e;
-        public static int change=0x7f070044;
-        public static int change_codec=0x7f07002b;
-        public static int cineplayer=0x7f070009;
-        public static int cinepox=0x7f070008;
-        public static int continue_=0x7f070035;
-        public static int delete=0x7f070034;
-        public static int done=0x7f07000f;
-        public static int download_already_completed=0x7f070036;
-        public static int download_cancel=0x7f070032;
-        public static int download_canceled=0x7f070038;
-        public static int download_completed=0x7f07003a;
-        public static int download_error=0x7f070039;
-        public static int download_exist=0x7f07003b;
-        public static int download_preparing=0x7f070037;
-        public static int download_progresstext=0x7f07003c;
-        public static int downloading=0x7f07003d;
-        public static int error_config=0x7f07001f;
-        public static int error_connect=0x7f07001e;
-        public static int hello=0x7f070006;
-        public static int hw_codec=0x7f070029;
-        public static int install_plugin=0x7f070022;
-        public static int installing_plugin=0x7f070023;
-        public static int join=0x7f070013;
-        public static int later=0x7f070040;
-        public static int leave=0x7f070014;
-        public static int login=0x7f070011;
-        public static int login_success=0x7f07000b;
-        public static int logout=0x7f070012;
-        public static int logout_success=0x7f07000c;
-        public static int motion_disable=0x7f070015;
-        public static int motion_enable=0x7f070016;
-        public static int motion_sensitive=0x7f070017;
-        public static int msg=0x7f070041;
-        public static int next=0x7f070046;
-        public static int noti_download_cancel=0x7f070033;
-        public static int noti_interval=0x7f070019;
-        public static int noti_item=0x7f070018;
-        public static int noti_locservice=0x7f07001d;
-        public static int noti_logout=0x7f07000d;
-        public static int noti_plugin=0x7f070020;
-        public static int noti_readymotion=0x7f070028;
-        public static int noti_unknown_setting=0x7f070021;
-        public static int notseemonth=0x7f070042;
-        public static int orignal=0x7f070043;
-        public static int pause=0x7f07002d;
-        public static int play=0x7f07002c;
-        public static int playback_completed=0x7f07002e;
-        /**  Just use standard Pull Down String when pulling up. These can be set for languages which require it 
-         */
-        public static int pull_to_refresh_from_bottom_pull_label=0x7f070003;
-        public static int pull_to_refresh_from_bottom_refreshing_label=0x7f070005;
-        public static int pull_to_refresh_from_bottom_release_label=0x7f070004;
-        public static int pull_to_refresh_pull_label=0x7f070000;
-        public static int pull_to_refresh_refreshing_label=0x7f070002;
-        public static int pull_to_refresh_release_label=0x7f070001;
-        public static int qrplay=0x7f07000a;
-        public static int readytoresponse=0x7f07000e;
-        public static int receive_notfound=0x7f07001a;
-        public static int scale_orign=0x7f070024;
-        public static int scale_scale=0x7f070025;
-        public static int scale_stretch=0x7f070027;
-        public static int scale_zoom=0x7f070026;
-        public static int send_failed=0x7f070031;
-        public static int send_success=0x7f070030;
-        public static int sending_video=0x7f07002f;
-        public static int sensitive_message=0x7f070045;
-        public static int sw_codec=0x7f07002a;
-        public static int update=0x7f07003f;
+        public static int alert=0x7f050013;
+        public static int backtoexit=0x7f050008;
+        public static int cancel=0x7f050014;
+        public static int caption_size=0x7f050036;
+        public static int change=0x7f05003c;
+        public static int change_codec=0x7f050023;
+        public static int cineplayer=0x7f050001;
+        public static int cinepox=0x7f050000;
+        public static int continue_=0x7f05002d;
+        public static int delete=0x7f05002c;
+        public static int done=0x7f050007;
+        public static int download_already_completed=0x7f05002e;
+        public static int download_cancel=0x7f05002a;
+        public static int download_canceled=0x7f050030;
+        public static int download_completed=0x7f050032;
+        public static int download_error=0x7f050031;
+        public static int download_exist=0x7f050033;
+        public static int download_preparing=0x7f05002f;
+        public static int download_progresstext=0x7f050034;
+        public static int downloading=0x7f050035;
+        public static int error_config=0x7f050017;
+        public static int error_connect=0x7f050016;
+        public static int hw_codec=0x7f050021;
+        public static int install_plugin=0x7f05001a;
+        public static int installing_plugin=0x7f05001b;
+        public static int join=0x7f05000b;
+        public static int later=0x7f050038;
+        public static int leave=0x7f05000c;
+        public static int login=0x7f050009;
+        public static int login_success=0x7f050003;
+        public static int logout=0x7f05000a;
+        public static int logout_success=0x7f050004;
+        public static int motion_disable=0x7f05000d;
+        public static int motion_enable=0x7f05000e;
+        public static int motion_sensitive=0x7f05000f;
+        public static int msg=0x7f050039;
+        public static int next=0x7f05003e;
+        public static int noti_download_cancel=0x7f05002b;
+        public static int noti_interval=0x7f050011;
+        public static int noti_item=0x7f050010;
+        public static int noti_locservice=0x7f050015;
+        public static int noti_logout=0x7f050005;
+        public static int noti_plugin=0x7f050018;
+        public static int noti_readymotion=0x7f050020;
+        public static int noti_unknown_setting=0x7f050019;
+        public static int notseemonth=0x7f05003a;
+        public static int orignal=0x7f05003b;
+        public static int pause=0x7f050025;
+        public static int play=0x7f050024;
+        public static int playback_completed=0x7f050026;
+        public static int qrplay=0x7f050002;
+        public static int readytoresponse=0x7f050006;
+        public static int receive_notfound=0x7f050012;
+        public static int scale_orign=0x7f05001c;
+        public static int scale_scale=0x7f05001d;
+        public static int scale_stretch=0x7f05001f;
+        public static int scale_zoom=0x7f05001e;
+        public static int send_failed=0x7f050029;
+        public static int send_success=0x7f050028;
+        public static int sending_video=0x7f050027;
+        public static int sensitive_message=0x7f05003d;
+        public static int sw_codec=0x7f050022;
+        public static int update=0x7f050037;
     }
-    public static final class style {
-        public static int EpoNgsProgressStyle=0x7f080000;
-    }
-    public static final class styleable {
-        /** Attributes that can be used with a ProgressBar.
-           <p>Includes the following attributes:</p>
-           <table>
-           <colgroup align="left" />
-           <colgroup align="left" />
-           <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #ProgressBar_android_max com.kr.busan.cw.cinepox:android_max}</code></td><td></td></tr>
-           <tr><td><code>{@link #ProgressBar_android_maxHeight com.kr.busan.cw.cinepox:android_maxHeight}</code></td><td></td></tr>
-           <tr><td><code>{@link #ProgressBar_android_maxWidth com.kr.busan.cw.cinepox:android_maxWidth}</code></td><td></td></tr>
-           <tr><td><code>{@link #ProgressBar_android_minHeight com.kr.busan.cw.cinepox:android_minHeight}</code></td><td></td></tr>
-           <tr><td><code>{@link #ProgressBar_android_minWidth com.kr.busan.cw.cinepox:android_minWidth}</code></td><td></td></tr>
-           <tr><td><code>{@link #ProgressBar_android_progress com.kr.busan.cw.cinepox:android_progress}</code></td><td></td></tr>
-           <tr><td><code>{@link #ProgressBar_android_progressDrawable com.kr.busan.cw.cinepox:android_progressDrawable}</code></td><td></td></tr>
-           <tr><td><code>{@link #ProgressBar_android_secondaryProgress com.kr.busan.cw.cinepox:android_secondaryProgress}</code></td><td></td></tr>
-           </table>
-           @see #ProgressBar_android_max
-           @see #ProgressBar_android_maxHeight
-           @see #ProgressBar_android_maxWidth
-           @see #ProgressBar_android_minHeight
-           @see #ProgressBar_android_minWidth
-           @see #ProgressBar_android_progress
-           @see #ProgressBar_android_progressDrawable
-           @see #ProgressBar_android_secondaryProgress
-         */
-        public static final int[] ProgressBar = {
-            0x0101011f, 0x01010120, 0x01010136, 0x01010137,
-            0x01010138, 0x0101013c, 0x0101013f, 0x01010140
-        };
-        /**
-          <p>This symbol is the offset where the {@link com.kr.busan.cw.cinepox.R.attr#android_max}
-          attribute's value can be found in the {@link #ProgressBar} array.
-          @attr name android:android_max
-        */
-        public static final int ProgressBar_android_max = 2;
-        /**
-          <p>This symbol is the offset where the {@link com.kr.busan.cw.cinepox.R.attr#android_maxHeight}
-          attribute's value can be found in the {@link #ProgressBar} array.
-          @attr name android:android_maxHeight
-        */
-        public static final int ProgressBar_android_maxHeight = 1;
-        /**
-          <p>This symbol is the offset where the {@link com.kr.busan.cw.cinepox.R.attr#android_maxWidth}
-          attribute's value can be found in the {@link #ProgressBar} array.
-          @attr name android:android_maxWidth
-        */
-        public static final int ProgressBar_android_maxWidth = 0;
-        /**
-          <p>This symbol is the offset where the {@link com.kr.busan.cw.cinepox.R.attr#android_minHeight}
-          attribute's value can be found in the {@link #ProgressBar} array.
-          @attr name android:android_minHeight
-        */
-        public static final int ProgressBar_android_minHeight = 7;
-        /**
-          <p>This symbol is the offset where the {@link com.kr.busan.cw.cinepox.R.attr#android_minWidth}
-          attribute's value can be found in the {@link #ProgressBar} array.
-          @attr name android:android_minWidth
-        */
-        public static final int ProgressBar_android_minWidth = 6;
-        /**
-          <p>This symbol is the offset where the {@link com.kr.busan.cw.cinepox.R.attr#android_progress}
-          attribute's value can be found in the {@link #ProgressBar} array.
-          @attr name android:android_progress
-        */
-        public static final int ProgressBar_android_progress = 3;
-        /**
-          <p>This symbol is the offset where the {@link com.kr.busan.cw.cinepox.R.attr#android_progressDrawable}
-          attribute's value can be found in the {@link #ProgressBar} array.
-          @attr name android:android_progressDrawable
-        */
-        public static final int ProgressBar_android_progressDrawable = 5;
-        /**
-          <p>This symbol is the offset where the {@link com.kr.busan.cw.cinepox.R.attr#android_secondaryProgress}
-          attribute's value can be found in the {@link #ProgressBar} array.
-          @attr name android:android_secondaryProgress
-        */
-        public static final int ProgressBar_android_secondaryProgress = 4;
-        /** Attributes that can be used with a PullToRefresh.
-           <p>Includes the following attributes:</p>
-           <table>
-           <colgroup align="left" />
-           <colgroup align="left" />
-           <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #PullToRefresh_ptrAdapterViewBackground com.kr.busan.cw.cinepox:ptrAdapterViewBackground}</code></td><td></td></tr>
-           <tr><td><code>{@link #PullToRefresh_ptrDrawable com.kr.busan.cw.cinepox:ptrDrawable}</code></td><td></td></tr>
-           <tr><td><code>{@link #PullToRefresh_ptrHeaderBackground com.kr.busan.cw.cinepox:ptrHeaderBackground}</code></td><td></td></tr>
-           <tr><td><code>{@link #PullToRefresh_ptrHeaderSubTextColor com.kr.busan.cw.cinepox:ptrHeaderSubTextColor}</code></td><td></td></tr>
-           <tr><td><code>{@link #PullToRefresh_ptrHeaderTextColor com.kr.busan.cw.cinepox:ptrHeaderTextColor}</code></td><td></td></tr>
-           <tr><td><code>{@link #PullToRefresh_ptrMode com.kr.busan.cw.cinepox:ptrMode}</code></td><td></td></tr>
-           <tr><td><code>{@link #PullToRefresh_ptrShowIndicator com.kr.busan.cw.cinepox:ptrShowIndicator}</code></td><td></td></tr>
-           </table>
-           @see #PullToRefresh_ptrAdapterViewBackground
-           @see #PullToRefresh_ptrDrawable
-           @see #PullToRefresh_ptrHeaderBackground
-           @see #PullToRefresh_ptrHeaderSubTextColor
-           @see #PullToRefresh_ptrHeaderTextColor
-           @see #PullToRefresh_ptrMode
-           @see #PullToRefresh_ptrShowIndicator
-         */
-        public static final int[] PullToRefresh = {
-            0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003,
-            0x7f010004, 0x7f010005, 0x7f010006
-        };
-        /**
-          <p>This symbol is the offset where the {@link com.kr.busan.cw.cinepox.R.attr#ptrAdapterViewBackground}
-          attribute's value can be found in the {@link #PullToRefresh} array.
-
-
-          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-          @attr name android:ptrAdapterViewBackground
-        */
-        public static final int PullToRefresh_ptrAdapterViewBackground = 0;
-        /**
-          <p>This symbol is the offset where the {@link com.kr.busan.cw.cinepox.R.attr#ptrDrawable}
-          attribute's value can be found in the {@link #PullToRefresh} array.
-
-
-          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name android:ptrDrawable
-        */
-        public static final int PullToRefresh_ptrDrawable = 6;
-        /**
-          <p>This symbol is the offset where the {@link com.kr.busan.cw.cinepox.R.attr#ptrHeaderBackground}
-          attribute's value can be found in the {@link #PullToRefresh} array.
-
-
-          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-          @attr name android:ptrHeaderBackground
-        */
-        public static final int PullToRefresh_ptrHeaderBackground = 1;
-        /**
-          <p>This symbol is the offset where the {@link com.kr.busan.cw.cinepox.R.attr#ptrHeaderSubTextColor}
-          attribute's value can be found in the {@link #PullToRefresh} array.
-
-
-          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-          @attr name android:ptrHeaderSubTextColor
-        */
-        public static final int PullToRefresh_ptrHeaderSubTextColor = 3;
-        /**
-          <p>This symbol is the offset where the {@link com.kr.busan.cw.cinepox.R.attr#ptrHeaderTextColor}
-          attribute's value can be found in the {@link #PullToRefresh} array.
-
-
-          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-          @attr name android:ptrHeaderTextColor
-        */
-        public static final int PullToRefresh_ptrHeaderTextColor = 2;
-        /**
-          <p>This symbol is the offset where the {@link com.kr.busan.cw.cinepox.R.attr#ptrMode}
-          attribute's value can be found in the {@link #PullToRefresh} array.
-
-
-          <p>Must be one or more (separated by '|') of the following constant values.</p>
-<table>
-<colgroup align="left" />
-<colgroup align="left" />
-<colgroup align="left" />
-<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
-<tr><td><code>pullDownFromTop</code></td><td>0x1</td><td></td></tr>
-<tr><td><code>pullUpFromBottom</code></td><td>0x2</td><td></td></tr>
-<tr><td><code>both</code></td><td>0x3</td><td></td></tr>
-</table>
-          @attr name android:ptrMode
-        */
-        public static final int PullToRefresh_ptrMode = 4;
-        /**
-          <p>This symbol is the offset where the {@link com.kr.busan.cw.cinepox.R.attr#ptrShowIndicator}
-          attribute's value can be found in the {@link #PullToRefresh} array.
-
-
-          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-<p>May be a boolean value, either "<code>true</code>" or "<code>false</code>".
-          @attr name android:ptrShowIndicator
-        */
-        public static final int PullToRefresh_ptrShowIndicator = 5;
-        /** Attributes that can be used with a SeekBar.
-           <p>Includes the following attributes:</p>
-           <table>
-           <colgroup align="left" />
-           <colgroup align="left" />
-           <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #SeekBar_android_thumb com.kr.busan.cw.cinepox:android_thumb}</code></td><td></td></tr>
-           <tr><td><code>{@link #SeekBar_android_thumbOffset com.kr.busan.cw.cinepox:android_thumbOffset}</code></td><td></td></tr>
-           </table>
-           @see #SeekBar_android_thumb
-           @see #SeekBar_android_thumbOffset
-         */
-        public static final int[] SeekBar = {
-            0x01010142, 0x01010143
-        };
-        /**
-          <p>This symbol is the offset where the {@link com.kr.busan.cw.cinepox.R.attr#android_thumb}
-          attribute's value can be found in the {@link #SeekBar} array.
-          @attr name android:android_thumb
-        */
-        public static final int SeekBar_android_thumb = 0;
-        /**
-          <p>This symbol is the offset where the {@link com.kr.busan.cw.cinepox.R.attr#android_thumbOffset}
-          attribute's value can be found in the {@link #SeekBar} array.
-          @attr name android:android_thumbOffset
-        */
-        public static final int SeekBar_android_thumbOffset = 1;
-        /** Attributes that can be used with a Theme.
-           <p>Includes the following attributes:</p>
-           <table>
-           <colgroup align="left" />
-           <colgroup align="left" />
-           <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #Theme_android_disabledAlpha com.kr.busan.cw.cinepox:android_disabledAlpha}</code></td><td></td></tr>
-           </table>
-           @see #Theme_android_disabledAlpha
-         */
-        public static final int[] Theme = {
-            0x01010033
-        };
-        /**
-          <p>This symbol is the offset where the {@link com.kr.busan.cw.cinepox.R.attr#android_disabledAlpha}
-          attribute's value can be found in the {@link #Theme} array.
-          @attr name android:android_disabledAlpha
-        */
-        public static final int Theme_android_disabledAlpha = 0;
-    };
 }
