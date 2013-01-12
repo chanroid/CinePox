@@ -9,7 +9,7 @@ import com.busan.cw.clsp20120924.R;
 
 public class DownCancelActivity extends Activity {
 
-	DownManager2 mng;
+	DownManager mng;
 	int mId;
 
 	@Override
@@ -23,8 +23,8 @@ public class DownCancelActivity extends Activity {
 			return;
 		}
 
-		mng = DownManager2.getInstance(this);
-		Downloader2 down = mng.getQueue(mId);
+		mng = DownManager.getInstance(this);
+		Downloader down = mng.getQueue(mId);
 		if (down == null) {
 			finish();
 			return;

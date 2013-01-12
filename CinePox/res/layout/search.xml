@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical" >
 
-        <kr.co.chan.util.Classes.ClearableEditText
+        <extend.ClearableEditText
             android:id="@+id/edit_search_form"
             android:layout_width="0dip"
             android:layout_height="wrap_content"

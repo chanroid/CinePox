@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import kr.co.chan.util.Util;
-import kr.co.chan.util.l;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import utils.FileUtils;
+import utils.JSONUtils;
+import utils.LogUtils.l;
+import utils.StreamUtils;
+import utils.StringUtils;
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -33,7 +35,7 @@ import android.widget.Toast;
 import com.busan.cw.clsp20120924.R;
 import com.busan.cw.clsp20120924.aidl.ICinepoxService;
 import com.busan.cw.clsp20120924.aidl.ICinepoxServiceCallback;
-import com.busan.cw.clsp20120924.downloader.DownManager2;
+import com.busan.cw.clsp20120924.downloader.DownManager;
 import com.busan.cw.clsp20120924.downloader.DownloadData;
 import com.busan.cw.clsp20120924.gcm.CommonUtilities;
 import com.busan.cw.clsp20120924.gcm.ServerUtilities;
@@ -50,7 +52,7 @@ public class CinepoxService extends Service {
 	private AlarmManager mAlarmManager;
 	private Config mConfig;
 
-	private DownManager2 mDownManager;
+	private DownManager mDownManager;
 	private PlayerConfigModel mConfigModel;
 
 	public static final int WHAT_CHANGED_ALARM = 2011;
@@ -190,14 +192,14 @@ public class CinepoxService extends Service {
 				if (getConfig().getWidgetUrl() != null) {
 					l.i(getConfig().getWidgetUrl());
 					jsonData = new JSONArray(
-							Util.Stream.stringFromURL(getConfig()
+							StringUtils.stringFromURL(getConfig()
 									.getWidgetUrl()
-									+ "?setting=response_type:json"));
+									+ "?setting=response_type:json", null));
 				} else
 					jsonData = new JSONArray(
-							Util.Stream
+							StringUtils
 									.stringFromURL(Domain.ACCESS_DOMAIN
-											+ "cinepoxAPP/getAdWidget?setting=response_type:json"));
+											+ "cinepoxAPP/getAdWidget?setting=response_type:json", null));
 				l.i(jsonData.toString());
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -243,7 +245,7 @@ public class CinepoxService extends Service {
 				ArrayList<NameValuePair> param = new ArrayList<NameValuePair>();
 				param.add(new BasicNameValuePair("sms_key", order));
 				param.add(new BasicNameValuePair("sms_num", commit));
-				Util.Stream.inStreamFromURLbyPOST(url, param);
+				StreamUtils.inStreamFromURL(url, param);
 				SMS_KEY = "";
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -263,7 +265,7 @@ public class CinepoxService extends Service {
 		public void run() {
 			// response가 있든 말든 걍 처리.
 			try {
-				Util.Stream.inStreamFromURL(url);
+				StreamUtils.inStreamFromURL(url, null);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -277,7 +279,7 @@ public class CinepoxService extends Service {
 		protected JSONObject doInBackground(String... params) {
 			// TODO Auto-generated method stub
 			try {
-				return Util.Stream.jsonFromURL(params[0]);
+				return JSONUtils.jsonFromURL(params[0]);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -295,7 +297,7 @@ public class CinepoxService extends Service {
 				for (int i = 0; i < list.length(); i++) {
 					JSONObject o = list.getJSONObject(i);
 					String url = o.getString("url");
-					String name = Util.File.clearName(o.getString("save_name"));
+					String name = FileUtils.clearName(o.getString("save_name"));
 					addDownloadQueue(url, name);
 				}
 			} catch (JSONException e) {
@@ -341,7 +343,7 @@ public class CinepoxService extends Service {
 
 	void initService() {
 		mConfigModel = PlayerConfigModel.getInstance(this);
-		mDownManager = DownManager2.getInstance(this);
+		mDownManager = DownManager.getInstance(this);
 		mConfig = Config.getInstance(this);
 		mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 		IntentFilter filter = new IntentFilter();

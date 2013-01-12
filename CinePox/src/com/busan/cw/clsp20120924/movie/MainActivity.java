@@ -1,6 +1,6 @@
 package com.busan.cw.clsp20120924.movie;
 
-import kr.co.chan.util.ShakeListener.OnShakeListener;
+import iface.OnShakeListener;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;

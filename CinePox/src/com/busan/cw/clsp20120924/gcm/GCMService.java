@@ -1,9 +1,9 @@
 package com.busan.cw.clsp20120924.gcm;
 
-import kr.co.chan.util.l;
-
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import utils.LogUtils.l;
 
 import android.content.Context;
 import android.content.Intent;

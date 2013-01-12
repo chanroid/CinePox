@@ -5,13 +5,15 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import kr.co.chan.util.ShakeListener;
-import kr.co.chan.util.l;
+import utils.LogUtils.l;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 
 import com.busan.cw.clsp20120924.movie.WidgetProvider.UpdateData;
+
+import extend.ShakeListener;
 
 public class Config {
 

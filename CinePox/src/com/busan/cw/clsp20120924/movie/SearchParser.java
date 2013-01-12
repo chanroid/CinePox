@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import kr.co.chan.util.Util;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.message.BasicNameValuePair;
@@ -14,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import utils.StringUtils;
 import android.annotation.TargetApi;
 import android.os.AsyncTask;
 
@@ -93,7 +92,7 @@ public class SearchParser extends AsyncTask<String, Integer, String> {
 		param.add(new BasicNameValuePair("SET_DEVICE", "android(APP)"));
 		param.add(new BasicNameValuePair("sc_query", URLEncoder.encode(mQuery,
 				HTTP.UTF_8)));
-		JSONArray a = new JSONArray(Util.Stream.stringFromURLbyPOST(
+		JSONArray a = new JSONArray(StringUtils.stringFromURL(
 				AUTOCOMPLETE_URL, param));
 		for (int i = 0; i < a.length(); i++) {
 			JSONObject jitem = a.getJSONObject(i);

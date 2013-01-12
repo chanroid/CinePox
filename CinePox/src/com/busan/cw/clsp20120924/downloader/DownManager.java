@@ -7,16 +7,16 @@ import java.util.concurrent.LinkedBlockingQueue;
 import android.app.NotificationManager;
 import android.content.Context;
 
-public class DownManager2 {
-	private static DownManager2 instance;
+public class DownManager {
+	private static DownManager instance;
 	public static int NOTIFICATION_COUNT = Integer.MAX_VALUE;
 	private NotificationManager mNotiManager;
-	private BlockingQueue<Downloader2> mQueue;
+	private BlockingQueue<Downloader> mQueue;
 	private Context mContext;
 
-	public static DownManager2 getInstance(Context ctx) {
+	public static DownManager getInstance(Context ctx) {
 		if (instance == null)
-			instance = new DownManager2(ctx);
+			instance = new DownManager(ctx);
 		return instance;
 	}
 
@@ -24,15 +24,15 @@ public class DownManager2 {
 		instance = null;
 	}
 
-	private DownManager2(Context ctx) {
-		mQueue = new LinkedBlockingQueue<Downloader2>();
+	private DownManager(Context ctx) {
+		mQueue = new LinkedBlockingQueue<Downloader>();
 		mContext = ctx;
 		mNotiManager = (NotificationManager) ctx
 				.getSystemService(Context.NOTIFICATION_SERVICE);
 	}
 
-	public Downloader2 getQueue(int num) {
-		for (Downloader2 data : mQueue) {
+	public Downloader getQueue(int num) {
+		for (Downloader data : mQueue) {
 			if (data.getNum() == num)
 				return data;
 		}
@@ -40,7 +40,7 @@ public class DownManager2 {
 	}
 
 	public void restart(int num) throws InterruptedException {
-		Downloader2 executor = getQueue(num);
+		Downloader executor = getQueue(num);
 		if (executor != null) {
 			executor.cancel();
 			mQueue.remove(executor);
@@ -50,7 +50,7 @@ public class DownManager2 {
 	}
 
 	public void cancel(int num, boolean delete) {
-		Downloader2 executor = getQueue(num);
+		Downloader executor = getQueue(num);
 		if (executor != null) {
 			executor.cancel();
 			if (delete)
@@ -60,7 +60,7 @@ public class DownManager2 {
 	}
 
 	public void queue(DownloadData data) throws InterruptedException {
-		Downloader2 downloader = new Downloader2(mContext, mQueue,
+		Downloader downloader = new Downloader(mContext, mQueue,
 				mNotiManager, data);
 		Thread worker = new Thread(downloader);
 		worker.start();
@@ -70,7 +70,7 @@ public class DownManager2 {
 	}
 
 	public void cancelAllDownload() {
-		for (Downloader2 data : mQueue) {
+		for (Downloader data : mQueue) {
 			data.cancel();
 		}
 		mQueue.clear();

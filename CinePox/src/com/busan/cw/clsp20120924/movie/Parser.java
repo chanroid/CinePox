@@ -3,13 +3,13 @@ package com.busan.cw.clsp20120924.movie;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import kr.co.chan.util.Util;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import utils.JSONUtils;
 
 public class Parser {
 
@@ -187,7 +187,7 @@ public class Parser {
 		default:
 			throw new IllegalArgumentException("not defined action");
 		}
-		return Util.Stream.jsonFromURLbyPOST(posturl, param);
+		return JSONUtils.jsonFromURL(posturl, param);
 	}
 
 }

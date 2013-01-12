@@ -4,8 +4,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import kr.co.chan.util.Classes.ClearableEditText;
-
 import org.apache.http.protocol.HTTP;
 
 import android.app.Activity;
@@ -32,6 +30,8 @@ import android.widget.ListView;
 
 import com.busan.cw.clsp20120924.R;
 import com.busan.cw.clsp20120924.movie.SearchParser.ParserCallback;
+
+import extend.ClearableEditText;
 
 public class SearchActivity extends Activity implements OnClickListener,
 		OnKeyListener, TextWatcher, OnItemClickListener, ParserCallback {

@@ -7,9 +7,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import kr.co.chan.util.Util;
-import kr.co.chan.util.l;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.message.BasicNameValuePair;
@@ -17,6 +14,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import utils.BitmapUtils;
+import utils.DisplayUtils;
+import utils.JSONUtils;
+import utils.LogUtils.l;
+import utils.ViewUtils;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -58,7 +60,7 @@ public class IntroActivity extends Activity {
 	String mMessage;
 	String mMsgNum;
 
-	AsyncTask<String, Integer, String> mDataloader = new AsyncTask<String, Integer, String>() {
+	private AsyncTask<String, Integer, String> mDataloader = new AsyncTask<String, Integer, String>() {
 
 		@Override
 		protected String doInBackground(String... param) {
@@ -70,10 +72,10 @@ public class IntroActivity extends Activity {
 
 				String url = Domain.ACCESS_DOMAIN
 						+ "cinepoxAPP/getStartConfig/";
-				String version = "2.14";
+				String version = "2.16";
 				try {
-					version = getPackageManager().getPackageInfo(getPackageName(),
-							PackageManager.GET_META_DATA).versionName;
+					version = getPackageManager().getPackageInfo(
+							getPackageName(), PackageManager.GET_META_DATA).versionName;
 				} catch (Exception e) {
 
 				}
@@ -82,7 +84,7 @@ public class IntroActivity extends Activity {
 				params.add(new BasicNameValuePair("setting",
 						"response_type:json"));
 				params.add(new BasicNameValuePair("SET_DEVICE", "android(APP)"));
-				JSONObject o = Util.Stream.jsonFromURLbyPOST(url, params);
+				JSONObject o = JSONUtils.jsonFromURL(url, params);
 				l.i(o.toString());
 				if ("N".equalsIgnoreCase(o.getString(KEY_RESULT))) {
 					return o.getString(Parser.KEY_MSG);
@@ -104,7 +106,7 @@ public class IntroActivity extends Activity {
 				getConfig().setAppRecommend(
 						"Y".equalsIgnoreCase(is_app_recommend));
 
-				if (!Util.Display.isTablet(IntroActivity.this)) {
+				if (!DisplayUtils.isTablet(IntroActivity.this)) {
 					JSONArray bestList = dataObject.getJSONArray("bestList");
 					for (int i = 0; i < bestList.length(); i++)
 						parseCategory(i, bestList.getString(i));
@@ -113,7 +115,7 @@ public class IntroActivity extends Activity {
 				JSONObject banner = dataObject.getJSONObject("top_banner");
 				String banner_img = banner.getString("top_banner_img");
 				String banner_url = banner.getString("top_banner_url");
-				Bitmap b = Util.Stream.bitmapFromURL(banner_img);
+				Bitmap b = BitmapUtils.bitmapFromURL(banner_img, null);
 				getConfig().setBannerInfo(b, banner_url);
 
 				JSONArray action = dataObject.getJSONArray("action");
@@ -122,21 +124,6 @@ public class IntroActivity extends Activity {
 					if (!parseAction(action.getJSONObject(i)))
 						break;
 				}
-
-				// 로그인 기능 제거
-				// if (getConfig().isAutoLogin()) {
-				// url = String.format(AUTOLOGIN_URL,
-				// getConfig().getAccount()[0], getConfig()
-				// .getAccount()[1]);
-				// String result = Util.Stream.stringFromURL(url);
-				// l.i("login result : " + result);
-				// if ("1".equalsIgnoreCase(result)) {
-				// getConfig().setLogined(true);
-				// } else {
-				// getConfig().setLogined(false);
-				// getConfig().setAccount("", "");
-				// }
-				// }
 
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -261,7 +248,7 @@ public class IntroActivity extends Activity {
 
 		void parseCategory(int index, String url)
 				throws ClientProtocolException, IOException, JSONException {
-			JSONObject o = Util.Stream.jsonFromURL(url);
+			JSONObject o = JSONUtils.jsonFromURL(url);
 			String title = o.getString(KEY_TITLE);
 			getConfig().addCategoryName(index, title);
 			getConfig().addCategoryUrl(index, url);
@@ -275,7 +262,7 @@ public class IntroActivity extends Activity {
 				showError(result);
 				return;
 			}
-			if (!isBlock || Util.Display.isTablet(IntroActivity.this)) {
+			if (!isBlock || DisplayUtils.isTablet(IntroActivity.this)) {
 				goMain();
 			} else {
 				if (isShowAd) {
@@ -313,6 +300,8 @@ public class IntroActivity extends Activity {
 					} else {
 						mMainAlert.show();
 					}
+				} else {
+					goMain();
 				}
 			}
 		};
@@ -335,7 +324,7 @@ public class IntroActivity extends Activity {
 			return;
 		}
 
-		if (Util.Display.isTablet(this)) {
+		if (DisplayUtils.isTablet(this)) {
 			Intent webintent = new Intent(Intent.ACTION_VIEW,
 					Uri.parse(Domain.WEB_DOMAIN));
 			startActivity(webintent);
@@ -348,7 +337,7 @@ public class IntroActivity extends Activity {
 
 	void showError(String msg) {
 		msg = getString(R.string.error_connect);
-		Util.Views.showAlert(this, getString(R.string.alert), msg,
+		ViewUtils.showAlert(this, getString(R.string.alert), msg,
 				getString(R.string.done),
 				new DialogInterface.OnClickListener() {
 					@Override
@@ -403,16 +392,15 @@ public class IntroActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		if (Util.Display.isTablet(this)) {
+		if (DisplayUtils.isTablet(this)) {
 			if (Build.VERSION.SDK_INT >= 9)
 				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
 			else
 				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		}
 		super.onCreate(savedInstanceState);
-//		l.setEnabled(false);
 		setContentView(R.layout.intro);
-		if (!Util.Display.isTablet(this))
+		if (!DisplayUtils.isTablet(this))
 			findViewById(R.id.introbg).setBackgroundResource(R.drawable.intro);
 		else
 			findViewById(R.id.introbg).setBackgroundResource(

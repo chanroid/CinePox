@@ -4,10 +4,13 @@ import java.net.URLEncoder;
 
 import org.apache.http.protocol.HTTP;
 
+import utils.StorageUtils;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.busan.cw.clsp20120924.movie.CinepoxService;
 import com.busan.cw.clsp20120924.movie.Config;
@@ -18,6 +21,14 @@ public class DownloaderActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+
+		if (!StorageUtils.isExternalMemoryAvailable()) {
+			Toast.makeText(this, "외장메모리가 없는 단말기에서는 다운로드 서비스를 이용하실 수 없습니다.",
+					Toast.LENGTH_LONG).show();
+			finish();
+			return;
+		}
+
 		try {
 			startService(new Intent(this, CinepoxService.class));
 			Uri uri = getIntent().getData();

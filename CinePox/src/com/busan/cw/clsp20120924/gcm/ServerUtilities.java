@@ -19,12 +19,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-import kr.co.chan.util.Util;
-import kr.co.chan.util.l;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import utils.LogUtils.l;
+import utils.StreamUtils;
 import android.content.Context;
 
 import com.google.android.gcm.GCMRegistrar;
@@ -58,7 +57,7 @@ public final class ServerUtilities {
 				for (int i = 1; i <= MAX_ATTEMPTS; i++) {
 					l.i("Attempt #" + i + " to register");
 					try {
-						Util.Stream.inStreamFromURLbyPOST(serverUrl, params);
+						StreamUtils.inStreamFromURL(serverUrl, params);
 						GCMRegistrar.setRegisteredOnServer(context, true);
 						return;
 					} catch (IOException e) {

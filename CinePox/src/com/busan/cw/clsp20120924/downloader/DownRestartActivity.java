@@ -30,9 +30,10 @@ import com.busan.cw.clsp20120924.R;
  * </PRE>
  */
 public class DownRestartActivity extends Activity {
-	DownManager2 mng;
-	Downloader2 down;
-	int mId;
+	
+	private DownManager mng;
+	private Downloader down;
+	private int mId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class DownRestartActivity extends Activity {
 			return;
 		}
 
-		mng = DownManager2.getInstance(this);
+		mng = DownManager.getInstance(this);
 		down = mng.getQueue(mId);
 		if (down == null) {
 			finish();

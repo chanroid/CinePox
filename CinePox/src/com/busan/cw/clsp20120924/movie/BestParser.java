@@ -10,13 +10,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import kr.co.chan.util.Util;
-
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import utils.JSONUtils;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -100,7 +99,7 @@ public class BestParser extends AsyncTask<String, Integer, String> {
 
 	void parseCategory(String url) throws ClientProtocolException, IOException,
 			JSONException {
-		JSONObject o = Util.Stream.jsonFromURL(url);
+		JSONObject o = JSONUtils.jsonFromURL(url);
 		JSONArray list = o.getJSONArray(KEY_LIST);
 		mResult = new ArrayList<Map<String, String>>();
 		for (int i = 0; i < list.length(); i++) {

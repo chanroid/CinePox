@@ -28,7 +28,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.graphics.PixelFormat;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -309,7 +308,7 @@ public class PlayerActivity extends CCActivity implements Constants,
 				finish();
 				return;
 			}
-			
+
 			if (result == null) {
 				mVideoView.hideLoading();
 				finish();
@@ -335,16 +334,17 @@ public class PlayerActivity extends CCActivity implements Constants,
 			} else if (result.equals(RESULT_MOVIE)) {
 				prepareVideo();
 			} else if (result.equals(RESULT_SUCCESS)) {
-				Criteria criteria = new Criteria();
-				String provider = mLocManager.getBestProvider(criteria, true);
-				if (provider == null)
-					provider = LocationManager.NETWORK_PROVIDER;
-				mLocation = mLocManager.getLastKnownLocation(provider);
-				mLocManager.requestLocationUpdates(provider, 10000, 100,
-						PlayerActivity.this);
-
-				mShaker.setOnShakeListener(PlayerActivity.this);
-				mShaker.pause();
+				// Criteria criteria = new Criteria();
+				// String provider = mLocManager.getBestProvider(criteria,
+				// true);
+				// if (provider == null)
+				// provider = LocationManager.NETWORK_PROVIDER;
+				// mLocation = mLocManager.getLastKnownLocation(provider);
+				// mLocManager.requestLocationUpdates(provider, 10000, 100,
+				// PlayerActivity.this);
+				//
+				// mShaker.setOnShakeListener(PlayerActivity.this);
+				// mShaker.pause();
 
 				prepareVideo();
 			}
@@ -381,6 +381,8 @@ public class PlayerActivity extends CCActivity implements Constants,
 			configLoader = new ConfigLoader();
 
 			mVideoView = (VideoView) loadView(VideoView.class);
+			if (mVideoView == null)
+				mVideoView = new VideoView(this);
 			mVideoView.setCallback(this);
 			mVideoController = (VideoControllerView) loadView(VideoControllerView.class);
 			mVideoController.setCallback(this);
@@ -513,13 +515,13 @@ public class PlayerActivity extends CCActivity implements Constants,
 	}
 
 	private void updateCaption() {
-		if (mVideoView == null || mCaptionModel == null)
-			return;
-		if (mCaptionModel.isEnabled())
-			mVideoView.setCaptionText(mCaptionModel.getCaption(mVideoView
-					.getCurrentPosition()));
-		else
-			mVideoView.setCaptionText("");
+		// if (mVideoView == null || mCaptionModel == null)
+		// return;
+		// if (mCaptionModel.isEnabled())
+		// mVideoView.setCaptionText(mCaptionModel.getCaption(mVideoView
+		// .getCurrentPosition()));
+		// else
+		// mVideoView.setCaptionText("");
 	}
 
 	private void addControllerView() {
@@ -596,6 +598,7 @@ public class PlayerActivity extends CCActivity implements Constants,
 	private void showCodecChange() {
 		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 		dialog.setTitle(R.string.change_codec);
+		dialog.setCancelable(true);
 		dialog.setSingleChoiceItems(new String[] {
 				getString(R.string.hw_codec), getString(R.string.sw_codec) },
 				mVideoView.getCodec(), codecChangeListener);
@@ -856,6 +859,10 @@ public class PlayerActivity extends CCActivity implements Constants,
 						+ "] player onError() : " + what + " : " + extra);
 				break;
 			default:
+				if (getIntent() == null || mVideoView == null) {
+					finish();
+					return;
+				}
 				Intent i = new Intent(this, PlayerActivity.class);
 				i.setData(getIntent().getData());
 				i.putExtra("set_time", mVideoView.getCurrentPosition() / 1000);
@@ -883,7 +890,8 @@ public class PlayerActivity extends CCActivity implements Constants,
 	public void finish() {
 		// TODO Auto-generated method stub
 		updateThread.interrupt();
-		mVideoView.setCodec(-1);
+		if (mVideoView != null)
+			mVideoView.setCodec(-1);
 		removeControllerView();
 		super.finish();
 	}

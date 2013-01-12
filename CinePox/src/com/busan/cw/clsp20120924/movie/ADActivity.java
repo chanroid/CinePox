@@ -2,7 +2,8 @@ package com.busan.cw.clsp20120924.movie;
 
 import java.io.IOException;
 
-import kr.co.chan.util.Util;
+import utils.BitmapUtils;
+import utils.DisplayUtils;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -44,7 +45,7 @@ public class ADActivity extends Activity implements OnClickListener,
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		if (Util.Display.isTablet(this))
+		if (DisplayUtils.isTablet(this))
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		super.onCreate(savedInstanceState);
 		mTimer = new CountSync();
@@ -97,8 +98,10 @@ public class ADActivity extends Activity implements OnClickListener,
 		if (isChecked) {
 			getConfig().addReadMessage(mAdNum);
 			finish();
-		} else
+		} else {
 			getConfig().removeReadMessage(mAdNum);
+			finish();
+		}
 	}
 
 	@Override
@@ -140,7 +143,7 @@ public class ADActivity extends Activity implements OnClickListener,
 			// TODO Auto-generated method stub
 			Bitmap b;
 			try {
-				b = Util.Stream.bitmapFromURL(url);
+				b = BitmapUtils.bitmapFromURL(url, null);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

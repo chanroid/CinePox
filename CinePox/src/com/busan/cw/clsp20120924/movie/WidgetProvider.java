@@ -2,8 +2,7 @@ package com.busan.cw.clsp20120924.movie;
 
 import java.util.ArrayList;
 
-import kr.co.chan.util.Util;
-
+import utils.DisplayUtils;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -112,7 +111,7 @@ public class WidgetProvider extends AppWidgetProvider {
 	@Override
 	public void onEnabled(Context context) {
 		// TODO Auto-generated method stub
-		if (Util.Display.isTablet(context))
+		if (DisplayUtils.isTablet(context))
 			Toast.makeText(context, "태블릿에서는 사용하실 수 없습니다. 빠른 시일 내에 업데이트 하겠습니다.",
 					Toast.LENGTH_SHORT).show();
 		else

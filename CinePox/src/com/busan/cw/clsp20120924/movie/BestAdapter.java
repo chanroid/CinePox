@@ -3,7 +3,7 @@ package com.busan.cw.clsp20120924.movie;
 import java.util.List;
 import java.util.Map;
 
-import kr.co.chan.util.Util;
+import utils.DisplayUtils;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +31,7 @@ public class BestAdapter extends SimpleAdapter {
 		super(context, data, resource, from, to);
 		mDataArray = data;
 		mContext = context;
-		w = Util.Display.getWindowSize(mContext)[0] / 4;
+		w = DisplayUtils.getWindowSize(mContext)[0] / 4;
 		h = w * 3 / 2;
 		ivparam = new FrameLayout.LayoutParams(w, h);
 		mImageLoader = new ImageLoader(context);

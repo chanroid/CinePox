@@ -8,7 +8,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.concurrent.BlockingQueue;
 
-import kr.co.chan.util.Util;
 import utils.MathUtils;
 import utils.StorageUtils;
 import android.app.Notification;
@@ -25,7 +24,7 @@ import android.support.v4.app.NotificationCompat;
 import com.busan.cw.clsp20120924.R;
 import com.kr.busan.cw.cinepox.player.controller.PlayerActivity;
 
-public class Downloader2 extends Handler implements Runnable {
+public class Downloader extends Handler implements Runnable {
 
 	private static final int MESSAGE_NOTIFY_PROGRESS = -1;
 	private static final int MESSAGE_NOTIFY_START = 0;
@@ -36,7 +35,7 @@ public class Downloader2 extends Handler implements Runnable {
 	private static final int MESSAGE_NOTIFY_NOT_ENOUGH_SIZE = 5;
 
 	private DownloadData mData;
-	private BlockingQueue<Downloader2> mQueue;
+	private BlockingQueue<Downloader> mQueue;
 	private NotificationManager mNotiManager;
 	private PendingIntent mEmptyPendingIntent;
 	private Notification mNoti;
@@ -47,7 +46,7 @@ public class Downloader2 extends Handler implements Runnable {
 	private int mIcon = R.drawable.ic_launcher;
 	private boolean isCanceled = false;
 
-	public Downloader2(Context ctx, BlockingQueue<Downloader2> queue,
+	public Downloader(Context ctx, BlockingQueue<Downloader> queue,
 			NotificationManager notiManager, DownloadData data) {
 		// TODO Auto-generated constructor stub
 
@@ -56,14 +55,13 @@ public class Downloader2 extends Handler implements Runnable {
 		mContext = ctx;
 		mNotiManager = notiManager;
 
-
 		// 스택에 있는 애들이면 아예 추가 안함
 		if (checkDuplecate(this))
 			return;
-		
+
 		try {
 			mQueue.put(this);
-			mNotiId = DownManager2.NOTIFICATION_COUNT;
+			mNotiId = DownManager.NOTIFICATION_COUNT;
 			mEmptyPendingIntent = PendingIntent.getActivity(mContext, 0,
 					new Intent(), PendingIntent.FLAG_UPDATE_CURRENT);
 		} catch (InterruptedException e) {
@@ -71,8 +69,8 @@ public class Downloader2 extends Handler implements Runnable {
 		}
 	}
 
-	private boolean checkDuplecate(Downloader2 data) {
-		for (Downloader2 queue : mQueue) {
+	private boolean checkDuplecate(Downloader data) {
+		for (Downloader queue : mQueue) {
 			boolean equalName = data.mData.filePath
 					.equals(queue.mData.filePath);
 			boolean equalUrl = data.mData.fileUrl.equals(queue.mData.fileUrl);
@@ -111,7 +109,7 @@ public class Downloader2 extends Handler implements Runnable {
 		Intent restartIntent = new Intent(mContext, DownRestartActivity.class);
 		restartIntent.putExtra("num", mNotiId);
 		PendingIntent restartPi = PendingIntent.getActivity(mContext, 0,
-				cancelIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+				restartIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		if (Build.VERSION.SDK_INT > 13) {
 			Notification.Builder mBuilder = new Notification.Builder(mContext);
@@ -209,7 +207,7 @@ public class Downloader2 extends Handler implements Runnable {
 					mNoti = mBuilder.getNotification();
 				break;
 			case MESSAGE_NOTIFY_NOT_ENOUGH_SIZE:
-				mBuilder.setVibrate(new long[] { 0, 1000 });
+				mBuilder.setVibrate(new long[] { 0, 200, 300, 200 });
 				mBuilder.setLights(0xff00ff00, 500, 500);
 				mBuilder.setContentTitle(mData.title);
 				mBuilder.setSmallIcon(mIcon);
@@ -342,7 +340,7 @@ public class Downloader2 extends Handler implements Runnable {
 		long fileSize, remains, lenghtOfFile = 0;
 
 		try {
-			
+
 			File file = new File(mData.filePath);
 			if (!file.exists())
 				file.createNewFile();
@@ -394,7 +392,7 @@ public class Downloader2 extends Handler implements Runnable {
 					}
 					output.write(data, 0, readBytes);
 					fileSize += readBytes;
-					if (mProgress != Util.Math.getPercent(fileSize,
+					if (mProgress != MathUtils.getPercent(fileSize,
 							lenghtOfFile)) {
 						Message msg = new Message();
 						msg.what = MESSAGE_NOTIFY_PROGRESS;

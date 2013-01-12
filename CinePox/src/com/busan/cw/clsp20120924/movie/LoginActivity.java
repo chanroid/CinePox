@@ -1,6 +1,6 @@
 package com.busan.cw.clsp20120924.movie;
 
-import kr.co.chan.util.l;
+import utils.LogUtils.l;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
