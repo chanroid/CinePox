@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp" >
+
+        <ImageView
+            android:id="@+id/img_actor_profile"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/bg_poster" />
+
+        <TextView
+            android:id="@+id/text_actor_role"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/img_actor_profile"
+            android:layout_marginBottom="3dp"
+            android:layout_toRightOf="@+id/img_actor_profile"
+            android:text="역할"
+            android:textSize="@dimen/textsize_smallest" />
+
+        <TextView
+            android:id="@+id/text_actor_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_actor_role"
+            android:layout_toRightOf="@+id/img_actor_profile"
+            android:text="이름"
+            android:textSize="@dimen/textsize_small" />
+
+        <TextView
+            android:id="@+id/text_actor_expand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:text="@string/view_expand"
+            android:textSize="@dimen/textsize_smallest" />
+    </RelativeLayout>
+
+    <Gallery
+        android:id="@+id/gallery_actor_movie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

@@ -893,6 +893,7 @@ public class PlayerActivity extends CCActivity implements Constants,
 		if (mVideoView != null)
 			mVideoView.setCodec(-1);
 		removeControllerView();
+		PlayerConfigModel.clearInstance();
 		super.finish();
 	}
 

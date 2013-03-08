@@ -8,8 +8,13 @@ package com.example.ccframework;
 
 public final class R {
 	public static final class id {
-		public static final int button1 = 0x7f09002b;
-		public static final int editText1 = 0x7f09002a;
+		public static final int edit_cleartext_text = 0x7f09002a;
+		public static final int btn_cleartext_clear = 0x7f09002b;
+	}
+	public static final class string {
+		public static final int error_connect = 0x7f0a0079;
+		public static final int error_device = 0x7f0a0078;
+		public static final int error_server_data = 0x7f0a007a;
 	}
 	public static final class layout {
 		public static final int claearable_edittext = 0x7f030004;

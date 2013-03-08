@@ -19,6 +19,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.support.v4.app.NotificationCompat;
 
 import com.busan.cw.clsp20120924.R;
@@ -37,6 +39,8 @@ public class Downloader extends Handler implements Runnable {
 	private DownloadData mData;
 	private BlockingQueue<Downloader> mQueue;
 	private NotificationManager mNotiManager;
+	private PowerManager mPowerManager;
+	private WakeLock mWakeLock;
 	private PendingIntent mEmptyPendingIntent;
 	private Notification mNoti;
 	private Context mContext;
@@ -54,6 +58,10 @@ public class Downloader extends Handler implements Runnable {
 		mData = data;
 		mContext = ctx;
 		mNotiManager = notiManager;
+		mPowerManager = (PowerManager) ctx
+				.getSystemService(Context.POWER_SERVICE);
+		mWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+				"download");
 
 		// 스택에 있는 애들이면 아예 추가 안함
 		if (checkDuplecate(this))
@@ -333,6 +341,9 @@ public class Downloader extends Handler implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		sendEmptyMessage(MESSAGE_NOTIFY_START);
+		
+		if (!mWakeLock.isHeld())
+			mWakeLock.acquire();
 
 		BufferedInputStream input = null;
 		RandomAccessFile output = null;
@@ -363,6 +374,7 @@ public class Downloader extends Handler implements Runnable {
 			remains = conn.getContentLength();
 
 			// 2013-01-07 외장메모리 용량검사
+			// 2013-01-29 fixed
 			long externalRemain = StorageUtils.getAvailableExternalMemorySize();
 			if (externalRemain < remains) {
 				sendEmptyMessage(MESSAGE_NOTIFY_NOT_ENOUGH_SIZE);
@@ -424,6 +436,8 @@ public class Downloader extends Handler implements Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			if (mWakeLock.isHeld())
+				mWakeLock.release();
 		}
 
 	}

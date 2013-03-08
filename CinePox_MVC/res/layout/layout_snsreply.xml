@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#414763"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/moviedetail_snsreply_desc"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/textsize_medium" />
+
+        <TextView
+            android:id="@+id/btn_moviedetail_snsreply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bt_my"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="#000000"
+            android:gravity="center"
+            android:text="@string/reply" />
+    </LinearLayout>
+
+    <extend.ExpandedListView
+        android:id="@+id/list_moviedetail_snsreply"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </extend.ExpandedListView>
+
+    <TextView
+        android:id="@+id/btn_moviedetail_snsreply_expand"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#8a8a8a"
+        android:padding="3dp"
+        android:gravity="center"
+        android:text="@string/view_expand"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/textsize_medium" >
+    </TextView>
+
+</LinearLayout>

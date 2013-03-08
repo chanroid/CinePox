@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#d9d9d9"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#f6f6f6"
+            android:padding="10dp" >
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp" >
+
+                <ImageView
+                    android:id="@+id/img_moviedetail_postimage"
+                    android:layout_width="@dimen/postimage_width"
+                    android:layout_height="@dimen/postimage_height"
+                    android:background="@drawable/bg_poster"
+                    android:padding="3dp" />
+
+                <ImageButton
+                    android:id="@+id/btn_moviedetail_preview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:src="@drawable/bt_play" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/text_moviedetail_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:drawableLeft="@drawable/img_ageall"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:text="클로이 Chloe (2009)"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/textsize_medium"
+                    android:textStyle="bold" >
+                </TextView>
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp" >
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="3dp" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:text="정보: "
+                            android:textColor="#000000"
+                            android:textSize="@dimen/textsize_small"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/text_moviedetail_info"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:textColor="#000000"
+                            android:textSize="@dimen/textsize_small" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="3dp" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:text="감독: "
+                            android:textColor="#000000"
+                            android:textSize="@dimen/textsize_small"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/text_moviedetail_director"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:textColor="#000000"
+                            android:textSize="@dimen/textsize_small" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="3dp" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:text="주연: "
+                            android:textColor="#000000"
+                            android:textSize="@dimen/textsize_small"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/text_moviedetail_actor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#000000"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:textSize="@dimen/textsize_small" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="3dp" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:text="가격: "
+                            android:textColor="#000000"
+                            android:textSize="@dimen/textsize_small"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/text_moviedetail_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:textColor="#000000"
+                            android:textSize="@dimen/textsize_small" />
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/table_moviedetail_deliberation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:text="심의: "
+                            android:textColor="#000000"
+                            android:textSize="@dimen/textsize_small"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/text_moviedetail_deliberation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:textColor="#000000"
+                            android:textSize="@dimen/textsize_small" />
+                    </TableRow>
+                </TableLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <LinearLayout
+                        android:id="@+id/btn_moviedetail_rating1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bt_snspoint_left"
+                        android:clickable="true"
+                        android:gravity="center_vertical" >
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center" >
+
+                            <ImageView
+                                android:id="@+id/img_moviedetail_star1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/img_snspoint_10" />
+
+                            <ImageView
+                                android:id="@+id/img_moviedetail_star2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/img_snspoint_10" />
+
+                            <ImageView
+                                android:id="@+id/img_moviedetail_star3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/img_snspoint_10" />
+
+                            <ImageView
+                                android:id="@+id/img_moviedetail_star4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/img_snspoint_10" />
+
+                            <ImageView
+                                android:id="@+id/img_moviedetail_star5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/img_snspoint_10" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/text_moviedetail_rating"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="3dp"
+                            android:maxLines="1"
+                            android:text="10.0"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textSize="@dimen/textsize_smallest" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/btn_moviedetail_rating2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bt_snspoint_right"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="@string/rating"
+                        android:textColor="#ffffff"
+                        android:textSize="@dimen/textsize_smallest" />
+
+                    <TextView
+                        android:id="@+id/btn_moviedetail_share"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/bt_share"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="@string/share"
+                        android:textColor="#ffffff"
+                        android:textSize="@dimen/textsize_smallest" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#c1c1c1"
+            android:padding="5dp" >
+
+            <ImageButton
+                android:id="@+id/btn_moviedetail_streaming"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:scaleType="centerInside"
+                android:src="@drawable/bt_contents_streaming" />
+
+            <ImageButton
+                android:id="@+id/btn_moviedetail_download"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:scaleType="centerInside"
+                android:src="@drawable/bt_contents_download" />
+
+            <ImageButton
+                android:id="@+id/btn_moviedetail_zzim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:scaleType="centerInside"
+                android:src="@drawable/bt_contents_zzim" />
+        </LinearLayout>
+
+        <com.busan.cw.clsp20120924.view.SeriseListView
+            android:id="@+id/view_moviedetail_seriselist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </com.busan.cw.clsp20120924.view.SeriseListView>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp" >
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="상세정보"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/textsize_medium"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="실시간 기간: "
+                    android:textColor="#000000"
+                    android:textSize="@dimen/textsize_small"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_moviedetail_stream_session"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/textsize_small" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="다운로드 기간: "
+                    android:textColor="#000000"
+                    android:textSize="@dimen/textsize_small"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_moviedetail_download_session"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/textsize_small" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="해상도 정보: "
+                    android:textColor="#000000"
+                    android:textSize="@dimen/textsize_small"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_moviedetail_resolution"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:maxLines="1"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/textsize_small" />
+
+                <TextView
+                    android:id="@+id/btn_moviedetail_resolution_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bt_moviedetail_fileinfo"
+                    android:padding="2dp"
+                    android:text="@string/detail"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/textsize_smallest" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="파일정보: "
+                    android:textColor="#000000"
+                    android:textSize="@dimen/textsize_small"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_moviedetail_fileinfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:maxLines="1"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/textsize_small" />
+
+                <TextView
+                    android:id="@+id/btn_moviedetail_fileinfo_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bt_moviedetail_fileinfo"
+                    android:padding="2dp"
+                    android:text="@string/detail"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/textsize_smallest" />
+            </TableRow>
+        </TableLayout>
+
+        <extend.SegmentLayout
+            android:id="@+id/segment_moviedetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" >
+        </extend.SegmentLayout>
+
+        <!-- 페이저 안쓰고 레이아웃 바꿔치기로 변경 -->
+
+        <com.busan.cw.clsp20120924.view.MovieSynopsisView
+            android:id="@+id/view_moviedetail_synopsis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </com.busan.cw.clsp20120924.view.MovieSynopsisView>
+
+        <com.busan.cw.clsp20120924.view.MovieSNSReplyView
+            android:id="@+id/view_moviedetail_snsreply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </com.busan.cw.clsp20120924.view.MovieSNSReplyView>
+
+        <extend.ExpandedListView
+            android:id="@+id/list_moviedetail_stillcut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+        </extend.ExpandedListView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:maxLines="1"
+            android:text="@string/moviedetail_related_item"
+            android:textColor="#000000"
+            android:textSize="@dimen/textsize_medium"
+            android:textStyle="bold" />
+
+        <android.widget.Gallery
+            android:id="@+id/gallery_moviedetail_relative"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#c1c1c1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:maxLines="1"
+                android:text="@string/moviedetail_help_desc"
+                android:textColor="#000000"
+                android:textSize="@dimen/textsize_small" />
+
+            <TextView
+                android:id="@+id/btn_moviedetail_help"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bt_ask"
+                android:text="@string/question"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/textsize_medium" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

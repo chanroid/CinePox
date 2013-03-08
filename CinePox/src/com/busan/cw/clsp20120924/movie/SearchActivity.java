@@ -60,12 +60,12 @@ public class SearchActivity extends Activity implements OnClickListener,
 		mSearchBtn = (ImageButton) findViewById(R.id.btn_search_commit);
 		mVoiceBtn = (ImageButton) findViewById(R.id.btn_search_voice);
 		mSearchEdit = (ClearableEditText) findViewById(R.id.edit_search_form);
-		mSearchEdit.textBox.addTextChangedListener(this);
-		mSearchEdit.textBox.setOnKeyListener(this);
-		mSearchEdit.textBox.setHint("검색어");
-		mSearchEdit.textBox.setTextColor(Color.BLACK);
-		mSearchEdit.textBox.setBackgroundResource(R.drawable.bg_form);
-		mSearchEdit.textBox.setSingleLine();
+		mSearchEdit.addTextChangedListener(this);
+		mSearchEdit.setOnKeyListener(this);
+		mSearchEdit.setHint("검색어");
+		mSearchEdit.setTextColor(Color.BLACK);
+		mSearchEdit.setBackgroundResource(R.drawable.bg_form);
+		mSearchEdit.setSingleLine();
 		mSearchEdit.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI
 				| EditorInfo.IME_ACTION_SEARCH);
 		mSearchEdit.setPrivateImeOptions("defaultInputmode=korea;");
@@ -88,7 +88,7 @@ public class SearchActivity extends Activity implements OnClickListener,
 	void refreshList() {
 		if (mParser != null)
 			mParser.cancel(true);
-		mParser = new SearchParser(mSearchEdit.textBox.getText().toString());
+		mParser = new SearchParser(mSearchEdit.getText().toString());
 		mParser.callback = this;
 		mParser.execute();
 	}
@@ -110,11 +110,11 @@ public class SearchActivity extends Activity implements OnClickListener,
 	}
 
 	private void search() {
-		if (mSearchEdit.textBox.getText().toString() != null)
+		if (mSearchEdit.getText().toString() != null)
 			try {
 				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(String
 						.format(SEARCH_URL, URLEncoder.encode(
-								mSearchEdit.textBox.getText().toString(),
+								mSearchEdit.getText().toString(),
 								HTTP.UTF_8)))));
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
@@ -142,7 +142,7 @@ public class SearchActivity extends Activity implements OnClickListener,
 						public void onClick(DialogInterface dialog, int which) {
 							// TODO Auto-generated method stub
 							dialog.dismiss();
-							mSearchEdit.textBox.setText(matches.get(which));
+							mSearchEdit.setText(matches.get(which));
 							search();
 						}
 					});
@@ -178,7 +178,7 @@ public class SearchActivity extends Activity implements OnClickListener,
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
 		if (mParser.query.size() > arg2) {
-			mSearchEdit.textBox.setText(mParser.query.get(arg2));
+			mSearchEdit.setText(mParser.query.get(arg2));
 			search();
 		}
 	}

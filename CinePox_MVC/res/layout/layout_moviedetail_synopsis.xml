@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/text_synopsis_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:maxLines="4"
+            android:text="지독하게 빠져든다..\n어쩌고 저쩌고"
+            android:ellipsize="end"
+            android:textColor="#000000"
+            android:textSize="@dimen/textsize_small" />
+
+        <TextView
+            android:id="@+id/text_synopsis_desc_expand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:maxLines="1"
+            android:clickable="true"
+            android:text="▼"
+            android:textColor="#000000"
+            android:textSize="@dimen/textsize_medium" />
+    </LinearLayout>
+
+    <extend.ExpandedListView
+        android:id="@+id/list_synopsis_actors"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </extend.ExpandedListView>
+
+    <TextView
+        android:id="@+id/text_synopsis_actors_expand"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#8a8a8a"
+        android:textColor="#ffffff"
+        android:clickable="true"
+        android:gravity="center"
+        android:maxLines="1"
+        android:padding="3dp"
+        android:text="@string/view_expand" >
+    </TextView>
+
+</LinearLayout>

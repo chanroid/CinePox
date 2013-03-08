@@ -199,7 +199,7 @@ public class CinepoxService extends Service {
 					jsonData = new JSONArray(
 							StringUtils
 									.stringFromURL(Domain.ACCESS_DOMAIN
-											+ "cinepoxAPP/getAdWidget?setting=response_type:json", null));
+											+ "cinepoxAPP/getAdWidget/?setting=response_type:json", null));
 				l.i(jsonData.toString());
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -357,7 +357,7 @@ public class CinepoxService extends Service {
 		registerReceiver(mReceiver, filter);
 		new LoadWidgetDataSync().start();
 	}
-
+	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO Auto-generated method stub

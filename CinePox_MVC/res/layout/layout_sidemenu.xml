@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#464646" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_top"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/btn_sidemenu_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/bg_search"
+                android:gravity="left|center_vertical"
+                android:text="@string/query"
+                android:textColor="#000000" >
+            </TextView>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/line" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:id="@+id/layout_sidemenu_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#2f2f2f"
+                    android:padding="5dp" >
+
+                    <ImageView
+                        android:id="@+id/img_sidemenu_profile"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/img_profile"
+                        android:clickable="true"
+                        android:padding="2dp"
+                        android:scaleType="centerCrop" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/text_sidemenu_username"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:maxLines="1"
+                            android:text="박찬우 님"
+                            android:textColor="#ffffff"
+                            android:textSize="@dimen/textsize_medium" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:gravity="center_vertical" >
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:src="@drawable/img_my_point" />
+
+                            <TextView
+                                android:id="@+id/text_sidemenu_point"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="20dp"
+                                android:maxLines="1"
+                                android:text="5,000"
+                                android:textColor="#ffffff"
+                                android:textSize="@dimen/textsize_small" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:src="@drawable/img_my_popcorn" />
+
+                            <TextView
+                                android:id="@+id/text_sidemenu_bonus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:text="3,500"
+                                android:textColor="#ffffff"
+                                android:textSize="@dimen/textsize_small" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical" >
+
+                            <ImageView
+                                android:id="@+id/img_sidemenu_ticket"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:src="@drawable/img_ticket_0" />
+
+                            <TextView
+                                android:id="@+id/text_sidemenu_ticket"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:text="@string/ticket_premium_auto"
+                                android:textColor="#ffffff"
+                                android:textSize="@dimen/textsize_small" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/text_sidemenu_period"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="5dp"
+                            android:maxLines="1"
+                            android:text="0000-00-00 까지"
+                            android:textColor="#ffffff"
+                            android:textSize="@dimen/textsize_small" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/line" />
+
+                <TableRow
+                    android:id="@+id/row_sidemenu_continue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_sidemenu_menuitem"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:padding="10dp" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/img_sidemenu_play" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="@string/sidemenu_continue"
+                        android:textColor="#ffffff"
+                        android:textSize="@dimen/textsize_medium" />
+                </TableRow>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/line" />
+
+                <TableRow
+                    android:id="@+id/row_sidemenu_zzim"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_sidemenu_menuitem"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:padding="10dp" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/img_sidemenu_zzim" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="@string/sidemenu_zzim"
+                        android:textColor="#ffffff"
+                        android:textSize="@dimen/textsize_medium" />
+                </TableRow>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/line" />
+
+                <TableRow
+                    android:id="@+id/row_sidemenu_viewlist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_sidemenu_menuitem"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:padding="10dp" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/img_sidemenu_list" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="@string/sidemenu_viewlog"
+                        android:textColor="#ffffff"
+                        android:textSize="@dimen/textsize_medium" />
+                </TableRow>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/line" />
+
+                <TableRow
+                    android:id="@+id/row_sidemenu_useinfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_sidemenu_menuitem"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:padding="10dp" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/img_sidemenu_info" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="@string/sidemenu_useinfo"
+                        android:textColor="#ffffff"
+                        android:textSize="@dimen/textsize_medium" />
+                </TableRow>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/line" />
+
+                <TableRow
+                    android:id="@+id/row_sidemenu_billing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_sidemenu_menuitem"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:padding="10dp" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/img_sidemenu_buy" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="@string/sidemenu_buy"
+                        android:textColor="#ffffff"
+                        android:textSize="@dimen/textsize_medium" />
+                </TableRow>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/line" />
+
+                <TableRow
+                    android:id="@+id/row_sidemenu_event"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_sidemenu_menuitem"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:padding="10dp" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/img_sidemenu_event" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="@string/sidemenu_event"
+                        android:textColor="#ffffff"
+                        android:textSize="@dimen/textsize_medium" />
+                </TableRow>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/line" />
+
+                <TableRow
+                    android:id="@+id/row_sidemenu_usercenter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_sidemenu_menuitem"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:padding="10dp" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/img_sidemenu_customer" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="@string/sidemenu_help"
+                        android:textColor="#ffffff"
+                        android:textSize="@dimen/textsize_medium" />
+                </TableRow>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/line" />
+
+                <TableRow
+                    android:id="@+id/row_sidemenu_versioninfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_sidemenu_menuitem"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:padding="10dp" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/img_sidemenu_version" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="@string/sidemenu_version"
+                        android:textColor="#ffffff"
+                        android:textSize="@dimen/textsize_medium" />
+
+                    <TextView
+                        android:id="@+id/text_sidemenu_version"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:maxLines="1"
+                        android:text="3.0.0"
+                        android:textColor="#ffffff"
+                        android:textSize="@dimen/textsize_small" />
+
+                    <ImageView
+                        android:id="@+id/img_sidemenu_version"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/img_new"
+                        android:visibility="gone" />
+                </TableRow>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/line" />
+            </TableLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</FrameLayout>

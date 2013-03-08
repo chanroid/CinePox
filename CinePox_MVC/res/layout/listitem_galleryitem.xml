@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/img_galleryitem_postimage"
+        android:layout_width="@dimen/postimage_width"
+        android:layout_height="@dimen/postimage_height"
+        android:layout_marginBottom="5dp"
+        android:padding="3dp"
+        android:background="@drawable/bg_poster" />
+
+    <ImageView
+        android:id="@+id/img_galleryitem_viewclass"
+        android:layout_width="@dimen/textsize_small"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/img_galleryitem_postimage"
+        android:layout_below="@+id/img_galleryitem_postimage"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/img_age12" />
+
+    <TextView
+        android:id="@+id/text_galleryitem_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/img_galleryitem_viewclass"
+        android:layout_alignRight="@+id/img_galleryitem_postimage"
+        android:layout_alignTop="@+id/img_galleryitem_viewclass"
+        android:layout_toRightOf="@+id/img_galleryitem_viewclass"
+        android:gravity="center_vertical"
+        android:text="영화제목"
+        android:maxLines="2"
+        android:textSize="@dimen/textsize_smallest" />
+
+</RelativeLayout>

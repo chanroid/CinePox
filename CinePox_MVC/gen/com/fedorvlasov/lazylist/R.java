@@ -8,25 +8,25 @@ package com.fedorvlasov.lazylist;
 
 public final class R {
 	public static final class id {
-		public static final int image = 0x7f090038;
-		public static final int list = 0x7f09003a;
-		public static final int text = 0x7f090039;
-		public static final int button1 = 0x7f09002b;
+		public static final int image = 0x7f0700a6;
+		public static final int list = 0x7f070143;
+		public static final int text = 0x7f0700a7;
+		public static final int button1 = 0x7f070144;
 	}
 	public static final class anim {
-		public static final int thumb_fade_in = 0x7f040008;
-		public static final int thumb_fade_out = 0x7f040009;
+		public static final int thumb_fade_in = 0x7f040004;
+		public static final int thumb_fade_out = 0x7f040005;
 	}
 	public static final class string {
-		public static final int hello = 0x7f0a0078;
-		public static final int app_name = 0x7f0a0077;
+		public static final int hello = 0x7f0c009b;
+		public static final int app_name = 0x7f0c009a;
 	}
 	public static final class layout {
-		public static final int item = 0x7f03000b;
-		public static final int main = 0x7f03000c;
+		public static final int item = 0x7f03002e;
+		public static final int main = 0x7f030047;
 	}
 	public static final class drawable {
-		public static final int icon = 0x7f020092;
-		public static final int stub = 0x7f0200b1;
+		public static final int icon = 0x7f02014d;
+		public static final int stub = 0x7f02018d;
 	}
 }

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_fragment_title"
+        android:padding="7dp" >
+
+        <TextView
+            android:id="@+id/text_home_top100title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/linearLayout1"
+            android:maxLines="1"
+            android:text="@string/top100"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/textsize_small" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:id="@+id/text_home_top100_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:background="#000000"
+                android:maxLines="1"
+                android:padding="3dp"
+                android:text="1"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/textsize_smallest" />
+
+            <TextView
+                android:id="@+id/text_home_top100_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:maxLines="1"
+                android:text="브레이킹던"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/textsize_small" />
+
+            <ImageView
+                android:id="@+id/img_home_top100_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/img_up" />
+
+            <TextView
+                android:id="@+id/text_home_top100_changed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="5"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/textsize_smallest" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/text_home_list1_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:maxLines="1"
+                android:text="NEW 최신영화"
+                android:textColor="#000000"
+                android:textSize="@dimen/textsize_medium" />
+
+            <Gallery
+                android:id="@+id/gallery_home_list1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/line" />
+
+            <TextView
+                android:id="@+id/text_home_list2_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:maxLines="1"
+                android:text="NEW 최신드라마"
+                android:textColor="#000000"
+                android:textSize="@dimen/textsize_medium" />
+
+            <Gallery
+                android:id="@+id/gallery_home_list2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/line" />
+
+            <TextView
+                android:id="@+id/text_home_list3_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:maxLines="1"
+                android:text="NEW 컨셉"
+                android:textColor="#000000"
+                android:textSize="@dimen/textsize_medium" />
+
+            <Gallery
+                android:id="@+id/gallery_home_list3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" />
+
+            <extend.SegmentLayout
+                android:id="@+id/segment_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" >
+            </extend.SegmentLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/line_main_menu" />
+
+            <com.busan.cw.clsp20120924.view.SNSReviewView
+                android:id="@+id/view_home_snsreview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </com.busan.cw.clsp20120924.view.SNSReviewView>
+
+            <Gallery
+                android:id="@+id/gallery_home_event"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Gallery
+                android:id="@+id/gallery_home_related"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

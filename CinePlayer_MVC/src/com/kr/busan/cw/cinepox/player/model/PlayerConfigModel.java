@@ -64,7 +64,8 @@ public class PlayerConfigModel extends Model {
 
 	private String mPlaytimeUrl;
 	private String mBugReportUrl;
-//	private String mLogReportUrl;
+
+	// private String mLogReportUrl;
 
 	private PlayerConfigModel(Context ctx) {
 		mContext = ctx;
@@ -146,6 +147,10 @@ public class PlayerConfigModel extends Model {
 		if (url == null)
 			return 0l;
 		return mPref.getLong(url, 0l);
+	}
+	
+	public void setURI(Uri url) {
+		mSetURI = url;
 	}
 
 	public boolean isSetURI() {
@@ -384,7 +389,7 @@ public class PlayerConfigModel extends Model {
 						m3GMessage = urlArray.getString(KEY_3G_MESSAGE);
 						m3GMessageLength = urlArray
 								.getInt(KEY_3G_MESSAGE_LENGTH);
-//						mLogReportUrl = urlArray.getString(KEY_LOG_URL);
+						// mLogReportUrl = urlArray.getString(KEY_LOG_URL);
 						mBookmarkModel.setDeleteUrl(urlArray
 								.getString(KEY_BOOKMARK_DELETE_URL));
 						mBookmarkModel.setListUrl(urlArray

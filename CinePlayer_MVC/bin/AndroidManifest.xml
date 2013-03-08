@@ -15,7 +15,6 @@
         android:targetSdkVersion="15" />
 
     <application
-        android:icon="@drawable/ic_launcher"
         android:label="@string/cineplayer" >
         
         <service android:name=".player.controller.PlayerService"

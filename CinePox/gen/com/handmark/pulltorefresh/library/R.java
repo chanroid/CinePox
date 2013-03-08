@@ -24,12 +24,12 @@ public final class R {
 		public static final int slide_in_from_top = 0x7f040005;
 	}
 	public static final class string {
-		public static final int pull_to_refresh_refreshing_label = 0x7f0a00b9;
-		public static final int pull_to_refresh_release_label = 0x7f0a00b8;
-		public static final int pull_to_refresh_from_bottom_pull_label = 0x7f0a00ba;
-		public static final int pull_to_refresh_from_bottom_refreshing_label = 0x7f0a00bc;
-		public static final int pull_to_refresh_pull_label = 0x7f0a00b7;
-		public static final int pull_to_refresh_from_bottom_release_label = 0x7f0a00bb;
+		public static final int pull_to_refresh_refreshing_label = 0x7f0a00bb;
+		public static final int pull_to_refresh_release_label = 0x7f0a00ba;
+		public static final int pull_to_refresh_from_bottom_pull_label = 0x7f0a00bc;
+		public static final int pull_to_refresh_from_bottom_refreshing_label = 0x7f0a00be;
+		public static final int pull_to_refresh_pull_label = 0x7f0a00b9;
+		public static final int pull_to_refresh_from_bottom_release_label = 0x7f0a00bd;
 	}
 	public static final class layout {
 		public static final int pull_to_refresh_header = 0x7f030012;

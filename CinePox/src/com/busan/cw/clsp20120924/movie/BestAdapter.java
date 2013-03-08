@@ -61,15 +61,13 @@ public class BestAdapter extends SimpleAdapter {
 
 		ImageView iv = (ImageView) view.findViewById(R.id.iv_movieitem_thumb);
 		iv.setScaleType(ScaleType.FIT_XY);
-		iv.setVisibility(View.INVISIBLE);
 		iv.setLayoutParams(ivparam);
 
 		boolean isAdult = "Y".equalsIgnoreCase(mDataArray.get(position).get(
 				"is_adult"));
-		if (isAdult) {
+		if (isAdult)
 			iv.setImageResource(R.drawable.eximg1);
-			iv.setVisibility(View.VISIBLE);
-		} else
+		else
 			mImageLoader.DisplayImage(mDataArray.get(position).get("sn_url"),
 					iv);
 

@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.busan.cw.clsp20120924"
-    android:versionCode="4"
-    android:versionName="2.01" >
+    package="com.busan.cw.clsp20120924_beta"
+    android:versionCode="30"
+    android:versionName="3.0.0" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -36,643 +36,95 @@
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
 
     <application
+        android:name="com.busan.cw.clsp20120924.model.CinepoxAppModel"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/cinepox" >
-        <service
-            android:name=".controller.GCMService"
-            android:enabled="true" />
-        <service
-            android:name=".controller.CinePoxService"
-            android:label="@string/cinepox" >
-        </service>
-
-        <receiver
-            android:name=".controller.GCMReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-
-                <category android:name="com.busan.cw.clsp20120924" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name=".controller.BootReceiver"
-            android:enabled="true"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name=".controller.CinePoxWidgetProvider" >
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/appwidget_provider" />
-        </receiver>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_appid" />
 
         <activity
-            android:name=".controller.PayCodeSendActivity"
-            android:theme="@android:style/Theme.Holo.NoActionBar" >
+            android:name="com.busan.cw.clsp20120924.controller.IntroActivity"
+            android:configChanges="orientation|keyboardHidden" >
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" >
-                </action>
-
-                <category android:name="android.intent.category.DEFAULT" >
-                </category>
-                <category android:name="android.intent.category.BROWSABLE" >
-                </category>
-
-                <data
-                    android:host="pay"
-                    android:scheme="cinepox" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".controller.DownloadCancelActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity
-            android:name=".controller.DownloadRestartActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity
-            android:name=".controller.DownloadStartActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" >
-                </action>
-
-                <category android:name="android.intent.category.DEFAULT" >
-                </category>
-                <category android:name="android.intent.category.BROWSABLE" >
-                </category>
-
-                <data
-                    android:host="download"
-                    android:scheme="cinepox" >
-                </data>
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".controller.InstallTestActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" >
-                </action>
-
-                <category android:name="android.intent.category.DEFAULT" >
-                </category>
-                <category android:name="android.intent.category.BROWSABLE" >
-                </category>
-
-                <data
-                    android:host="installtest"
-                    android:scheme="cinepox" >
-                </data>
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".controller.ADActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity
-            android:name=".controller.SearchActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:theme="@android:style/Theme.Holo.NoActionBar"
-            android:title="씨네폭스 영화검색" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" >
-                </action>
-
-                <category android:name="android.intent.category.DEFAULT" >
-                </category>
-                <category android:name="android.intent.category.BROWSABLE" >
-                </category>
-
-                <data
-                    android:host="search"
-                    android:scheme="cinepox" >
-                </data>
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".controller.IntroActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" >
-                </action>
 
-                <category android:name="android.intent.category.DEFAULT" >
-                </category>
-                <category android:name="android.intent.category.BROWSABLE" >
-                </category>
-
-                <data
-                    android:host="qrplay"
-                    android:scheme="cinepox" >
-                </data>
+                <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".controller.MainActivity"
-            android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale"
-            android:launchMode="singleTask"
+            android:name="com.busan.cw.clsp20120924.controller.SelectLoginMethodActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.busan.cw.clsp20120924.controller.CinepoxLoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.NoActionBar" />
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
         <activity
-            android:name=".controller.LoginActivity"
+            android:name="com.busan.cw.clsp20120924.controller.AppADActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.busan.cw.clsp20120924.controller.Me2DayLoginActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.busan.cw.clsp20120924.controller.YozmLoginActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.busan.cw.clsp20120924.controller.FacebookLoginActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.busan.cw.clsp20120924.controller.TwitterLoginActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.busan.cw.clsp20120924.controller.SNSJoinActionActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.busan.cw.clsp20120924.controller.CinepoxJoinActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.busan.cw.clsp20120924.controller.MemberOutActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.busan.cw.clsp20120924.controller.MainFragmentActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.busan.cw.clsp20120924.controller.MovieSearchActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" >
-                </action>
-
-                <category android:name="android.intent.category.DEFAULT" >
-                </category>
-                <category android:name="android.intent.category.BROWSABLE" >
-                </category>
-
-                <data
-                    android:host="loginCheck"
-                    android:scheme="cinepox" />
-            </intent-filter>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name=".controller.QRPlayActivity"
+            android:name="com.busan.cw.clsp20120924.controller.MyPageActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/qrplay" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" >
-                </action>
-
-                <category android:name="android.intent.category.DEFAULT" >
-                </category>
-                <category android:name="android.intent.category.BROWSABLE" >
-                </category>
-            </intent-filter>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name="com.google.zxing.client.android.HelpActivity"
-            android:screenOrientation="user" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.google.zxing.client.android.CaptureActivity"
+            android:name="com.facebook.LoginActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/qrplay"
-            android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:windowSoftInputMode="stateAlwaysHidden" >
-            <intent-filter>
-                <action android:name="com.google.zxing.client.android.SCAN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.kr.cinepox.player.QRPLAY" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-        <!-- 플레이어 관련 매니페스트 -->
-        <service
-            android:name="om.kr.busan.cw.cinepox.player.controller.PlayerService"
-            android:label="PlayerService" />
-
-        <activity
-            android:name="com.kr.busan.cw.cinepox.player.controller.VolumeActivity"
-            android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
-        <activity
-            android:name="com.kr.busan.cw.cinepox.player.controller.BrightActivity"
-            android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
-        <activity
-            android:name="com.kr.busan.cw.cinepox.player.controller.ReadQRActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
-        <activity
-            android:name="com.kr.busan.cw.cinepox.player.controller.PlayerActivity"
-            android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale"
-            android:label="@string/cineplayer"
-            android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
-            <intent-filter>
-                <action android:name=".player.PLAY" >
-                </action>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" >
-                </action>
-
-                <category android:name="android.intent.category.DEFAULT" >
-                </category>
-                <category android:name="android.intent.category.BROWSABLE" >
-                </category>
-
-                <data
-                    android:host="play"
-                    android:scheme="cinepox" >
-                </data>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" >
-                </action>
-
-                <category android:name="android.intent.category.DEFAULT" >
-                </category>
-                <category android:name="android.intent.category.BROWSABLE" >
-                </category>
-
-                <data android:scheme="http" >
-                </data>
-                <data android:scheme="https" >
-                </data>
-                <data
-                    android:host="v.youku.com"
-                    android:pathPattern=".*\.html"
-                    android:pathPrefix="/v_show/id_" >
-                </data>
-                <data
-                    android:host="v.youku.com"
-                    android:pathPattern=".*\.html"
-                    android:pathPrefix="/v_playlist/" >
-                </data>
-                <data
-                    android:host="v.ku6.com"
-                    android:pathPattern=".*html"
-                    android:pathPrefix="/show/" >
-                </data>
-                <data
-                    android:host="tv.sohu.com"
-                    android:pathPattern=".*\.shtml.*" >
-                </data>
-                <data
-                    android:host="my.tv.sohu.com"
-                    android:pathPrefix="/u/" >
-                </data>
-                <data
-                    android:host="www.iqiyi.com"
-                    android:pathPattern=".*/.*/.*\.html.*"
-                    android:pathPrefix="/" >
-                </data>
-                <data
-                    android:host="yule.iqiyi.com"
-                    android:pathPattern=".*\.html.*" >
-                </data>
-                <data
-                    android:host="www.tudou.com"
-                    android:pathPrefix="/programs/view/" >
-                </data>
-                <data
-                    android:host="www.tudou.com"
-                    android:pathPrefix="/albumcover/" >
-                </data>
-                <data
-                    android:host="www.tudou.com"
-                    android:pathPattern=".*\.html"
-                    android:pathPrefix="/playlist/" >
-                </data>
-                <data
-                    android:host="www.tudou.com"
-                    android:pathPattern=".*\.html?vid=.*" >
-                </data>
-                <data
-                    android:host="v.qq.com"
-                    android:pathPattern=".*\.html?vid=.*" >
-                </data>
-                <data
-                    android:host="v.qq.com"
-                    android:pathPattern=".*\.html"
-                    android:pathPrefix="/cover/" >
-                </data>
-                <data
-                    android:host="video.sina.com.cn"
-                    android:pathPattern=".*\.html.*" >
-                </data>
-                <data
-                    android:host="www.youtube.com"
-                    android:pathPrefix="/watch" >
-                </data>
-                <data
-                    android:host="www.youtube.com"
-                    android:pathPrefix="/movie" >
-                </data>
-                <data
-                    android:host="www.youtube.com"
-                    android:pathPrefix="/v/" >
-                </data>
-                <data
-                    android:host="www.youtube.com"
-                    android:pathPrefix="/embed/" >
-                </data>
-                <data
-                    android:host="vimeo.com"
-                    android:pathPattern=".*" >
-                </data>
-                <data
-                    android:host="www.letv.com"
-                    android:pathPattern=".*\.html"
-                    android:pathPrefix="/ptv/pplay/" >
-                </data>
-                <data
-                    android:host="v.pptv.com"
-                    android:pathPattern=".*\.html"
-                    android:pathPrefix="/show/" >
-                </data>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="me.abitno.vplayer.action.VIEW" >
-                </action>
-
-                <category android:name="android.intent.category.DEFAULT" >
-                </category>
-                <category android:name="android.intent.category.BROWSABLE" >
-                </category>
-
-                <data
-                    android:mimeType="*/*"
-                    android:scheme="*" >
-                </data>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" >
-                </action>
-
-                <category android:name="android.intent.category.DEFAULT" >
-                </category>
-                <category android:name="android.intent.category.BROWSABLE" >
-                </category>
-
-                <data
-                    android:mimeType="audio/*"
-                    android:scheme="http" >
-                </data>
-                <data
-                    android:mimeType="audio/*"
-                    android:scheme="rtsp" >
-                </data>
-                <data
-                    android:mimeType="audio/*"
-                    android:scheme="rtmp" >
-                </data>
-                <data
-                    android:mimeType="audio/*"
-                    android:scheme="udp" >
-                </data>
-                <data
-                    android:mimeType="audio/*"
-                    android:scheme="tcp" >
-                </data>
-                <data
-                    android:mimeType="audio/*"
-                    android:scheme="file" >
-                </data>
-                <data
-                    android:mimeType="audio/*"
-                    android:scheme="content" >
-                </data>
-                <data
-                    android:mimeType="audio/*"
-                    android:scheme="mms" >
-                </data>
-                <data
-                    android:mimeType="video/*"
-                    android:scheme="http" >
-                </data>
-                <data
-                    android:mimeType="video/*"
-                    android:scheme="rtsp" >
-                </data>
-                <data
-                    android:mimeType="video/*"
-                    android:scheme="rtmp" >
-                </data>
-                <data
-                    android:mimeType="video/*"
-                    android:scheme="udp" >
-                </data>
-                <data
-                    android:mimeType="video/*"
-                    android:scheme="tcp" >
-                </data>
-                <data
-                    android:mimeType="video/*"
-                    android:scheme="file" >
-                </data>
-                <data
-                    android:mimeType="video/*"
-                    android:scheme="content" >
-                </data>
-                <data
-                    android:mimeType="video/*"
-                    android:scheme="mms" >
-                </data>
-                <data android:mimeType="application/octet-stream" >
-                </data>
-                <data android:mimeType="application/x-mpegurl" >
-                </data>
-                <data android:mimeType="application/vnd.apple.mpegurl" >
-                </data>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" >
-                </action>
-
-                <category android:name="android.intent.category.DEFAULT" >
-                </category>
-
-                <data android:scheme="content" >
-                </data>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" >
-                </action>
-
-                <category android:name="android.intent.category.DEFAULT" >
-                </category>
-                <category android:name="android.intent.category.BROWSABLE" >
-                </category>
-
-                <data
-                    android:mimeType="application/x-mpegurl"
-                    android:scheme="http" >
-                </data>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" >
-                </action>
-
-                <category android:name="android.intent.category.DEFAULT" >
-                </category>
-                <category android:name="android.intent.category.BROWSABLE" >
-                </category>
-
-                <data android:scheme="rtsp" >
-                </data>
-                <data android:scheme="rtmp" >
-                </data>
-                <data android:scheme="mms" >
-                </data>
-                <data android:scheme="tcp" >
-                </data>
-                <data android:scheme="udp" >
-                </data>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" >
-                </action>
-                <action android:name="android.intent.action.SEND" >
-                </action>
-                <action android:name="android.intent.action.SENDTO" >
-                </action>
-
-                <category android:name="android.intent.category.DEFAULT" >
-                </category>
-
-                <data android:mimeType="video/*" >
-                </data>
-                <data android:mimeType="application/sdp" >
-                </data>
-                <data android:mimeType="application/octet-stream" >
-                </data>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" >
-                </action>
-
-                <category android:name="android.intent.category.DEFAULT" >
-                </category>
-                <category android:name="android.intent.category.BROWSABLE" >
-                </category>
-
-                <data android:scheme="http" >
-                </data>
-                <data android:mimeType="video/*" >
-                </data>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" >
-                </action>
-
-                <category android:name="android.intent.category.DEFAULT" >
-                </category>
-                <category android:name="android.intent.category.BROWSABLE" >
-                </category>
-
-                <data android:scheme="file" >
-                </data>
-                <data android:scheme="content" >
-                </data>
-                <data android:scheme="http" >
-                </data>
-                <data android:scheme="https" >
-                </data>
-                <data android:scheme="ftp" >
-                </data>
-                <data android:scheme="rtsp" >
-                </data>
-                <data android:scheme="rtmp" >
-                </data>
-                <data android:scheme="mms" >
-                </data>
-                <data android:scheme="tcp" >
-                </data>
-                <data android:scheme="udp" >
-                </data>
-                <data android:scheme="gopher" >
-                </data>
-                <data android:mimeType="video/*" >
-                </data>
-                <data android:mimeType="audio/*" >
-                </data>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" >
-                </action>
-
-                <category android:name="android.intent.category.DEFAULT" >
-                </category>
-                <category android:name="android.intent.category.BROWSABLE" >
-                </category>
-
-                <data android:scheme="file" >
-                </data>
-                <data android:scheme="content" >
-                </data>
-                <data android:scheme="http" >
-                </data>
-                <data android:scheme="https" >
-                </data>
-                <data android:scheme="ftp" >
-                </data>
-                <data android:scheme="rtsp" >
-                </data>
-                <data android:scheme="rtmp" >
-                </data>
-                <data android:scheme="mms" >
-                </data>
-                <data android:scheme="tcp" >
-                </data>
-                <data android:scheme="udp" >
-                </data>
-                <data android:scheme="gopher" >
-                </data>
-                <data android:host="*" >
-                </data>
-                <data android:pathPattern=".*\.avi" >
-                </data>
-                <data android:pathPattern=".*\.asf" >
-                </data>
-                <data android:pathPattern=".*\.f4v" >
-                </data>
-                <data android:pathPattern=".*\.flv" >
-                </data>
-                <data android:pathPattern=".*\.mkv" >
-                </data>
-                <data android:pathPattern=".*\.mpeg" >
-                </data>
-                <data android:pathPattern=".*\.mpg" >
-                </data>
-                <data android:pathPattern=".*\.mov" >
-                </data>
-                <data android:pathPattern=".*\.rm" >
-                </data>
-                <data android:pathPattern=".*\.vob" >
-                </data>
-                <data android:pathPattern=".*\.wmv" >
-                </data>
-                <data android:pathPattern=".*\.ts" >
-                </data>
-                <data android:pathPattern=".*\.tp" >
-                </data>
-                <data android:pathPattern=".*\.m3u" >
-                </data>
-                <data android:pathPattern=".*\.m3u8" >
-                </data>
-                <data android:pathPattern=".*\.m4v" >
-                </data>
-                <data android:pathPattern=".*\.mp4" >
-                </data>
-            </intent-filter>
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 

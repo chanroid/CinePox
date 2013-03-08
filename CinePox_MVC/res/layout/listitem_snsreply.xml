@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dp" >
+
+    <ImageView
+        android:id="@+id/img_snsreply_profile"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/bg_poster"
+        android:padding="3dp" />
+
+    <TextView
+        android:id="@+id/text_snsreply_nick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/img_snsreply_profile"
+        android:layout_marginBottom="3dp"
+        android:layout_toRightOf="@+id/img_snsreply_profile"
+        android:text="원빈느님 님"
+        android:textSize="@dimen/textsize_small" />
+
+    <TextView
+        android:id="@+id/text_snsreply_timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/text_snsreply_nick"
+        android:layout_below="@+id/text_snsreply_nick"
+        android:text="2013.01.30 13:25"
+        android:textSize="@dimen/textsize_smallest" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center_vertical" >
+
+        <ImageView
+            android:id="@+id/img_snsreply_star1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_snspoint_0" />
+
+        <ImageView
+            android:id="@+id/img_snsreply_star2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_snspoint_0" />
+
+        <ImageView
+            android:id="@+id/img_snsreply_star3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_snspoint_0" />
+
+        <ImageView
+            android:id="@+id/img_snsreply_star4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_snspoint_0" />
+
+        <ImageView
+            android:id="@+id/img_snsreply_star5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_snspoint_0" />
+
+        <TextView
+            android:id="@+id/text_snsreply_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="0.0"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/text_snsreply_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/img_snsreply_profile"
+        android:layout_below="@+id/img_snsreply_profile"
+        android:text="여자가 봐도 너무 매력적인 아만다 사이프리드... 연기도 연기지만 얼굴보는 재미에 시간가는줄 모르겠다 ㅠㅠ 너무이뻐"
+        android:textSize="@dimen/textsize_smallest" />
+
+</RelativeLayout>

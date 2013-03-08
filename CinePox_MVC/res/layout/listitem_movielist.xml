@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp" >
+
+        <ImageView
+            android:id="@+id/img_movielistitem_postimage"
+            android:layout_width="70dp"
+            android:layout_height="98dp"
+            android:layout_centerInParent="true"
+            android:layout_margin="15dp"
+            android:background="@drawable/bg_poster"
+            android:padding="1dp"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/img_movielistitem_postimage_frame"
+            android:layout_width="70dp"
+            android:layout_height="98dp"
+            android:layout_centerInParent="true"
+            android:layout_margin="15dp"
+            android:background="@drawable/bg_poster_bg"
+            android:scaleType="fitXY" />
+        
+        <ImageView
+            android:id="@+id/img_movielistitem_is3d"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/img_movielistitem_postimage"
+            android:src="@drawable/icon_3d"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/img_movielistitem_islive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/img_movielistitem_postimage"
+            android:src="@drawable/icon_live"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/img_movielistitem_isnew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/img_movielistitem_postimage"
+            android:src="@drawable/icon_new"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/img_movielistitem_iscinema"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/img_movielistitem_postimage"
+            android:src="@drawable/icon_same"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/img_movielistitem_iskome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/img_movielistitem_postimage"
+            android:layout_alignRight="@+id/img_movielistitem_postimage"
+            android:layout_margin="11dp"
+            android:src="@drawable/icon_come"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/img_movielistitem_ishd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/img_movielistitem_postimage"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="11dp"
+            android:src="@drawable/icon_hd"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/img_movielistitem_isdubbing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/img_movielistitem_postimage"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="11dp"
+            android:src="@drawable/icon_dubbing"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/img_movielistitem_isonline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/img_movielistitem_postimage"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="9dp"
+            android:src="@drawable/icon_online"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:gravity="center_vertical" >
+
+            <ImageView
+                android:id="@+id/img_movielistitem_viewclass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/img_ageall" />
+
+            <TextView
+                android:id="@+id/text_movielistitem_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="클로이 Chloe (2009)"
+                android:textColor="#000000"
+                android:textSize="@dimen/textsize_medium"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <!--
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="감독: "
+                    android:textColor="#000000"
+                    android:textSize="@dimen/textsize_small"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_movielistitem_director"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/textsize_small" />
+            </TableRow>
+            -->
+
+
+            <!--
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="주연: "
+                    android:textColor="#000000"
+                    android:textSize="@dimen/textsize_small"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_movielistitem_actor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/textsize_small" />
+            </TableRow>
+            -->
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <!--
+                     <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="장르: "
+                    android:textColor="#000000"
+                    android:textSize="@dimen/textsize_small"
+                    android:textStyle="bold" />
+                -->
+
+                <TextView
+                    android:id="@+id/text_movielistitem_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/textsize_small" />
+            </TableRow>
+
+            <!--
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp" >
+
+                     <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="가격: "
+                    android:textColor="#000000"
+                    android:textSize="@dimen/textsize_small"
+                    android:textStyle="bold" />
+
+            </TableRow>
+            -->
+
+            <TableRow
+                android:id="@+id/table_movielistitem_deliberation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="심의번호: "
+                    android:textColor="#000000"
+                    android:textSize="@dimen/textsize_small" />
+
+                <TextView
+                    android:id="@+id/text_movielistitem_deliberation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/textsize_small" />
+            </TableRow>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center_vertical" >
+
+                <TextView
+                    android:id="@+id/text_movielistitem_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/textsize_small"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/img_movielistitem_ismonth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_free" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:gravity="center_vertical" >
+
+            <LinearLayout
+                android:id="@+id/layout_movielistitem_stars"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp" >
+
+                <ImageView
+                    android:id="@+id/img_movielistitem_star1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_snspoint_0" />
+
+                <ImageView
+                    android:id="@+id/img_movielistitem_star2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_snspoint_0" />
+
+                <ImageView
+                    android:id="@+id/img_movielistitem_star3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_snspoint_0" />
+
+                <ImageView
+                    android:id="@+id/img_movielistitem_star4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_snspoint_0" />
+
+                <ImageView
+                    android:id="@+id/img_movielistitem_star5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_snspoint_0" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/text_movielistitem_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="0.0"
+                android:textColor="#000000"
+                android:textSize="@dimen/textsize_small" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <CheckedTextView
+        android:id="@+id/btn_movielistitem_zzim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/bt_zzim"
+        android:focusable="false" />
+
+</LinearLayout>

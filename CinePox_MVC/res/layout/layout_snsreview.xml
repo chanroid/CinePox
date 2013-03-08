@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#f6f6f6"
+    android:padding="10dp" >
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp" >
+
+        <ImageView
+            android:id="@+id/img_snsreview_postimage"
+            android:layout_width="70dp"
+            android:layout_height="98dp"
+            android:background="@drawable/bg_poster"
+            android:padding="3dp" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/text_snsreview_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:drawableLeft="@drawable/img_ageall"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:text="클로이 Chloe (2009)"
+            android:textColor="#000000"
+            android:textSize="@dimen/textsize_medium" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/text_snsreview_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="코미디,공포 | 한국 | 119분"
+            android:textColor="#000000"
+            android:textSize="@dimen/textsize_small" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SNS영화평점: "
+                android:textColor="#000000"
+                android:textSize="@dimen/textsize_smallest" />
+
+            <LinearLayout
+                android:id="@+id/layout_snsreview_stars"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp" >
+
+                <ImageView
+                    android:id="@+id/img_snsreview_star1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_snspoint_0" />
+
+                <ImageView
+                    android:id="@+id/img_snsreview_star2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_snspoint_0" />
+
+                <ImageView
+                    android:id="@+id/img_snsreview_star3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_snspoint_0" />
+
+                <ImageView
+                    android:id="@+id/img_snsreview_star4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_snspoint_0" />
+
+                <ImageView
+                    android:id="@+id/img_snsreview_star5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_snspoint_0" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/text_snsreview_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0"
+                android:textColor="#000000"
+                android:textSize="@dimen/textsize_smallest" />
+        </LinearLayout>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/line" />
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp" >
+
+                <TextView
+                    android:id="@+id/text_snsreview_1_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:text="pcw*****"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/textsize_smallest" />
+
+                <TextView
+                    android:id="@+id/text_snsreview_1_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="넘 재밌음"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/textsize_smallest" />
+            </TableRow>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/line" />
+        </TableLayout>
+    </LinearLayout>
+
+</LinearLayout>

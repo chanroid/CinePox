@@ -15,9 +15,8 @@
             android:id="@+id/iv_movieitem_thumb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/eximg"
-            android:scaleType="fitXY"
-            android:visibility="invisible" />
+            android:layout_gravity="center"
+            android:scaleType="fitXY" />
     </FrameLayout>
     
 </LinearLayout>

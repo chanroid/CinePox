@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#d2d2d2"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_top"
+        android:padding="5dp" >
+
+        <ImageButton
+            android:id="@+id/btn_mypage_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:src="@drawable/bt_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/mypage_title"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/textsize_large" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_top_shadow" >
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#d2d2d2"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp" >
+
+                <ImageView
+                    android:id="@+id/img_login_profile"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/img_profile"
+                    android:padding="2dp" />
+
+                <TextView
+                    android:id="@+id/btn_login_profile_change"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/img_login_profile"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/bt_ask"
+                    android:text="@string/mypage_edit_profile_img"
+                    android:textColor="#ffffff" />
+            </RelativeLayout>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#c1c1c1"
+                android:padding="15dp" >
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_mypage_table_lefttop"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="@string/mypage_id"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/textsize_small" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_mypage_table_righttop"
+                        android:padding="10dp" >
+
+                        <TextView
+                            android:id="@+id/text_mypage_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:text="chanroid@gmail.com"
+                            android:textColor="#000000"
+                            android:textSize="16sp" />
+                    </RelativeLayout>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_mypage_table_leftcenter"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="@string/mypage_nick"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/textsize_small" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_mypage_table_rightcenter"
+                        android:padding="10dp" >
+
+                        <extend.ClearableEditText
+                            android:id="@+id/edit_mypage_nick"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginBottom="3dp"
+                            android:background="@drawable/bg_input" >
+                        </extend.ClearableEditText>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_below="@id/edit_mypage_nick"
+                            android:maxLines="1"
+                            android:text="@string/mypage_nick_description"
+                            android:textColor="#000000"
+                            android:textSize="8sp" />
+                    </RelativeLayout>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_mypage_table_leftcenter"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="@string/user_grade"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/textsize_small" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_mypage_table_rightcenter"
+                        android:padding="10dp" >
+
+                        <TextView
+                            android:id="@+id/text_mypage_usergrade"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:maxLines="1"
+                            android:textColor="#000000"
+                            android:textSize="@dimen/textsize_small" />
+                    </RelativeLayout>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_mypage_table_leftcenter"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:padding="10dp"
+                        android:text="@string/mypage_point"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/textsize_small" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_mypage_table_rightcenter"
+                        android:padding="10dp" >
+
+                        <TextView
+                            android:id="@+id/btn_mypage_point_detail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/bt_my"
+                            android:padding="5dp"
+                            android:text="@string/mypage_viewpointhistory"
+                            android:textColor="#000000" />
+
+                        <TextView
+                            android:id="@+id/text_mypage_point"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="5dp"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:text="5,000"
+                            android:textColor="#000000"
+                            android:textSize="@dimen/textsize_small" />
+
+                        <ImageView
+                            android:id="@+id/img_mypage_point"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="10dp"
+                            android:layout_toRightOf="@id/text_mypage_point"
+                            android:src="@drawable/img_my_point" />
+                    </RelativeLayout>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_mypage_table_leftcenter"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="@string/mypage_popcorn"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/textsize_small" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_mypage_table_rightcenter"
+                        android:padding="10dp" >
+
+                        <TextView
+                            android:id="@+id/btn_mypage_popcorn_detail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/bt_my"
+                            android:padding="5dp"
+                            android:text="@string/mypage_viewpointhistory"
+                            android:textColor="#000000" />
+
+                        <TextView
+                            android:id="@+id/text_mypage_popcorn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="5dp"
+                            android:maxLines="1"
+                            android:text="3,500"
+                            android:textColor="#000000"
+                            android:textSize="@dimen/textsize_small" />
+
+                        <ImageView
+                            android:id="@+id/img_mypage_popcorn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/text_mypage_popcorn"
+                            android:maxLines="1"
+                            android:src="@drawable/img_my_popcorn" />
+                    </RelativeLayout>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_mypage_table_leftcenter"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="@string/mypage_useinfo"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/textsize_small" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_mypage_table_rightcenter"
+                        android:padding="10dp" >
+
+                        <TextView
+                            android:id="@+id/btn_mypage_ticket_detail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/bt_go" />
+
+                        <LinearLayout
+                            android:id="@+id/layout_mypage_ticket"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginBottom="5dp"
+                            android:layout_toLeftOf="@id/btn_mypage_ticket_detail" >
+
+                            <ImageView
+                                android:id="@+id/img_mypage_ticket"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:src="@drawable/img_ticket_0" />
+
+                            <TextView
+                                android:id="@+id/text_mypage_ticket"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:text="@string/ticket_premium_auto"
+                                android:textColor="#000000"
+                                android:textSize="@dimen/textsize_small" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/text_mypage_ticket_period"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_below="@id/layout_mypage_ticket"
+                            android:layout_toLeftOf="@+id/btn_mypage_ticket_detail"
+                            android:maxLines="1"
+                            android:text="0000-00-00"
+                            android:textColor="#000000"
+                            android:textSize="@dimen/textsize_small" />
+                    </RelativeLayout>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_mypage_table_leftcenter"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="@string/message"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/textsize_small" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_mypage_table_rightcenter"
+                        android:padding="10dp" >
+
+                        <TextView
+                            android:id="@+id/btn_mypage_message_detail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/bt_my"
+                            android:padding="5dp"
+                            android:text="@string/message_detail"
+                            android:textColor="#000000" />
+                    </RelativeLayout>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_mypage_table_leftcenter"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:padding="10dp"
+                        android:text="@string/mypage_autologin"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/textsize_small" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_mypage_table_rightcenter"
+                        android:padding="10dp" >
+
+                        <TextView
+                            android:id="@+id/text_mypage_autologin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@+id/check_mypage_autologin"
+                            android:maxLines="1"
+                            android:text="@string/login_autologin_enable"
+                            android:textColor="#000000"
+                            android:textSize="@dimen/textsize_small" />
+
+                        <CheckBox
+                            android:id="@+id/check_mypage_autologin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:button="@drawable/bt_checkbox" />
+                    </RelativeLayout>
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/layout_mypage_profileedit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_mypage_table_leftcenter"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="@string/mypage_profileedit"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/textsize_small" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_mypage_table_rightcenter"
+                        android:padding="10dp" >
+
+                        <TextView
+                            android:id="@+id/btn_mypage_userinfoedit_detail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/bt_my"
+                            android:padding="5dp"
+                            android:text="@string/mypage_profileedit"
+                            android:textColor="#000000" />
+                    </RelativeLayout>
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/layout_mypage_passwordedit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_mypage_table_leftcenter"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="@string/mypage_passwordedit"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/textsize_small" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_mypage_table_rightcenter"
+                        android:padding="10dp" >
+
+                        <TextView
+                            android:id="@+id/btn_mypage_passwordedit_detail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/bt_my"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="@string/mypage_passwordedit"
+                            android:textColor="#000000" />
+                    </RelativeLayout>
+                </TableRow>
+
+                <!-- 팝콘이 보너스 포인트와 통합됨에 따라 따로 표시하지 않음 -->
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_mypage_table_leftcenter"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:padding="10dp"
+                        android:text="@string/mypage_popcorn"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/textsize_small" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_mypage_table_rightcenter"
+                        android:padding="10dp" >
+
+                        <TextView
+                            android:id="@+id/btn_mypage_popcorn_trans"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/bt_my"
+                            android:padding="5dp"
+                            android:text="@string/mypage_transmoney"
+                            android:textColor="#000000" />
+
+                        <!-- android:id="@+id/text_mypage_popcorn" -->
+                    </RelativeLayout>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_mypage_table_leftbottom"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:padding="10dp"
+                        android:text="@string/mypage_leave"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/textsize_small" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_mypage_table_rightbottom"
+                        android:padding="10dp" >
+
+                        <TextView
+                            android:id="@+id/btn_mypage_leave"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/bt_go"
+                            android:textSize="@dimen/textsize_small" />
+                    </RelativeLayout>
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/btn_mypage_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bt_ask"
+                android:text="@string/mypage_logout"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

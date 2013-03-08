@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_top"
+        android:padding="5dp" >
+
+        <ImageButton
+            android:id="@+id/btn_webview_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:background="@null"
+            android:scaleType="centerInside"
+            android:src="@drawable/bt_webview_back" />
+
+        <ImageButton
+            android:id="@+id/btn_webview_ff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/btn_webview_back"
+            android:background="@null"
+            android:scaleType="centerInside"
+            android:src="@drawable/bt_webview_ff" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/img_logo" />
+
+        <ImageButton
+            android:id="@+id/btn_webview_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:scaleType="centerInside"
+            android:src="@drawable/bt_webview_close" />
+
+        <ImageButton
+            android:id="@+id/btn_webview_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/btn_webview_ff"
+            android:background="@null"
+            android:src="@android:drawable/ic_popup_sync" />
+    </RelativeLayout>
+
+    <include layout="@layout/layout_webview" />
+
+</LinearLayout>
