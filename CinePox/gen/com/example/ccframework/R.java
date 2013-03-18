@@ -20,9 +20,9 @@ public final class R {
 		public static final int claearable_edittext = 0x7f030004;
 	}
 	public static final class drawable {
-		public static final int ic_clear = 0x7f02008b;
-		public static final int text_cursor_holo_light = 0x7f0200a3;
-		public static final int ic_clear_selected = 0x7f02008c;
-		public static final int ic_clear_unselected = 0x7f02008d;
+		public static final int ic_clear = 0x7f02008c;
+		public static final int text_cursor_holo_light = 0x7f0200a4;
+		public static final int ic_clear_selected = 0x7f02008d;
+		public static final int ic_clear_unselected = 0x7f02008e;
 	}
 }

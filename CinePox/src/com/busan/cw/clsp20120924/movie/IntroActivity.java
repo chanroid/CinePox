@@ -401,10 +401,10 @@ public class IntroActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.intro);
 		if (!DisplayUtils.isTablet(this))
-			findViewById(R.id.introbg).setBackgroundResource(R.drawable.intro);
+			findViewById(R.id.introbg).setBackgroundResource(R.drawable.bg_poster_em);
 		else
 			findViewById(R.id.introbg).setBackgroundResource(
-					R.drawable.intro_large);
+					R.drawable.bg_poster_em);
 		mDataloader.execute();
 		setupShortcut();
 	}

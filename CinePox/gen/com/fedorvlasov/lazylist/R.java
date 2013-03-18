@@ -24,7 +24,7 @@ public final class R {
 		public static final int main = 0x7f03000b;
 	}
 	public static final class drawable {
-		public static final int icon = 0x7f020090;
-		public static final int stub = 0x7f0200a2;
+		public static final int icon = 0x7f020091;
+		public static final int stub = 0x7f0200a3;
 	}
 }
